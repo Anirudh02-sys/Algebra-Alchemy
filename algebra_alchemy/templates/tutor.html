@@ -67,7 +67,8 @@
                 </div>
 
                 <ul class="lesson-list">
-                    <li class="lesson-item">
+                    <!-- Isolating X-Terms -->
+                    <li class="lesson-item clickable active-lesson" id="lesson-isolating">
                         <div class="lesson-main">
                             <span class="lesson-star">☆</span>
                             <div>
@@ -75,10 +76,11 @@
                                 <div class="lesson-text-subtitle">Menu description.</div>
                             </div>
                         </div>
-                        <div class="lesson-progress">82%</div>
+                        <div class="lesson-progress" id="isolating-progress">0%</div>
                     </li>
 
-                    <li class="lesson-item">
+                    <!-- Solving for X -->
+                    <li class="lesson-item clickable" id="lesson-solving">
                         <div class="lesson-main">
                             <span class="lesson-star">☆</span>
                             <div>
@@ -176,11 +178,17 @@
         <h2>Nice work! 🎓</h2>
         <p>You’ve finished all the problems.</p>
         <p id="completion-stats"></p>
-        <button id="close-modal" class="next-btn">
-            Close
-        </button>
+        <div class="modal-buttons">
+            <button id="next-lesson" class="next-btn secondary-btn">
+                Next lesson: Solving for X →
+            </button>
+            <button id="close-modal" class="next-btn">
+                Close
+            </button>
+        </div>
     </div>
 </div>
+
 
 <!-- external JS -->
 <script src="{% static 'js/tutor.js' %}"></script>

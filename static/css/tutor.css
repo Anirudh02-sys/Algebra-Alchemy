@@ -199,6 +199,38 @@ body {
     color: #333;
 }
 
+.lesson-item.clickable {
+    cursor: pointer;
+    transition: background 0.15s ease, transform 0.1s ease;
+}
+
+.lesson-item.clickable:hover {
+    background: #f7f6ff;
+    transform: translateY(-1px);
+}
+
+.lesson-item.active-lesson {
+    background: #f4f2ff;
+}
+
+.lesson-item.active-lesson .lesson-text-title {
+    font-weight: 700;
+}
+
+.modal-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 12px;
+}
+
+.secondary-btn {
+    background: #ffffff;
+    color: #000;
+    border: 1px solid #ddd;
+}
+
+
 /* WORKSPACE --------------------------------------------------- */
 .workspace-wrapper {
     position: relative;

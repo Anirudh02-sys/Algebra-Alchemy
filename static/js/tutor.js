@@ -200,12 +200,21 @@ function updateProgressUI() {
     const xp = score * 10;
     summary.textContent = `Score: ${score}/${problems.length} · XP: ${xp}`;
 
+    // bottom stars
     const stars = document.querySelectorAll(".star-indicator");
     const filledCount = score; // 1 star per solved problem
     stars.forEach((star, index) => {
         star.classList.toggle("filled", index < filledCount);
     });
+
+    // top-left "Isolating X-Terms" percentage
+    const isolatingElem = document.getElementById("isolating-progress");
+    if (isolatingElem) {
+        const percent = Math.round((score / problems.length) * 100);
+        isolatingElem.textContent = `${percent}%`;
+    }
 }
+
 
 // Next button
 function setupNextButton() {
@@ -230,16 +239,39 @@ function showCompletionModal() {
 function setupCompletionModal() {
     const overlay = document.getElementById("completion-overlay");
     const closeBtn = document.getElementById("close-modal");
-    closeBtn.addEventListener("click", () => {
-        overlay.classList.add("hidden");
-    });
+    const nextLessonBtn = document.getElementById("next-lesson");
+
+    if (closeBtn) {
+        closeBtn.addEventListener("click", () => {
+            overlay.classList.add("hidden");
+        });
+    }
+
+    if (nextLessonBtn) {
+        nextLessonBtn.addEventListener("click", () => {
+            overlay.classList.add("hidden");
+
+            // Visually mark "Solving for X" as the next active lesson
+            const isolatingItem = document.getElementById("lesson-isolating");
+            const solvingItem = document.getElementById("lesson-solving");
+
+            if (isolatingItem) isolatingItem.classList.remove("active-lesson");
+            if (solvingItem) solvingItem.classList.add("active-lesson");
+
+            // In a future iteration you could:
+            // - swap in a new problem set
+            // - reset score/progress, etc.
+        });
+    }
 }
+
 
 // Init
 document.addEventListener("DOMContentLoaded", () => {
     setupContainerDnD();
     setupNextButton();
     setupCompletionModal();
+    setupLessonClicks();
     loadProblem(currentProblemIndex);
 });
 
@@ -321,4 +353,25 @@ function isolateEquation(equation) {
     const rightStr = joinTerms(constTerms);
 
     return `${leftStr} = ${rightStr}`;
+}
+
+function setupLessonClicks() {
+    const isolatingItem = document.getElementById("lesson-isolating");
+    const workspace = document.querySelector(".workspace-wrapper");
+
+    if (isolatingItem && workspace) {
+        isolatingItem.addEventListener("click", () => {
+            workspace.scrollIntoView({ behavior: "smooth", block: "center" });
+        });
+    }
+
+    // Optional: clicking "Solving for X" could be wired in later
+    const solvingItem = document.getElementById("lesson-solving");
+    if (solvingItem && workspace) {
+        solvingItem.addEventListener("click", () => {
+            // For now just scroll as well or show a placeholder
+            workspace.scrollIntoView({ behavior: "smooth", block: "center" });
+            // In the future: load a new problem set here.
+        });
+    }
 }
