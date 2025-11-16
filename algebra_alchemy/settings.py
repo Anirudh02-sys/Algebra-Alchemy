@@ -54,7 +54,7 @@ ROOT_URLCONF = 'algebra_alchemy.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'algebra_alchemy' / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

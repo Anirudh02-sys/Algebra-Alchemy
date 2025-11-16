@@ -1,0 +1,673 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Algebra Alchemy – Tutor</title>
+    <style>
+        :root {
+            --bg: #f5f4f7;
+            --sidebar-bg: #f7f5fb;
+            --purple: #c9b6ff;
+            --purple-dark: #9b7fff;
+            --card-bg: #ffffff;
+            --text-main: #333333;
+            --text-muted: #8d8d8d;
+            --shadow-soft: 0 10px 24px rgba(0,0,0,0.08);
+            --radius-lg: 22px;
+            --radius-pill: 999px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background: var(--bg);
+            color: var(--text-main);
+        }
+
+        .app-shell {
+            min-height: 100vh;
+            padding: 24px 40px;
+            display: flex;
+            gap: 28px;
+        }
+
+        /* SIDEBAR ----------------------------------------------------- */
+        .sidebar {
+            width: 90px;
+            background: var(--sidebar-bg);
+            border-radius: 26px;
+            padding: 24px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .sidebar-top {
+            margin-bottom: 32px;
+        }
+
+        .nav-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .nav-icon-circle {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: var(--purple);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            font-size: 11px;
+            color: #666;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .nav-item.active .nav-icon-circle {
+            background: #000;
+            color: #fff;
+        }
+
+        .nav-item.active span {
+            font-weight: 600;
+            color: #111;
+        }
+
+        .nav-icon-circle.outline {
+            background: transparent;
+            border: 1px solid #b9b9b9;
+            color: #555;
+        }
+
+        .sidebar-spacer {
+            flex: 1;
+        }
+
+        /* MAIN AREA --------------------------------------------------- */
+        .main-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .top-title {
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+        }
+
+        .top-subtitle {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .content-row {
+            display: grid;
+            grid-template-columns: minmax(260px, 340px) minmax(360px, 1fr);
+            gap: 40px;
+            align-items: flex-start;
+        }
+
+        /* LESSON CARD ------------------------------------------------- */
+        .lesson-card {
+            background: var(--card-bg);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-soft);
+            padding: 20px 22px;
+        }
+
+        .lesson-card-header {
+            margin-bottom: 16px;
+        }
+
+        .lesson-card-title-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--text-muted);
+        }
+
+        .lesson-card-title-main {
+            font-size: 15px;
+            font-weight: 700;
+            margin-top: 4px;
+        }
+
+        .lesson-list {
+            list-style: none;
+            margin-top: 8px;
+        }
+
+        .lesson-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-top: 1px solid #eee;
+            gap: 12px;
+        }
+
+        .lesson-item:first-of-type {
+            border-top: none;
+        }
+
+        .lesson-main {
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+        }
+
+        .lesson-star {
+            font-size: 16px;
+            color: #bbb;
+            margin-top: 2px;
+        }
+
+        .lesson-text-title {
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .lesson-text-subtitle {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        .lesson-progress {
+            font-size: 13px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        /* WORKSPACE --------------------------------------------------- */
+        .workspace-wrapper {
+            position: relative;
+            padding: 24px;
+            border-radius: var(--radius-lg);
+            background: radial-gradient(circle at top left, #f4ebff, #f5f4f7);
+            min-height: 260px;
+            box-shadow: var(--shadow-soft);
+            overflow: hidden;
+        }
+
+        .workspace-label {
+            position: absolute;
+            top: 16px;
+            right: 24px;
+            font-size: 11px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+        }
+
+        /* DRAGGABLE CHIPS -------------------------------------------------- */
+        .workspace-chips {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 24px;
+            margin-top: 80px;
+        }
+
+        .chip {
+            padding: 16px 22px;
+            border-radius: 18px;
+            background: #ffffff;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            font-size: 18px;
+            font-weight: 600;
+            cursor: grab;
+            user-select: none;
+        }
+
+        .chip.dragging {
+            opacity: 0.6;
+            cursor: grabbing;
+        }
+
+        .status-message {
+            margin-top: 24px;
+            text-align: center;
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .status-message.correct {
+            color: #1a7f3c;
+            font-weight: 600;
+        }
+
+
+        /* BOTTOM AREA ------------------------------------------------- */
+        .bottom-area {
+            margin-top: 32px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 28px;
+        }
+
+        .drag-cta {
+            padding: 10px 26px;
+            border-radius: var(--radius-pill);
+            border: 1px solid var(--purple-dark);
+            background: rgba(201, 182, 255, 0.3);
+            font-size: 13px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .drag-cta-icon {
+            font-size: 14px;
+        }
+
+        .pagination {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            font-size: 13px;
+        }
+
+        .next-btn {
+            margin-top: 8px;
+            padding: 8px 18px;
+            border-radius: 999px;
+            border: none;
+            background: #000;
+            color: #fff;
+            font-size: 13px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+        }
+        
+        .next-btn:disabled {
+            opacity: 0.5;
+            cursor: default;
+        }
+
+
+        .page {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .page.active {
+            background: #000;
+            color: #fff;
+        }
+
+        .page.inactive {
+            color: #777;
+        }
+
+        .page-dot {
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: #888;
+        }
+
+        @media (max-width: 900px) {
+            .app-shell {
+                padding: 16px;
+            }
+
+            .content-row {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+
+            .workspace-wrapper {
+                min-height: 220px;
+            }
+
+            .chip {
+                position: relative;
+                display: inline-block;
+                margin: 8px;
+            }
+
+            .chip-4x-left,
+            .chip-plus,
+            .chip-8,
+            .chip-equals,
+            .chip-4x-right {
+                top: auto;
+                left: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="app-shell">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <div class="sidebar-top">
+            <div class="nav-icon-circle">
+                👤
+            </div>
+        </div>
+
+        <div class="nav-section">
+            <div class="nav-item">
+                <div class="nav-icon-circle outline">
+                    ☰
+                </div>
+            </div>
+
+            <div class="nav-item active">
+                <div class="nav-icon-circle">✏️</div>
+                <span>Learn</span>
+            </div>
+
+            <div class="nav-item">
+                <div class="nav-icon-circle">★</div>
+                <span>Current<br>Progress</span>
+            </div>
+
+            <div class="nav-item">
+                <div class="nav-icon-circle">📊</div>
+                <span>Learning<br>Graph</span>
+            </div>
+
+            <div class="nav-item">
+                <div class="nav-icon-circle">📅</div>
+                <span>Calendar</span>
+            </div>
+        </div>
+
+        <div class="sidebar-spacer"></div>
+    </aside>
+
+    <!-- MAIN AREA -->
+    <main class="main-area">
+        <header class="top-bar">
+            <div>
+                <div class="top-title">Algebra Alchemy</div>
+                <div class="top-subtitle">Reducing Equations: Lesson 1</div>
+            </div>
+        </header>
+
+        <section class="content-row">
+            <!-- LEFT: LESSON CARD -->
+            <article class="lesson-card">
+                <div class="lesson-card-header">
+                    <div class="lesson-card-title-label">Learn Simple Algebra</div>
+                    <div class="lesson-card-title-main">Reducing Equations: Lesson 1</div>
+                </div>
+
+                <ul class="lesson-list">
+                    <li class="lesson-item">
+                        <div class="lesson-main">
+                            <span class="lesson-star">☆</span>
+                            <div>
+                                <div class="lesson-text-title">Isolating X-Terms</div>
+                                <div class="lesson-text-subtitle">Menu description.</div>
+                            </div>
+                        </div>
+                        <div class="lesson-progress">82%</div>
+                    </li>
+
+                    <li class="lesson-item">
+                        <div class="lesson-main">
+                            <span class="lesson-star">☆</span>
+                            <div>
+                                <div class="lesson-text-title">Solving for X</div>
+                                <div class="lesson-text-subtitle">Menu description.</div>
+                            </div>
+                        </div>
+                        <div class="lesson-progress">78%</div>
+                    </li>
+
+                    <li class="lesson-item">
+                        <div class="lesson-main">
+                            <span class="lesson-star">☆</span>
+                            <div>
+                                <div class="lesson-text-title">Reducing Fractions</div>
+                                <div class="lesson-text-subtitle">Menu description.</div>
+                            </div>
+                        </div>
+                        <div class="lesson-progress">92%</div>
+                    </li>
+
+                    <li class="lesson-item">
+                        <div class="lesson-main">
+                            <span class="lesson-star">☆</span>
+                            <div>
+                                <div class="lesson-text-title">Practice Level Up Test 1</div>
+                                <div class="lesson-text-subtitle">Feeling confident?</div>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li class="lesson-item">
+                        <div class="lesson-main">
+                            <span class="lesson-star">☆</span>
+                            <div>
+                                <div class="lesson-text-title">Practice Level Up Test 2</div>
+                                <div class="lesson-text-subtitle">Test out to next level!</div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </article>
+
+            <!-- RIGHT: WORKSPACE -->
+            <section class="workspace-wrapper">
+                <div class="workspace-label">Drag to isolate x</div>
+
+                <!-- Container where draggable tokens live -->
+                <div id="chip-container" class="workspace-chips">
+                    <!-- chips will be injected by JS -->
+                </div>
+            
+                <div id="status-message" class="status-message"></div>
+            </section>
+        </section>
+
+        <!-- BOTTOM AREA -->
+        <section class="bottom-area">
+            <button class="drag-cta">
+                <span class="drag-cta-icon">✔</span>
+                <span>Drag and drop to isolate X terms</span>
+            </button>
+        
+            <button id="next-problem" class="next-btn" style="display:none;">
+                Next problem →
+            </button>
+        
+            <div class="pagination">
+                <div class="page active">1</div>
+                <div class="page inactive">2</div>
+                <div class="page inactive">3</div>
+                <span class="page-dot"></span>
+                <span class="page-dot"></span>
+                <span class="page-dot"></span>
+                <div class="page inactive">7</div>
+                <div class="page inactive">8</div>
+            </div>
+        </section>
+
+    </main>
+</div>
+<script>
+    // Simple problem set: each problem has tokens and the correct order
+    const problems = [
+        {
+            tokens: ["4x", "+", "8", "=", "4x"],
+            correct: ["4x", "+", "8", "=", "4x"]
+        },
+        {
+            tokens: ["3x", "-", "5", "=", "10"],
+            correct: ["3x", "-", "5", "=", "10"]
+        },
+        {
+            tokens: ["2x", "+", "6", "=", "14"],
+            correct: ["2x", "+", "6", "=", "14"]
+        }
+    ];
+
+    let currentProblemIndex = 0;
+    let correctOrder = problems[0].correct;
+    let draggedElement = null;
+
+    function shuffle(array) {
+        const arr = [...array];
+        for (let i = arr.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+        return arr;
+    }
+
+    function loadProblem(index) {
+        const problem = problems[index];
+        correctOrder = problem.correct;
+
+        const container = document.getElementById("chip-container");
+        const status = document.getElementById("status-message");
+        const nextBtn = document.getElementById("next-problem");
+
+        container.innerHTML = "";
+        status.textContent = "";
+        status.classList.remove("correct");
+        nextBtn.style.display = "none";
+
+        const shuffledTokens = shuffle(problem.tokens);
+
+        shuffledTokens.forEach(token => {
+            const chip = document.createElement("div");
+            chip.className = "chip";
+            chip.textContent = token;
+            chip.setAttribute("draggable", "true");
+            addChipDragHandlers(chip);
+            container.appendChild(chip);
+        });
+    }
+
+    function addChipDragHandlers(chip) {
+        chip.addEventListener("dragstart", (e) => {
+            draggedElement = chip;
+            chip.classList.add("dragging");
+        });
+
+        chip.addEventListener("dragend", () => {
+            if (draggedElement) {
+                draggedElement.classList.remove("dragging");
+                draggedElement = null;
+            }
+            checkCorrect();
+        });
+    }
+
+    function getDragAfterElement(container, x) {
+        const draggableElements = [...container.querySelectorAll(".chip:not(.dragging)")];
+
+        return draggableElements.reduce((closest, child) => {
+            const box = child.getBoundingClientRect();
+            const offset = x - box.left - box.width / 2;
+            if (offset < 0 && offset > closest.offset) {
+                return { offset: offset, element: child };
+            } else {
+                return closest;
+            }
+        }, { offset: Number.NEGATIVE_INFINITY, element: null }).element;
+    }
+
+    function setupContainerDnD() {
+        const container = document.getElementById("chip-container");
+
+        container.addEventListener("dragover", (e) => {
+            e.preventDefault();
+            if (!draggedElement) return;
+
+            const afterElement = getDragAfterElement(container, e.clientX);
+            if (afterElement == null) {
+                container.appendChild(draggedElement);
+            } else {
+                container.insertBefore(draggedElement, afterElement);
+            }
+        });
+
+        container.addEventListener("drop", (e) => {
+            e.preventDefault();
+            // ordering is already handled in dragover
+            checkCorrect();
+        });
+    }
+
+    function checkCorrect() {
+        const container = document.getElementById("chip-container");
+        const status = document.getElementById("status-message");
+        const nextBtn = document.getElementById("next-problem");
+
+        const currentOrder = [...container.querySelectorAll(".chip")]
+            .map(chip => chip.textContent.trim());
+
+        if (currentOrder.length !== correctOrder.length) return;
+
+        const isCorrect = currentOrder.every((value, index) => value === correctOrder[index]);
+
+        if (isCorrect) {
+            status.textContent = "Correct! 🎉";
+            status.classList.add("correct");
+            nextBtn.style.display = "inline-flex";
+        } else {
+            status.textContent = "Keep going…";
+            status.classList.remove("correct");
+            nextBtn.style.display = "none";
+        }
+    }
+
+    function setupNextButton() {
+        const nextBtn = document.getElementById("next-problem");
+        nextBtn.addEventListener("click", () => {
+            currentProblemIndex = (currentProblemIndex + 1) % problems.length;
+            loadProblem(currentProblemIndex);
+        });
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        setupContainerDnD();
+        setupNextButton();
+        loadProblem(currentProblemIndex);
+    });
+</script>
+
+</body>
+</html>

@@ -15,8 +15,16 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, re_path
+from django.contrib.auth import views as auth_views
+from .views import tutor_dashboard
+
+# import algebra_alchemy.views as views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    # re_path(r'^$', views.landing, name='landing'),
+    # path("home/", views.home, name='home'),
+    # re_path(r'^sendmessage$', views.sendmessage, name ='sendmessage'),
+    path("", tutor_dashboard, name="tutor-dashboard"),
 ]
