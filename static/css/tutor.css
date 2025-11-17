@@ -278,6 +278,47 @@ body {
     font-weight: 600;
 }
 
+/* Expression mode (word problems to expressions) ----------------- */
+
+.expr-card {
+    margin-top: 32px;
+    background: #ffffff;
+    border-radius: 22px;
+    box-shadow: var(--shadow-soft);
+    padding: 20px 24px;
+    max-width: 520px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.expr-label {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.expr-input {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 12px;
+    border: 1px solid #ddd;
+    font-size: 14px;
+    outline: none;
+}
+
+.expr-input:focus {
+    border-color: #7b5cff;
+    box-shadow: 0 0 0 2px rgba(123, 92, 255, 0.15);
+}
+
+.expr-buttons {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+    justify-content: flex-end;
+}
+
+
 /* Modal buttons layout ----------------------------------------- */
 
 .modal-buttons {

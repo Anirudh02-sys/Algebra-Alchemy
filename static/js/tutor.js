@@ -1,4 +1,4 @@
-// ---------------------- LESSON 1: ISOLATING X (DRAG) ----------------------
+// ======================= LESSON 1: ISOLATING X (DRAG) =======================
 
 const isolatingEquations = [
     "2x - 3 = x + 4",
@@ -9,21 +9,17 @@ const isolatingEquations = [
 ];
 
 const isolatingProblems = isolatingEquations.map((eq) => {
-    const isolated = isolateEquation(eq);          // e.g. "3x - x = 10 - 2"
-    const tokens = equationToTokens(isolated);     // ["3x","-","x","=","10","-","2"]
-    return {
-        original: eq,
-        tokens,
-        correct: tokens,
-    };
+    const isolated = isolateEquation(eq);
+    const tokens = equationToTokens(isolated);
+    return { original: eq, tokens, correct: tokens };
 });
 
 let isolatingCurrentIndex = 0;
 let isolatingCorrectOrder = isolatingProblems[0].correct;
 let isolatingSolved = Array(isolatingProblems.length).fill(false);
-let isolatingScore = 0;   // number of isolating problems solved
+let isolatingScore = 0;
 
-// ---------------------- LESSON 2: SOLVING FOR X (MCQ) ----------------------
+// ======================= LESSON 2: SOLVING FOR X (MCQ) =======================
 
 const solvingProblems = [
     {
@@ -41,12 +37,7 @@ const solvingProblems = [
             },
             {
                 question: "What is the equation after simplifying the right-hand side?",
-                options: [
-                    "5x = 14",
-                    "5x = 10",
-                    "5x = 2",
-                    "x = 10"
-                ],
+                options: ["5x = 14", "5x = 10", "5x = 2", "x = 10"],
                 correctIndex: 1
             },
             {
@@ -61,12 +52,7 @@ const solvingProblems = [
             },
             {
                 question: "What does x equal?",
-                options: [
-                    "x = 10",
-                    "x = 1/2",
-                    "x = 2",
-                    "x = 5"
-                ],
+                options: ["x = 10", "x = 1/2", "x = 2", "x = 5"],
                 correctIndex: 2
             }
         ]
@@ -86,12 +72,7 @@ const solvingProblems = [
             },
             {
                 question: "What is the equation after simplifying the right-hand side?",
-                options: [
-                    "3x = 7",
-                    "3x = 15",
-                    "3x = -15",
-                    "x = 15"
-                ],
+                options: ["3x = 7", "3x = 15", "3x = -15", "x = 15"],
                 correctIndex: 1
             },
             {
@@ -106,12 +87,7 @@ const solvingProblems = [
             },
             {
                 question: "What does x equal?",
-                options: [
-                    "x = 3",
-                    "x = 4",
-                    "x = 5",
-                    "x = 15"
-                ],
+                options: ["x = 3", "x = 4", "x = 5", "x = 15"],
                 correctIndex: 2
             }
         ]
@@ -131,12 +107,7 @@ const solvingProblems = [
             },
             {
                 question: "What is the equation after simplifying the right-hand side?",
-                options: [
-                    "4x = 28",
-                    "4x = 16",
-                    "4x = 6",
-                    "x = 4"
-                ],
+                options: ["4x = 28", "4x = 16", "4x = 6", "x = 4"],
                 correctIndex: 1
             },
             {
@@ -151,12 +122,7 @@ const solvingProblems = [
             },
             {
                 question: "What does x equal?",
-                options: [
-                    "x = 2",
-                    "x = 3",
-                    "x = 4",
-                    "x = 8"
-                ],
+                options: ["x = 2", "x = 3", "x = 4", "x = 8"],
                 correctIndex: 2
             }
         ]
@@ -176,12 +142,7 @@ const solvingProblems = [
             },
             {
                 question: "What is the equation after simplifying the right-hand side?",
-                options: [
-                    "2x = 4",
-                    "2x = 14",
-                    "2x = -14",
-                    "x = 14"
-                ],
+                options: ["2x = 4", "2x = 14", "2x = -14", "x = 14"],
                 correctIndex: 1
             },
             {
@@ -196,12 +157,7 @@ const solvingProblems = [
             },
             {
                 question: "What does x equal?",
-                options: [
-                    "x = 9",
-                    "x = 5",
-                    "x = 7",
-                    "x = 2"
-                ],
+                options: ["x = 9", "x = 5", "x = 7", "x = 2"],
                 correctIndex: 2
             }
         ]
@@ -221,12 +177,7 @@ const solvingProblems = [
             },
             {
                 question: "What is the equation after simplifying the right-hand side?",
-                options: [
-                    "7x = 30",
-                    "7x = 28",
-                    "7x = 26",
-                    "x = 4"
-                ],
+                options: ["7x = 30", "7x = 28", "7x = 26", "x = 4"],
                 correctIndex: 1
             },
             {
@@ -241,12 +192,7 @@ const solvingProblems = [
             },
             {
                 question: "What does x equal?",
-                options: [
-                    "x = 3",
-                    "x = 4",
-                    "x = 7",
-                    "x = 28"
-                ],
+                options: ["x = 3", "x = 4", "x = 7", "x = 28"],
                 correctIndex: 1
             }
         ]
@@ -256,14 +202,43 @@ const solvingProblems = [
 let solvingCurrentProblemIndex = 0;
 let solvingCurrentStepIndex = 0;
 let solvingSolved = Array(solvingProblems.length).fill(false);
-let solvingScore = 0;   // number of equations fully completed
+let solvingScore = 0;
 
-// ---------------------- GLOBAL STATE ----------------------
+// ======================= LESSON 3: WORD → EXPRESSION =======================
 
-let currentMode = "isolating"; // "isolating" | "solving"
+const expressionProblems = [
+    {
+        prompt: "Five plus two times x equals fifteen.",
+        answer: "5 + 2x = 15"
+    },
+    {
+        prompt: "Three times a number minus four equals eleven.",
+        answer: "3x - 4 = 11"
+    },
+    {
+        prompt: "Seven more than four times x is twenty-three.",
+        answer: "4x + 7 = 23"
+    },
+    {
+        prompt: "Nine less than five times x equals sixteen.",
+        answer: "5x - 9 = 16"
+    },
+    {
+        prompt: "Twice a number plus six equals twenty.",
+        answer: "2x + 6 = 20"
+    }
+];
+
+let exprCurrentIndex = 0;
+let exprSolved = Array(expressionProblems.length).fill(false);
+let exprScore = 0;
+
+// ======================= GLOBAL STATE =======================
+
+let currentMode = "isolating"; // "isolating" | "solving" | "expressions";
 let draggedElement = null;
 
-// ---------------------- GENERIC HELPERS ----------------------
+// ======================= GENERIC HELPERS =======================
 
 function shuffle(array) {
     const arr = [...array];
@@ -274,7 +249,6 @@ function shuffle(array) {
     return arr;
 }
 
-// Turn "3x - x = 10 - 2" into ["3x","-","x","=","10","-","2"]
 function equationToTokens(eq) {
     return eq.replace(/\s+/g, " ").trim().split(" ");
 }
@@ -293,58 +267,43 @@ function flipSign(term) {
 function parseSide(side) {
     side = side.replace(/\s+/g, "");
     const chunks = side.match(/[+-]?[^+-]+/g) || [];
-
     const xTerms = [];
     const constTerms = [];
-
     chunks.forEach(ch => {
-        if (ch.includes("x")) {
-            xTerms.push(ch);
-        } else {
-            constTerms.push(ch);
-        }
+        if (ch.includes("x")) xTerms.push(ch);
+        else constTerms.push(ch);
     });
-
     return { xTerms, constTerms };
 }
 
 function joinTerms(terms) {
     if (terms.length === 0) return "0";
-
-    return terms.map((t, i) => {
-        let sign = "+";
-        let body = t;
-
-        if (t.startsWith("-")) {
-            sign = "-";
-            body = t.slice(1);
-        } else if (t.startsWith("+")) {
-            body = t.slice(1);
-        }
-
-        if (i === 0) {
-            return sign === "-" ? `-${body}` : body;
-        } else {
-            return ` ${sign} ${body}`;
-        }
-    }).join("");
+    return terms
+        .map((t, i) => {
+            let sign = "+";
+            let body = t;
+            if (t.startsWith("-")) {
+                sign = "-";
+                body = t.slice(1);
+            } else if (t.startsWith("+")) {
+                body = t.slice(1);
+            }
+            if (i === 0) {
+                return sign === "-" ? `-${body}` : body;
+            } else {
+                return ` ${sign} ${body}`;
+            }
+        })
+        .join("");
 }
 
-// Given "3x + 2 = x + 10" return "3x - x = 10 - 2"
 function isolateEquation(equation) {
     const [leftRaw, rightRaw] = equation.split("=");
     const left = parseSide(leftRaw);
     const right = parseSide(rightRaw);
 
-    const xTerms = [
-        ...left.xTerms,
-        ...right.xTerms.map(flipSign)
-    ];
-
-    const constTerms = [
-        ...right.constTerms,
-        ...left.constTerms.map(flipSign)
-    ];
+    const xTerms = [...left.xTerms, ...right.xTerms.map(flipSign)];
+    const constTerms = [...right.constTerms, ...left.constTerms.map(flipSign)];
 
     const leftStr = joinTerms(xTerms);
     const rightStr = joinTerms(constTerms);
@@ -352,7 +311,15 @@ function isolateEquation(equation) {
     return `${leftStr} = ${rightStr}`;
 }
 
-// ---------------------- ISOLATING MODE (DRAG) ----------------------
+// normalize equations so "5+2x=15" and "5 + 2x = 15" match
+function normalizeEquation(str) {
+    return str
+        .toLowerCase()
+        .replace(/\s+/g, "")
+        .replace(/−/g, "-");
+}
+
+// ======================= ISOLATING MODE (DRAG) =======================
 
 function loadIsolatingProblem(index) {
     const problem = isolatingProblems[index];
@@ -407,16 +374,18 @@ function addChipDragHandlers(chip) {
 
 function getDragAfterElement(container, x) {
     const draggableElements = [...container.querySelectorAll(".chip:not(.dragging)")];
-
-    return draggableElements.reduce((closest, child) => {
-        const box = child.getBoundingClientRect();
-        const offset = x - box.left - box.width / 2;
-        if (offset < 0 && offset > closest.offset) {
-            return { offset: offset, element: child };
-        } else {
-            return closest;
-        }
-    }, { offset: Number.NEGATIVE_INFINITY, element: null }).element;
+    return draggableElements.reduce(
+        (closest, child) => {
+            const box = child.getBoundingClientRect();
+            const offset = x - box.left - box.width / 2;
+            if (offset < 0 && offset > closest.offset) {
+                return { offset: offset, element: child };
+            } else {
+                return closest;
+            }
+        },
+        { offset: Number.NEGATIVE_INFINITY, element: null }
+    ).element;
 }
 
 function setupContainerDnD() {
@@ -494,7 +463,7 @@ function checkIsolatingCorrect() {
     }
 }
 
-// ---------------------- SOLVING MODE (MCQ) ----------------------
+// ======================= SOLVING MODE (MCQ) =======================
 
 function loadSolvingProblem(index) {
     solvingCurrentProblemIndex = index;
@@ -569,11 +538,9 @@ function setupMcqNextButton() {
         const problem = solvingProblems[solvingCurrentProblemIndex];
 
         if (solvingCurrentStepIndex < problem.steps.length - 1) {
-            // next step within same equation
             solvingCurrentStepIndex++;
             renderCurrentSolvingStep();
         } else {
-            // finished this equation
             if (!solvingSolved[solvingCurrentProblemIndex]) {
                 solvingSolved[solvingCurrentProblemIndex] = true;
                 solvingScore += 1;
@@ -585,7 +552,6 @@ function setupMcqNextButton() {
                 solvingCurrentStepIndex = 0;
                 renderCurrentSolvingStep();
             } else {
-                // all solving problems done
                 const feedback = document.getElementById("mcq-feedback");
                 feedback.textContent = "You finished all Solving for X problems! 🎉";
                 feedback.classList.add("correct");
@@ -595,7 +561,82 @@ function setupMcqNextButton() {
     });
 }
 
-// ---------------------- SHARED UI: PROGRESS, PAGINATION, MODAL ----------------------
+// ======================= EXPRESSIONS MODE (INPUT) =======================
+
+function loadExpressionProblem(index) {
+    exprCurrentIndex = index;
+    const problem = expressionProblems[index];
+
+    const promptEl = document.getElementById("expr-prompt");
+    const inputEl = document.getElementById("expr-input");
+    const feedback = document.getElementById("expr-feedback");
+    const checkBtn = document.getElementById("expr-check");
+    const nextBtn = document.getElementById("expr-next");
+
+    promptEl.textContent = problem.prompt;
+    inputEl.value = "";
+    inputEl.focus();
+
+    feedback.textContent = "";
+    feedback.classList.remove("correct");
+    checkBtn.disabled = false;
+    nextBtn.style.display = exprSolved[index] ? "inline-flex" : "none";
+
+    updateProgressUI();
+}
+
+function setupExpressionButtons() {
+    const checkBtn = document.getElementById("expr-check");
+    const nextBtn = document.getElementById("expr-next");
+    const inputEl = document.getElementById("expr-input");
+
+    if (!checkBtn || !nextBtn || !inputEl) return;
+
+    checkBtn.addEventListener("click", () => {
+        if (currentMode !== "expressions") return;
+
+        const problem = expressionProblems[exprCurrentIndex];
+        const user = normalizeEquation(inputEl.value);
+        const correct = normalizeEquation(problem.answer);
+
+        const feedback = document.getElementById("expr-feedback");
+
+        if (!user) {
+            feedback.textContent = "Type your equation first.";
+            feedback.classList.remove("correct");
+            return;
+        }
+
+        if (user === correct) {
+            feedback.textContent = "Correct! 🎉";
+            feedback.classList.add("correct");
+            checkBtn.disabled = true;
+            nextBtn.style.display = "inline-flex";
+
+            if (!exprSolved[exprCurrentIndex]) {
+                exprSolved[exprCurrentIndex] = true;
+                exprScore += 1;
+                updateProgressUI();
+            }
+        } else {
+            feedback.textContent = "Not quite. Check your signs and order.";
+            feedback.classList.remove("correct");
+        }
+    });
+
+    nextBtn.addEventListener("click", () => {
+        if (exprCurrentIndex < expressionProblems.length - 1) {
+            loadExpressionProblem(exprCurrentIndex + 1);
+        } else {
+            const feedback = document.getElementById("expr-feedback");
+            feedback.textContent = "You finished all word problems! 🎉";
+            feedback.classList.add("correct");
+            nextBtn.style.display = "none";
+        }
+    });
+}
+
+// ======================= SHARED UI: PROGRESS, PAGINATION, MODAL =======================
 
 function updatePagination(index) {
     const currentPageNumber = index + 1;
@@ -613,29 +654,37 @@ function updateProgressUI() {
     const summary = document.getElementById("progress-summary");
     const isolatingElem = document.getElementById("isolating-progress");
     const solvingElem = document.getElementById("solving-progress");
+    const exprElem = document.getElementById("expressions-progress");
     const stars = document.querySelectorAll(".star-indicator");
 
-    // Top-left lesson percentages (always kept in sync)
     if (isolatingElem) {
-        const percentIso = Math.round((isolatingScore / isolatingProblems.length) * 100);
-        isolatingElem.textContent = `${percentIso}%`;
+        const p = Math.round((isolatingScore / isolatingProblems.length) * 100);
+        isolatingElem.textContent = `${p}%`;
     }
     if (solvingElem) {
-        const percentSol = Math.round((solvingScore / solvingProblems.length) * 100);
-        solvingElem.textContent = `${percentSol}%`;
+        const p = Math.round((solvingScore / solvingProblems.length) * 100);
+        solvingElem.textContent = `${p}%`;
+    }
+    if (exprElem) {
+        const p = Math.round((exprScore / expressionProblems.length) * 100);
+        exprElem.textContent = `${p}%`;
     }
 
-    // Bottom bar reflects the *current* lesson
     let label, done, total;
     if (currentMode === "isolating") {
         label = "Isolating X-Terms";
         done = isolatingScore;
         total = isolatingProblems.length;
-    } else {
+    } else if (currentMode === "solving") {
         label = "Solving for X";
         done = solvingScore;
         total = solvingProblems.length;
+    } else {
+        label = "Word Problems to Expressions";
+        done = exprScore;
+        total = expressionProblems.length;
     }
+
     const xp = done * 10;
     summary.textContent = `${label}: ${done}/${total} · XP: ${xp}`;
 
@@ -647,6 +696,8 @@ function updateProgressUI() {
 
 function setupNextButton() {
     const nextBtn = document.getElementById("next-problem");
+    if (!nextBtn) return;
+
     nextBtn.addEventListener("click", () => {
         if (currentMode !== "isolating") return;
 
@@ -691,17 +742,19 @@ function setupCompletionModal() {
     }
 }
 
-// ---------------------- LESSON MODE SWITCHING ----------------------
+// ======================= LESSON MODE SWITCHING =======================
 
 function activateIsolatingLesson() {
     currentMode = "isolating";
     const dragMode = document.getElementById("drag-mode");
     const mcqMode = document.getElementById("mcq-mode");
+    const exprMode = document.getElementById("expression-mode");
     const label = document.getElementById("workspace-label");
 
-    if (dragMode) dragMode.classList.remove("hidden");
-    if (mcqMode) mcqMode.classList.add("hidden");
-    if (label) label.textContent = "DRAG TO ISOLATE X";
+    dragMode.classList.remove("hidden");
+    mcqMode.classList.add("hidden");
+    exprMode.classList.add("hidden");
+    label.textContent = "DRAG TO ISOLATE X";
 
     loadIsolatingProblem(isolatingCurrentIndex);
 }
@@ -710,46 +763,70 @@ function activateSolvingLesson() {
     currentMode = "solving";
     const dragMode = document.getElementById("drag-mode");
     const mcqMode = document.getElementById("mcq-mode");
+    const exprMode = document.getElementById("expression-mode");
     const label = document.getElementById("workspace-label");
 
-    if (dragMode) dragMode.classList.add("hidden");
-    if (mcqMode) mcqMode.classList.remove("hidden");
-    if (label) label.textContent = "SOLVING FOR X";
+    dragMode.classList.add("hidden");
+    mcqMode.classList.remove("hidden");
+    exprMode.classList.add("hidden");
+    label.textContent = "SOLVING FOR X";
 
     loadSolvingProblem(solvingCurrentProblemIndex);
+}
+
+function activateExpressionLesson() {
+    currentMode = "expressions";
+    const dragMode = document.getElementById("drag-mode");
+    const mcqMode = document.getElementById("mcq-mode");
+    const exprMode = document.getElementById("expression-mode");
+    const label = document.getElementById("workspace-label");
+
+    dragMode.classList.add("hidden");
+    mcqMode.classList.add("hidden");
+    exprMode.classList.remove("hidden");
+    label.textContent = "WORD PROBLEMS TO EXPRESSIONS";
+
+    loadExpressionProblem(exprCurrentIndex);
 }
 
 function setupLessonClicks() {
     const workspace = document.querySelector(".workspace-wrapper");
     const isolatingItem = document.getElementById("lesson-isolating");
     const solvingItem = document.getElementById("lesson-solving");
+    const exprItem = document.getElementById("lesson-expressions");
 
     if (isolatingItem) {
         isolatingItem.addEventListener("click", () => {
-            if (workspace) {
-                workspace.scrollIntoView({ behavior: "smooth", block: "center" });
-            }
-
+            workspace.scrollIntoView({ behavior: "smooth", block: "center" });
             isolatingItem.classList.add("active-lesson");
-            if (solvingItem) solvingItem.classList.remove("active-lesson");
+            solvingItem && solvingItem.classList.remove("active-lesson");
+            exprItem && exprItem.classList.remove("active-lesson");
             activateIsolatingLesson();
         });
     }
 
     if (solvingItem) {
         solvingItem.addEventListener("click", () => {
-            if (workspace) {
-                workspace.scrollIntoView({ behavior: "smooth", block: "center" });
-            }
-
+            workspace.scrollIntoView({ behavior: "smooth", block: "center" });
             solvingItem.classList.add("active-lesson");
-            if (isolatingItem) isolatingItem.classList.remove("active-lesson");
+            isolatingItem && isolatingItem.classList.remove("active-lesson");
+            exprItem && exprItem.classList.remove("active-lesson");
             activateSolvingLesson();
+        });
+    }
+
+    if (exprItem) {
+        exprItem.addEventListener("click", () => {
+            workspace.scrollIntoView({ behavior: "smooth", block: "center" });
+            exprItem.classList.add("active-lesson");
+            isolatingItem && isolatingItem.classList.remove("active-lesson");
+            solvingItem && solvingItem.classList.remove("active-lesson");
+            activateExpressionLesson();
         });
     }
 }
 
-// ---------------------- INIT ----------------------
+// ======================= INIT =======================
 
 document.addEventListener("DOMContentLoaded", () => {
     setupContainerDnD();
@@ -757,5 +834,6 @@ document.addEventListener("DOMContentLoaded", () => {
     setupCompletionModal();
     setupLessonClicks();
     setupMcqNextButton();
+    setupExpressionButtons();
     activateIsolatingLesson();  // start in drag mode
 });

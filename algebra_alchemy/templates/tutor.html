@@ -91,17 +91,18 @@
                         <div class="lesson-progress" id="solving-progress">0%</div>
                     </li>
 
-
-                    <li class="lesson-item">
+                    <!-- Word Problems to Expressions -->
+                    <li class="lesson-item clickable" id="lesson-expressions">
                         <div class="lesson-main">
                             <span class="lesson-star">☆</span>
                             <div>
-                                <div class="lesson-text-title">Reducing Fractions</div>
-                                <div class="lesson-text-subtitle">Menu description.</div>
+                                <div class="lesson-text-title">Word Problems to Expressions</div>
+                                <div class="lesson-text-subtitle">Turn words into equations.</div>
                             </div>
                         </div>
-                        <div class="lesson-progress">92%</div>
+                        <div class="lesson-progress" id="expressions-progress">0%</div>
                     </li>
+
 
                     <li class="lesson-item">
                         <div class="lesson-main">
@@ -128,15 +129,11 @@
             <!-- RIGHT: WORKSPACE -->
             <section class="workspace-wrapper">
                 <div class="workspace-label" id="workspace-label">DRAG TO ISOLATE X</div>
-
+                        
                 <!-- Drag-and-drop mode (Isolating X-Terms) -->
                 <div id="drag-mode">
                     <div id="original-equation" class="original-equation"></div>
-                
-                    <div id="chip-container" class="workspace-chips">
-                        <!-- chips injected by JS -->
-                    </div>
-                
+                    <div id="chip-container" class="workspace-chips"></div>
                     <div id="status-message" class="status-message"></div>
                 </div>
             
@@ -151,6 +148,31 @@
                         <button id="mcq-next-step" class="next-btn" disabled>
                             Next step →
                         </button>
+                    </div>
+                </div>
+            
+                <!-- Expression mode (Word problems to expressions) -->
+                <div id="expression-mode" class="hidden">
+                    <div id="expr-prompt" class="original-equation"></div>
+                
+                    <div class="expr-card">
+                        <div class="expr-label">Type the algebraic equation:</div>
+                        <input
+                            id="expr-input"
+                            type="text"
+                            class="expr-input"
+                            autocomplete="off"
+                            placeholder="e.g. 5 + 2x = 15"
+                        />
+                        <div id="expr-feedback" class="mcq-feedback"></div>
+                        <div class="expr-buttons">
+                            <button id="expr-check" class="next-btn">
+                                Check
+                            </button>
+                            <button id="expr-next" class="next-btn" style="display:none;">
+                                Next expression →
+                            </button>
+                        </div>
                     </div>
                 </div>
             </section>
