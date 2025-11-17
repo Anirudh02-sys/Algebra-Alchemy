@@ -78,7 +78,7 @@
                         </div>
                         <div class="lesson-progress" id="isolating-progress">0%</div>
                     </li>
-
+                
                     <!-- Solving for X -->
                     <li class="lesson-item clickable" id="lesson-solving">
                         <div class="lesson-main">
@@ -88,8 +88,9 @@
                                 <div class="lesson-text-subtitle">Menu description.</div>
                             </div>
                         </div>
-                        <div class="lesson-progress">78%</div>
+                        <div class="lesson-progress" id="solving-progress">0%</div>
                     </li>
+
 
                     <li class="lesson-item">
                         <div class="lesson-main">
@@ -126,16 +127,34 @@
 
             <!-- RIGHT: WORKSPACE -->
             <section class="workspace-wrapper">
-                <div class="workspace-label">DRAG TO ISOLATE X</div>
+                <div class="workspace-label" id="workspace-label">DRAG TO ISOLATE X</div>
 
-                <div id="original-equation" class="original-equation"></div>
-
-                <div id="chip-container" class="workspace-chips">
-                    <!-- chips injected by JS -->
+                <!-- Drag-and-drop mode (Isolating X-Terms) -->
+                <div id="drag-mode">
+                    <div id="original-equation" class="original-equation"></div>
+                
+                    <div id="chip-container" class="workspace-chips">
+                        <!-- chips injected by JS -->
+                    </div>
+                
+                    <div id="status-message" class="status-message"></div>
                 </div>
-
-                <div id="status-message" class="status-message"></div>
+            
+                <!-- MCQ mode (Solving for X) -->
+                <div id="mcq-mode" class="hidden">
+                    <div id="mcq-original" class="original-equation"></div>
+                
+                    <div class="mcq-card">
+                        <div id="mcq-question" class="mcq-question"></div>
+                        <div id="mcq-options" class="mcq-options"></div>
+                        <div id="mcq-feedback" class="mcq-feedback"></div>
+                        <button id="mcq-next-step" class="next-btn" disabled>
+                            Next step →
+                        </button>
+                    </div>
+                </div>
             </section>
+
         </section>
 
         <!-- BOTTOM AREA -->

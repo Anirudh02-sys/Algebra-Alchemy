@@ -217,6 +217,69 @@ body {
     font-weight: 700;
 }
 
+/* MCQ mode ------------------------------------------------------ */
+
+.mcq-card {
+    margin-top: 32px;
+    background: #ffffff;
+    border-radius: 22px;
+    box-shadow: var(--shadow-soft);
+    padding: 20px 24px;
+    max-width: 520px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.mcq-question {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+.mcq-options {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.mcq-option {
+    padding: 8px 12px;
+    border-radius: 12px;
+    border: 1px solid #ddd;
+    background: #ffffff;
+    text-align: left;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.mcq-option:hover {
+    background: #f5f4ff;
+}
+
+.mcq-option.mcq-correct {
+    border-color: #1a7f3c;
+    background: #e6f6ec;
+}
+
+.mcq-option.mcq-incorrect {
+    border-color: #c0392b;
+    background: #fdecea;
+}
+
+.mcq-feedback {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+}
+
+.mcq-feedback.correct {
+    color: #1a7f3c;
+    font-weight: 600;
+}
+
+/* Modal buttons layout ----------------------------------------- */
+
 .modal-buttons {
     display: flex;
     gap: 10px;
@@ -424,6 +487,10 @@ body {
 }
 
 .completion-overlay.hidden {
+    display: none;
+}
+
+.hidden {
     display: none;
 }
 
