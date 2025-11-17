@@ -1138,5 +1138,41 @@ document.addEventListener("DOMContentLoaded", () => {
     setupLessonClicks();
     setupMcqNextButton();
     setupExpressionButtons();
+    setupProgressPopup();
     activateIsolatingLesson(); // start in drag mode
 });
+
+function setupProgressPopup() {
+    const trigger = document.getElementById("sidebar-progress");
+    const overlay = document.getElementById("progress-overlay");
+
+    if (!trigger || !overlay) return;
+
+    const hide = () => {
+        overlay.classList.add("hidden");
+        overlay.classList.remove("active");
+    };
+
+    const show = () => {
+        overlay.classList.remove("hidden");
+        overlay.classList.add("active");
+    };
+
+    trigger.addEventListener("click", (e) => {
+        e.preventDefault();
+        if (overlay.classList.contains("active")) {
+            hide();
+        } else {
+            show();
+        }
+    });
+
+    overlay.addEventListener("click", (e) => {
+        if (e.target === overlay || e.target.classList.contains("progress-backdrop")) {
+            hide();
+        }
+    });
+
+    // start hidden
+    hide();
+}

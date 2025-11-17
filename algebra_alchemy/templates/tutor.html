@@ -30,7 +30,7 @@
                 <span>Learn</span>
             </a>
 
-            <a href="{% url 'current-progress' %}" class="nav-item {% if active_page == 'progress' %}active{% endif %}">
+            <a href="#" id="sidebar-progress" class="nav-item {% if active_page == 'progress' %}active{% endif %}">
                 <div class="nav-icon-circle">★</div>
                 <span>Current<br>Progress</span>
             </a>
@@ -58,78 +58,8 @@
             </div>
         </header>
 
-        <section class="content-row">
-            <!-- LEFT: LESSON CARD -->
-            <article class="lesson-card">
-                <div class="lesson-card-header">
-                    <div class="lesson-card-title-label">Learn Simple Algebra</div>
-                    <div class="lesson-card-title-main">Reducing Equations: Lesson 1</div>
-                </div>
-
-                <ul class="lesson-list">
-                    <!-- Isolating X-Terms -->
-                    <li class="lesson-item clickable active-lesson" id="lesson-isolating">
-                        <div class="lesson-main">
-                            <span class="lesson-star">☆</span>
-                            <div>
-                                <div class="lesson-text-title">Isolating X-Terms</div>
-                                <div class="lesson-text-subtitle">Menu description.</div>
-                            </div>
-                        </div>
-                        <div class="lesson-progress" id="isolating-progress">0%</div>
-                    </li>
-                
-                    <!-- Solving for X -->
-                    <li class="lesson-item clickable" id="lesson-solving">
-                        <div class="lesson-main">
-                            <span class="lesson-star">☆</span>
-                            <div>
-                                <div class="lesson-text-title">Solving for X</div>
-                                <div class="lesson-text-subtitle">Menu description.</div>
-                            </div>
-                        </div>
-                        <div class="lesson-progress" id="solving-progress">0%</div>
-                    </li>
-
-                    <!-- Word Problems to Expressions -->
-                    <li class="lesson-item clickable" id="lesson-expressions">
-                        <div class="lesson-main">
-                            <span class="lesson-star">☆</span>
-                            <div>
-                                <div class="lesson-text-title">Word Problems to Expressions</div>
-                                <div class="lesson-text-subtitle">Turn words into equations.</div>
-                            </div>
-                        </div>
-                        <div class="lesson-progress" id="expressions-progress">0%</div>
-                    </li>
-
-                    <!-- Practice Level Up Test 1 -->
-                    <li class="lesson-item clickable" id="lesson-practice1">
-                        <div class="lesson-main">
-                            <span class="lesson-star">☆</span>
-                            <div>
-                                <div class="lesson-text-title">Practice Level Up Test 1</div>
-                                <div class="lesson-text-subtitle">Feeling confident?</div>
-                            </div>
-                        </div>
-                        <div class="lesson-progress" id="practice1-progress">0%</div>
-                    </li>
-
-                    <!-- Practice Level Up Test 2 -->
-                    <li class="lesson-item clickable" id="lesson-practice2">
-                        <div class="lesson-main">
-                            <span class="lesson-star">☆</span>
-                            <div>
-                                <div class="lesson-text-title">Practice Level Up Test 2</div>
-                                <div class="lesson-text-subtitle">Test out to next level!</div>
-                            </div>
-                        </div>
-                        <div class="lesson-progress" id="practice2-progress">0%</div>
-                    </li>
-                </ul>
-            </article>
-
-            <!-- RIGHT: WORKSPACE -->
+        <section class="content-row progress-hidden" id="main-content-row">
+            <!-- WORKSPACE -->
             <section class="workspace-wrapper">
                 <div class="workspace-label" id="workspace-label">DRAG TO ISOLATE X</div>
 
@@ -218,6 +148,74 @@
         </section>
 
     </main>
+</div>
+
+<!-- PROGRESS POPUP -->
+<div id="progress-overlay" class="progress-overlay hidden">
+    <div class="progress-backdrop"></div>
+    <div class="progress-modal">
+        <div class="progress-modal-inner">
+            <div class="lesson-card-title-label">Learn Simple Algebra</div>
+            <div class="lesson-card-title-main">Reducing Equations: Lesson 1</div>
+
+            <ul class="lesson-list">
+                <li class="lesson-item clickable active-lesson" id="lesson-isolating">
+                    <div class="lesson-main">
+                        <span class="lesson-star">☆</span>
+                        <div>
+                            <div class="lesson-text-title">Isolating X-Terms</div>
+                            <div class="lesson-text-subtitle">Menu description.</div>
+                        </div>
+                    </div>
+                    <div class="lesson-progress" id="isolating-progress">0%</div>
+                </li>
+            
+                <li class="lesson-item clickable" id="lesson-solving">
+                    <div class="lesson-main">
+                        <span class="lesson-star">☆</span>
+                        <div>
+                            <div class="lesson-text-title">Solving for X</div>
+                            <div class="lesson-text-subtitle">Menu description.</div>
+                        </div>
+                    </div>
+                    <div class="lesson-progress" id="solving-progress">0%</div>
+                </li>
+
+                <li class="lesson-item clickable" id="lesson-expressions">
+                    <div class="lesson-main">
+                        <span class="lesson-star">☆</span>
+                        <div>
+                            <div class="lesson-text-title">Word Problems to Expressions</div>
+                            <div class="lesson-text-subtitle">Turn words into equations.</div>
+                        </div>
+                    </div>
+                    <div class="lesson-progress" id="expressions-progress">0%</div>
+                </li>
+
+                <li class="lesson-item clickable" id="lesson-practice1">
+                    <div class="lesson-main">
+                        <span class="lesson-star">☆</span>
+                        <div>
+                            <div class="lesson-text-title">Practice Level Up Test 1</div>
+                            <div class="lesson-text-subtitle">Feeling confident?</div>
+                        </div>
+                    </div>
+                    <div class="lesson-progress" id="practice1-progress">0%</div>
+                </li>
+
+                <li class="lesson-item clickable" id="lesson-practice2">
+                    <div class="lesson-main">
+                        <span class="lesson-star">☆</span>
+                        <div>
+                            <div class="lesson-text-title">Practice Level Up Test 2</div>
+                            <div class="lesson-text-subtitle">Test out to next level!</div>
+                        </div>
+                    </div>
+                    <div class="lesson-progress" id="practice2-progress">0%</div>
+                </li>
+            </ul>
+        </div>
+    </div>
 </div>
 
 <div id="completion-overlay" class="completion-overlay hidden">
