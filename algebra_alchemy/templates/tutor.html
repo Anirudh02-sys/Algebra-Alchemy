@@ -1,0 +1,197 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Algebra Alchemy – Tutor</title>
+
+    <!-- external CSS -->
+    <link rel="stylesheet" href="{% static 'css/tutor.css' %}">
+</head>
+<body>
+<div class="app-shell">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <div class="sidebar-top">
+            <div class="nav-icon-circle">
+                👤
+            </div>
+        </div>
+
+        <div class="nav-section">
+            <div class="nav-item">
+                <div class="nav-icon-circle outline">
+                    ☰
+                </div>
+            </div>
+
+            <div class="nav-item active">
+                <div class="nav-icon-circle">✏️</div>
+                <span>Learn</span>
+            </div>
+
+            <div class="nav-item">
+                <div class="nav-icon-circle">★</div>
+                <span>Current<br>Progress</span>
+            </div>
+
+            <div class="nav-item">
+                <div class="nav-icon-circle">📊</div>
+                <span>Learning<br>Graph</span>
+            </div>
+
+            <div class="nav-item">
+                <div class="nav-icon-circle">📅</div>
+                <span>Calendar</span>
+            </div>
+        </div>
+
+        <div class="sidebar-spacer"></div>
+    </aside>
+
+    <!-- MAIN AREA -->
+    <main class="main-area">
+        <header class="top-bar">
+            <div>
+                <div class="top-title">Algebra Alchemy</div>
+                <div class="top-subtitle">Reducing Equations: Lesson 1</div>
+            </div>
+        </header>
+
+        <section class="content-row">
+            <!-- LEFT: LESSON CARD -->
+            <article class="lesson-card">
+                <div class="lesson-card-header">
+                    <div class="lesson-card-title-label">Learn Simple Algebra</div>
+                    <div class="lesson-card-title-main">Reducing Equations: Lesson 1</div>
+                </div>
+
+                <ul class="lesson-list">
+                    <!-- Isolating X-Terms -->
+                    <li class="lesson-item clickable active-lesson" id="lesson-isolating">
+                        <div class="lesson-main">
+                            <span class="lesson-star">☆</span>
+                            <div>
+                                <div class="lesson-text-title">Isolating X-Terms</div>
+                                <div class="lesson-text-subtitle">Menu description.</div>
+                            </div>
+                        </div>
+                        <div class="lesson-progress" id="isolating-progress">0%</div>
+                    </li>
+
+                    <!-- Solving for X -->
+                    <li class="lesson-item clickable" id="lesson-solving">
+                        <div class="lesson-main">
+                            <span class="lesson-star">☆</span>
+                            <div>
+                                <div class="lesson-text-title">Solving for X</div>
+                                <div class="lesson-text-subtitle">Menu description.</div>
+                            </div>
+                        </div>
+                        <div class="lesson-progress">78%</div>
+                    </li>
+
+                    <li class="lesson-item">
+                        <div class="lesson-main">
+                            <span class="lesson-star">☆</span>
+                            <div>
+                                <div class="lesson-text-title">Reducing Fractions</div>
+                                <div class="lesson-text-subtitle">Menu description.</div>
+                            </div>
+                        </div>
+                        <div class="lesson-progress">92%</div>
+                    </li>
+
+                    <li class="lesson-item">
+                        <div class="lesson-main">
+                            <span class="lesson-star">☆</span>
+                            <div>
+                                <div class="lesson-text-title">Practice Level Up Test 1</div>
+                                <div class="lesson-text-subtitle">Feeling confident?</div>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li class="lesson-item">
+                        <div class="lesson-main">
+                            <span class="lesson-star">☆</span>
+                            <div>
+                                <div class="lesson-text-title">Practice Level Up Test 2</div>
+                                <div class="lesson-text-subtitle">Test out to next level!</div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </article>
+
+            <!-- RIGHT: WORKSPACE -->
+            <section class="workspace-wrapper">
+                <div class="workspace-label">DRAG TO ISOLATE X</div>
+
+                <div id="original-equation" class="original-equation"></div>
+
+                <div id="chip-container" class="workspace-chips">
+                    <!-- chips injected by JS -->
+                </div>
+
+                <div id="status-message" class="status-message"></div>
+            </section>
+        </section>
+
+        <!-- BOTTOM AREA -->
+        <section class="bottom-area">
+            <div id="progress-summary" class="progress-summary">
+                Score: 0/5 · XP: 0
+            </div>
+        
+            <div class="star-row">
+                <span class="star-indicator">★</span>
+                <span class="star-indicator">★</span>
+                <span class="star-indicator">★</span>
+                <span class="star-indicator">★</span>
+                <span class="star-indicator">★</span>
+            </div>
+        
+            <button class="drag-cta">
+                <span class="drag-cta-icon">✔</span>
+                <span>Drag and drop to isolate X terms</span>
+            </button>
+        
+            <button id="next-problem" class="next-btn" style="display:none;">
+                Next problem →
+            </button>
+        
+            <div class="pagination">
+                <div class="page active" data-page="1">1</div>
+                <div class="page inactive" data-page="2">2</div>
+                <div class="page inactive" data-page="3">3</div>
+                <div class="page inactive" data-page="4">4</div>
+                <div class="page inactive" data-page="5">5</div>
+            </div>
+        </section>
+
+    </main>
+</div>
+
+<div id="completion-overlay" class="completion-overlay hidden">
+    <div class="completion-modal">
+        <h2>Nice work! 🎓</h2>
+        <p>You’ve finished all the problems.</p>
+        <p id="completion-stats"></p>
+        <div class="modal-buttons">
+            <button id="next-lesson" class="next-btn secondary-btn">
+                Next lesson: Solving for X →
+            </button>
+            <button id="close-modal" class="next-btn">
+                Close
+            </button>
+        </div>
+    </div>
+</div>
+
+
+<!-- external JS -->
+<script src="{% static 'js/tutor.js' %}"></script>
+
+</body>
+</html>
