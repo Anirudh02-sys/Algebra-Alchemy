@@ -34,4 +34,16 @@ from django.shortcuts import render, redirect, get_object_or_404
 
 def tutor_dashboard(request):
     # client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
-    return render(request, "tutor.html")
+    return render(request, "tutor.html", {"active_page": "learn"})
+
+
+def current_progress(request):
+    return render(request, "current_progress.html", {"active_page": "progress"})
+
+
+def learning_graph(request):
+    return render(request, "learning_graph.html", {"active_page": "graph"})
+
+
+def calendar_view(request):
+    return render(request, "calendar.html", {"active_page": "calendar"})

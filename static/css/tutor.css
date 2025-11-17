@@ -73,6 +73,7 @@ body {
     color: #666;
     cursor: pointer;
     text-align: center;
+    text-decoration: none;
 }
 
 .nav-item.active .nav-icon-circle {
@@ -125,6 +126,171 @@ body {
     grid-template-columns: minmax(260px, 340px) minmax(360px, 1fr);
     gap: 40px;
     align-items: flex-start;
+}
+
+.content-single {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.page-card {
+    background: var(--card-bg);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-soft);
+    padding: 24px 26px;
+}
+
+.page-card-title {
+    font-size: 20px;
+    font-weight: 800;
+    margin-bottom: 6px;
+}
+
+.page-card-body {
+    color: var(--text-muted);
+    font-size: 14px;
+    line-height: 1.55;
+    margin-bottom: 12px;
+    font-weight: 400;
+}
+
+.page-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--purple);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.page-cta:hover {
+    text-decoration: underline;
+}
+
+.calendar {
+    margin: 14px auto 0;
+    border: 1px solid #e5e5e5;
+    border-radius: 16px;
+    overflow: hidden;
+    background: #fff;
+    max-width: 1040px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.05);
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    background: #f7f6ff;
+    border-bottom: 1px solid #ece8ff;
+}
+
+.calendar-month {
+    font-weight: 700;
+    font-size: 15px;
+}
+
+.calendar-year {
+    color: var(--text-muted);
+    font-size: 13px;
+}
+
+.calendar-weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    padding: 12px 12px 10px;
+    gap: 12px;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    text-align: center;
+    border-bottom: 1px solid #ececec;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 12px;
+    padding: 12px;
+    background: #f8f8fb;
+}
+
+.calendar-day {
+    min-height: 110px;
+    border: 1px solid transparent;
+    padding: 12px 14px;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    position: relative;
+    box-shadow: inset 0 0 0 1px #ececf3;
+    border-radius: 12px;
+}
+
+.calendar-day.muted {
+    color: #b8b8b8;
+    background: #fbfbfb;
+}
+
+.calendar-day.today {
+    border-color: var(--purple);
+    box-shadow: 0 0 0 2px rgba(93, 41, 238, 0.12);
+}
+
+.calendar-day .date {
+    font-weight: 700;
+    font-size: 13px;
+    text-align: right;
+}
+
+.calendar .event {
+    font-size: 11px;
+    line-height: 1.3;
+    color: #222;
+}
+
+.calendar .chip {
+    display: inline-flex;
+    align-items: center;
+    padding: 5px 8px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 11px;
+    color: #fff;
+    width: fit-content;
+    box-shadow: none;
+    margin-top: 4px;
+}
+
+.calendar .chip.blue {
+    background: #3f82ff;
+}
+
+.calendar .chip.purple {
+    background: #6f51f8;
+}
+
+.calendar .chip.green {
+    background: #2eb88a;
+}
+
+.calendar .chip.orange {
+    background: #f59e0b;
+}
+
+.calendar-legend {
+    margin-top: 16px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.calendar-legend .chip {
+    box-shadow: 0 8px 18px rgba(0,0,0,0.06);
 }
 
 /* LESSON CARD ------------------------------------------------- */

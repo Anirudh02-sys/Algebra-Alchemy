@@ -17,7 +17,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, re_path
 from django.contrib.auth import views as auth_views
-from .views import tutor_dashboard
+from .views import (
+    tutor_dashboard,
+    current_progress,
+    learning_graph,
+    calendar_view,
+)
 
 # import algebra_alchemy.views as views
 
@@ -27,4 +32,7 @@ urlpatterns = [
     # path("home/", views.home, name='home'),
     # re_path(r'^sendmessage$', views.sendmessage, name ='sendmessage'),
     path("", tutor_dashboard, name="tutor-dashboard"),
+    path("progress/", current_progress, name="current-progress"),
+    path("graph/", learning_graph, name="learning-graph"),
+    path("calendar/", calendar_view, name="calendar"),
 ]

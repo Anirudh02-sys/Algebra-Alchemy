@@ -25,25 +25,25 @@
                 </div>
             </div>
 
-            <div class="nav-item active">
+            <a href="{% url 'tutor-dashboard' %}" class="nav-item {% if active_page|default:'learn' == 'learn' %}active{% endif %}">
                 <div class="nav-icon-circle">✏️</div>
                 <span>Learn</span>
-            </div>
+            </a>
 
-            <div class="nav-item">
+            <a href="{% url 'current-progress' %}" class="nav-item {% if active_page == 'progress' %}active{% endif %}">
                 <div class="nav-icon-circle">★</div>
                 <span>Current<br>Progress</span>
-            </div>
+            </a>
 
-            <div class="nav-item">
+            <a href="{% url 'learning-graph' %}" class="nav-item {% if active_page == 'graph' %}active{% endif %}">
                 <div class="nav-icon-circle">📊</div>
                 <span>Learning<br>Graph</span>
-            </div>
+            </a>
 
-            <div class="nav-item">
+            <a href="{% url 'calendar' %}" class="nav-item {% if active_page == 'calendar' %}active{% endif %}">
                 <div class="nav-icon-circle">📅</div>
                 <span>Calendar</span>
-            </div>
+            </a>
         </div>
 
         <div class="sidebar-spacer"></div>
