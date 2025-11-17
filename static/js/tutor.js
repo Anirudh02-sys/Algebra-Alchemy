@@ -831,7 +831,36 @@ function setupExpressionButtons() {
     });
 }
 
-// ======================= SHARED UI: PROGRESS, MODAL, NEXT BTN =======================
+// ======================= STARS + SHARED UI: PROGRESS, MODAL, NEXT BTN =======================
+
+function updateStars(done, total, isPractice) {
+    const starContainer = document.getElementById("stars");
+    if (!starContainer) return;
+
+    if (!total || total <= 0) {
+        total = 1;
+    }
+
+    const totalStars = isPractice ? 10 : 5;
+    const existingStars = starContainer.querySelectorAll(".star-indicator");
+
+    if (existingStars.length !== totalStars) {
+        starContainer.innerHTML = "";
+        for (let i = 0; i < totalStars; i++) {
+            const span = document.createElement("span");
+            span.className = "star-indicator";
+            span.textContent = "★";
+            starContainer.appendChild(span);
+        }
+    }
+
+    const stars = starContainer.querySelectorAll(".star-indicator");
+    const filledStars = Math.round((done / total) * totalStars);
+
+    stars.forEach((star, index) => {
+        star.classList.toggle("filled", index < filledStars);
+    });
+}
 
 function updateProgressUI() {
     const summary = document.getElementById("progress-summary");
@@ -842,8 +871,7 @@ function updateProgressUI() {
     const practice1Elem = document.getElementById("practice1-progress");
     const practice2Elem = document.getElementById("practice2-progress");
 
-    const stars = document.querySelectorAll(".star-indicator");
-
+    // Per-lesson percentages in the left card
     if (isolatingElem) {
         const p = Math.round(
             (isolatingScore / isolatingProblems.length) * 100
@@ -870,6 +898,7 @@ function updateProgressUI() {
         practice2Elem.textContent = `${p}%`;
     }
 
+    // Active mode stats
     let label, done, total;
 
     if (currentMode === "isolating") {
@@ -897,13 +926,18 @@ function updateProgressUI() {
         total = set.problems.length;
     }
 
-    const xp = done * 10;
-    summary.textContent = `${label}: ${done}/${total} · XP: ${xp}`;
+    if (!total || total <= 0) {
+        total = 1;
+    }
 
-    const filledCount = done;
-    stars.forEach((star, index) => {
-        star.classList.toggle("filled", index < filledCount);
-    });
+    const xp = done * 10;
+    if (summary) {
+        summary.textContent = `${label}: ${done}/${total} · XP: ${xp}`;
+    }
+
+    const isPractice =
+        currentMode === "practice1" || currentMode === "practice2";
+    updateStars(done, total, isPractice);
 }
 
 function setupNextButton() {

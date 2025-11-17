@@ -334,6 +334,25 @@ body {
     border: 1px solid #ddd;
 }
 
+.star-row {
+    display: flex;
+    justify-content: center;
+    margin-top: 12px;
+}
+
+#stars {
+    display: flex;
+    gap: 6px;
+}
+
+.star-indicator {
+    font-size: 22px;
+    color: #d1d5db;
+}
+
+.star-indicator.filled {
+    color: #facc15;
+}
 
 /* WORKSPACE --------------------------------------------------- */
 .workspace-wrapper {
