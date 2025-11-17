@@ -5,7 +5,7 @@ const isolatingEquations = [
     "3x + 2 = x + 10",
     "5x - 4 = 2x + 8",
     "4x + 1 = x + 13",
-    "6x - 5 = 3x + 7"
+    "6x - 5 = 3x + 7",
 ];
 
 const isolatingProblems = isolatingEquations.map((eq) => {
@@ -26,19 +26,21 @@ const solvingProblems = [
         original: "5x + 2 = 12",
         steps: [
             {
-                question: "After isolating the x-terms on one side, what is the equation?",
+                question:
+                    "After isolating the x-terms on one side, what is the equation?",
                 options: [
                     "5x = 12 - 2",
                     "5x + 2 = 12 - 2",
                     "5x - 2 = 12",
-                    "5x = 12 + 2"
+                    "5x = 12 + 2",
                 ],
-                correctIndex: 0
+                correctIndex: 0,
             },
             {
-                question: "What is the equation after simplifying the right-hand side?",
+                question:
+                    "What is the equation after simplifying the right-hand side?",
                 options: ["5x = 14", "5x = 10", "5x = 2", "x = 10"],
-                correctIndex: 1
+                correctIndex: 1,
             },
             {
                 question: "What is the next algebraic step to solve for x?",
@@ -46,34 +48,36 @@ const solvingProblems = [
                     "5x/5 = 10/5",
                     "5x + 5 = 10 + 5",
                     "5x = 10/5",
-                    "x = 10/5"
+                    "x = 10/5",
                 ],
-                correctIndex: 0
+                correctIndex: 0,
             },
             {
                 question: "What does x equal?",
                 options: ["x = 10", "x = 1/2", "x = 2", "x = 5"],
-                correctIndex: 2
-            }
-        ]
+                correctIndex: 2,
+            },
+        ],
     },
     {
         original: "3x - 4 = 11",
         steps: [
             {
-                question: "After isolating the x-terms on one side, what is the equation?",
+                question:
+                    "After isolating the x-terms on one side, what is the equation?",
                 options: [
                     "3x = 11 + 4",
                     "3x = 11 - 4",
                     "3x - 4 = 11 - 4",
-                    "x = 11 + 4"
+                    "x = 11 + 4",
                 ],
-                correctIndex: 0
+                correctIndex: 0,
             },
             {
-                question: "What is the equation after simplifying the right-hand side?",
+                question:
+                    "What is the equation after simplifying the right-hand side?",
                 options: ["3x = 7", "3x = 15", "3x = -15", "x = 15"],
-                correctIndex: 1
+                correctIndex: 1,
             },
             {
                 question: "What is the next algebraic step to solve for x?",
@@ -81,34 +85,36 @@ const solvingProblems = [
                     "3x/3 = 15/3",
                     "3x + 3 = 15 + 3",
                     "3x = 15/3",
-                    "x = 15/3"
+                    "x = 15/3",
                 ],
-                correctIndex: 0
+                correctIndex: 0,
             },
             {
                 question: "What does x equal?",
                 options: ["x = 3", "x = 4", "x = 5", "x = 15"],
-                correctIndex: 2
-            }
-        ]
+                correctIndex: 2,
+            },
+        ],
     },
     {
         original: "4x + 6 = 22",
         steps: [
             {
-                question: "After isolating the x-terms on one side, what is the equation?",
+                question:
+                    "After isolating the x-terms on one side, what is the equation?",
                 options: [
                     "4x = 22 - 6",
                     "4x + 6 = 22 - 6",
                     "4x - 6 = 22",
-                    "4x = 22 + 6"
+                    "4x = 22 + 6",
                 ],
-                correctIndex: 0
+                correctIndex: 0,
             },
             {
-                question: "What is the equation after simplifying the right-hand side?",
+                question:
+                    "What is the equation after simplifying the right-hand side?",
                 options: ["4x = 28", "4x = 16", "4x = 6", "x = 4"],
-                correctIndex: 1
+                correctIndex: 1,
             },
             {
                 question: "What is the next algebraic step to solve for x?",
@@ -116,34 +122,36 @@ const solvingProblems = [
                     "4x/4 = 16/4",
                     "4x + 4 = 16 + 4",
                     "4x = 16/4",
-                    "x = 16/4"
+                    "x = 16/4",
                 ],
-                correctIndex: 0
+                correctIndex: 0,
             },
             {
                 question: "What does x equal?",
                 options: ["x = 2", "x = 3", "x = 4", "x = 8"],
-                correctIndex: 2
-            }
-        ]
+                correctIndex: 2,
+            },
+        ],
     },
     {
         original: "2x - 5 = 9",
         steps: [
             {
-                question: "After isolating the x-terms on one side, what is the equation?",
+                question:
+                    "After isolating the x-terms on one side, what is the equation?",
                 options: [
                     "2x = 9 + 5",
                     "2x = 9 - 5",
                     "2x - 5 = 9 - 5",
-                    "x = 9 + 5"
+                    "x = 9 + 5",
                 ],
-                correctIndex: 0
+                correctIndex: 0,
             },
             {
-                question: "What is the equation after simplifying the right-hand side?",
+                question:
+                    "What is the equation after simplifying the right-hand side?",
                 options: ["2x = 4", "2x = 14", "2x = -14", "x = 14"],
-                correctIndex: 1
+                correctIndex: 1,
             },
             {
                 question: "What is the next algebraic step to solve for x?",
@@ -151,34 +159,36 @@ const solvingProblems = [
                     "2x/2 = 14/2",
                     "2x + 2 = 14 + 2",
                     "2x = 14/2",
-                    "x = 14/2"
+                    "x = 14/2",
                 ],
-                correctIndex: 0
+                correctIndex: 0,
             },
             {
                 question: "What does x equal?",
                 options: ["x = 9", "x = 5", "x = 7", "x = 2"],
-                correctIndex: 2
-            }
-        ]
+                correctIndex: 2,
+            },
+        ],
     },
     {
         original: "7x + 1 = 29",
         steps: [
             {
-                question: "After isolating the x-terms on one side, what is the equation?",
+                question:
+                    "After isolating the x-terms on one side, what is the equation?",
                 options: [
                     "7x = 29 - 1",
                     "7x + 1 = 29 - 1",
                     "7x - 1 = 29",
-                    "7x = 29 + 1"
+                    "7x = 29 + 1",
                 ],
-                correctIndex: 0
+                correctIndex: 0,
             },
             {
-                question: "What is the equation after simplifying the right-hand side?",
+                question:
+                    "What is the equation after simplifying the right-hand side?",
                 options: ["7x = 30", "7x = 28", "7x = 26", "x = 4"],
-                correctIndex: 1
+                correctIndex: 1,
             },
             {
                 question: "What is the next algebraic step to solve for x?",
@@ -186,17 +196,17 @@ const solvingProblems = [
                     "7x/7 = 28/7",
                     "7x + 7 = 28 + 7",
                     "7x = 28/7",
-                    "x = 28/7"
+                    "x = 28/7",
                 ],
-                correctIndex: 0
+                correctIndex: 0,
             },
             {
                 question: "What does x equal?",
                 options: ["x = 3", "x = 4", "x = 7", "x = 28"],
-                correctIndex: 1
-            }
-        ]
-    }
+                correctIndex: 1,
+            },
+        ],
+    },
 ];
 
 let solvingCurrentProblemIndex = 0;
@@ -204,38 +214,148 @@ let solvingCurrentStepIndex = 0;
 let solvingSolved = Array(solvingProblems.length).fill(false);
 let solvingScore = 0;
 
-// ======================= LESSON 3: WORD → EXPRESSION =======================
+// ======================= LESSON 3 + TESTS: TEXT-INPUT EXPRESSIONS =======================
 
+// Mini-lesson
 const expressionProblems = [
     {
         prompt: "Five plus two times x equals fifteen.",
-        answer: "5 + 2x = 15"
+        answer: "5 + 2x = 15",
     },
     {
         prompt: "Three times a number minus four equals eleven.",
-        answer: "3x - 4 = 11"
+        answer: "3x - 4 = 11",
     },
     {
         prompt: "Seven more than four times x is twenty-three.",
-        answer: "4x + 7 = 23"
+        answer: "4x + 7 = 23",
     },
     {
         prompt: "Nine less than five times x equals sixteen.",
-        answer: "5x - 9 = 16"
+        answer: "5x - 9 = 16",
     },
     {
         prompt: "Twice a number plus six equals twenty.",
-        answer: "2x + 6 = 20"
-    }
+        answer: "2x + 6 = 20",
+    },
 ];
 
-let exprCurrentIndex = 0;
-let exprSolved = Array(expressionProblems.length).fill(false);
-let exprScore = 0;
+// Practice Test 1 – 10 mixed skills (isolate, solve, word → expression)
+const practice1Problems = [
+    {
+        prompt: "Isolate the x-terms: 2x - 3 = x + 5",
+        answer: "2x - x = 5 + 3",
+    },
+    {
+        prompt: "Solve for x: 3x + 4 = 13",
+        answer: "x = 3",
+    },
+    {
+        prompt: "Five more than twice x equals seventeen.",
+        answer: "2x + 5 = 17",
+    },
+    {
+        prompt: "Solve for x: 4x - 2 = 14",
+        answer: "x = 4",
+    },
+    {
+        prompt: "Isolate the x-terms: 5x + 6 = 2x + 15",
+        answer: "5x - 2x = 15 - 6",
+    },
+    {
+        prompt: "The sum of x and eight is thirteen.",
+        answer: "x + 8 = 13",
+    },
+    {
+        prompt: "Solve for x: 2x - 5 = 9",
+        answer: "x = 7",
+    },
+    {
+        prompt: "Isolate the x-terms: 3x + 1 = x + 9",
+        answer: "3x - x = 9 - 1",
+    },
+    {
+        prompt: "Four more than three times a number is nineteen.",
+        answer: "3x + 4 = 19",
+    },
+    {
+        prompt: "Solve for x: 6x = 24",
+        answer: "x = 4",
+    },
+];
+
+// Practice Test 2 – 10 harder mixed problems
+const practice2Problems = [
+    {
+        prompt: "Isolate the x-terms: 4x - 3 = 2x + 9",
+        answer: "4x - 2x = 9 + 3",
+    },
+    {
+        prompt: "Solve for x: 3(x - 2) = 15",
+        answer: "x = 7",
+    },
+    {
+        prompt: "Half of x plus three equals eleven.",
+        answer: "x/2 + 3 = 11",
+    },
+    {
+        prompt: "Solve for x: (x + 5) / 3 = 4",
+        answer: "x = 7",
+    },
+    {
+        prompt: "Isolate the x-terms: 5x + 2 = 3x + 10",
+        answer: "5x - 3x = 10 - 2",
+    },
+    {
+        prompt: "Solve for x: 2(x + 4) - 3 = 13",
+        answer: "x = 4",
+    },
+    {
+        prompt: "Three less than the sum of x and twelve equals twenty.",
+        answer: "x + 12 - 3 = 20",
+    },
+    {
+        prompt: "Solve for x: x/4 + 9 = 16",
+        answer: "x = 28",
+    },
+    {
+        prompt: "Isolate the x-terms: 7x + 1 = 3x + 17",
+        answer: "7x - 3x = 17 - 1",
+    },
+    {
+        prompt:
+            "Seven more than twice the quantity x minus one equals twenty-one.",
+        answer: "7 + 2(x - 1) = 21",
+    },
+];
+
+const expressionSets = {
+    expressions: {
+        label: "Word Problems to Expressions",
+        problems: expressionProblems,
+        currentIndex: 0,
+        solved: Array(expressionProblems.length).fill(false),
+        score: 0,
+    },
+    practice1: {
+        label: "Practice Level Up Test 1",
+        problems: practice1Problems,
+        currentIndex: 0,
+        solved: Array(practice1Problems.length).fill(false),
+        score: 0,
+    },
+    practice2: {
+        label: "Practice Level Up Test 2",
+        problems: practice2Problems,
+        currentIndex: 0,
+        solved: Array(practice2Problems.length).fill(false),
+        score: 0,
+    },
+};
 
 // ======================= GLOBAL STATE =======================
 
-let currentMode = "isolating"; // "isolating" | "solving" | "expressions";
+let currentMode = "isolating"; // "isolating" | "solving" | "expressions" | "practice1" | "practice2"
 let draggedElement = null;
 
 // ======================= GENERIC HELPERS =======================
@@ -269,7 +389,7 @@ function parseSide(side) {
     const chunks = side.match(/[+-]?[^+-]+/g) || [];
     const xTerms = [];
     const constTerms = [];
-    chunks.forEach(ch => {
+    chunks.forEach((ch) => {
         if (ch.includes("x")) xTerms.push(ch);
         else constTerms.push(ch);
     });
@@ -311,12 +431,65 @@ function isolateEquation(equation) {
     return `${leftStr} = ${rightStr}`;
 }
 
-// normalize equations so "5+2x=15" and "5 + 2x = 15" match
 function normalizeEquation(str) {
-    return str
-        .toLowerCase()
-        .replace(/\s+/g, "")
-        .replace(/−/g, "-");
+    return str.toLowerCase().replace(/\s+/g, "").replace(/−/g, "-");
+}
+
+// ======================= DYNAMIC PAGINATION =======================
+
+function renderPagination(total, currentIndex) {
+    const container = document.getElementById("pagination");
+    if (!container) return;
+
+    container.innerHTML = "";
+    if (total <= 0) return;
+
+    for (let i = 0; i < total; i++) {
+        const btn = document.createElement("button");
+        btn.className = "page" + (i === currentIndex ? " active" : " inactive");
+        btn.dataset.index = i;
+        btn.textContent = i + 1;
+
+        btn.addEventListener("click", () => {
+            if (currentMode === "isolating") {
+                isolatingCurrentIndex = i;
+                loadIsolatingProblem(i);
+            } else if (currentMode === "solving") {
+                solvingCurrentProblemIndex = i;
+                solvingCurrentStepIndex = 0;
+                loadSolvingProblem(i);
+            } else if (
+                currentMode === "expressions" ||
+                currentMode === "practice1" ||
+                currentMode === "practice2"
+            ) {
+                const set = currentExpressionSet();
+                if (!set) return;
+                if (i < set.problems.length) {
+                    loadExpressionProblem(i);
+                }
+            }
+        });
+
+        container.appendChild(btn);
+    }
+}
+
+function updatePagination(currentIndex) {
+    let total = 0;
+    if (currentMode === "isolating") {
+        total = isolatingProblems.length;
+    } else if (currentMode === "solving") {
+        total = solvingProblems.length;
+    } else if (
+        currentMode === "expressions" ||
+        currentMode === "practice1" ||
+        currentMode === "practice2"
+    ) {
+        const set = currentExpressionSet();
+        total = set ? set.problems.length : 0;
+    }
+    renderPagination(total, currentIndex);
 }
 
 // ======================= ISOLATING MODE (DRAG) =======================
@@ -338,13 +511,13 @@ function loadIsolatingProblem(index) {
     nextBtn.style.display = isolatingSolved[index] ? "inline-flex" : "none";
     nextBtn.disabled = false;
     nextBtn.textContent =
-        (index === isolatingProblems.length - 1 && isolatingSolved[index])
+        index === isolatingProblems.length - 1 && isolatingSolved[index]
             ? "All problems done"
             : "Next problem →";
 
     const shuffledTokens = shuffle(problem.tokens);
 
-    shuffledTokens.forEach(token => {
+    shuffledTokens.forEach((token) => {
         const chip = document.createElement("div");
         chip.className = "chip";
         chip.textContent = token;
@@ -416,8 +589,9 @@ function checkIsolatingCorrect() {
     const status = document.getElementById("status-message");
     const nextBtn = document.getElementById("next-problem");
 
-    const currentOrder = [...container.querySelectorAll(".chip")]
-        .map(chip => chip.textContent.trim());
+    const currentOrder = [...container.querySelectorAll(".chip")].map((chip) =>
+        chip.textContent.trim()
+    );
 
     if (currentOrder.length !== isolatingCorrectOrder.length) return;
 
@@ -431,7 +605,7 @@ function checkIsolatingCorrect() {
         status.textContent = "Correct! 🎉";
         status.classList.add("correct");
 
-        container.querySelectorAll(".chip").forEach(c => {
+        container.querySelectorAll(".chip").forEach((c) => {
             c.classList.add("correct-chip");
             setTimeout(() => c.classList.remove("correct-chip"), 400);
         });
@@ -469,6 +643,7 @@ function loadSolvingProblem(index) {
     solvingCurrentProblemIndex = index;
     solvingCurrentStepIndex = 0;
     renderCurrentSolvingStep();
+    updatePagination(index);
     updateProgressUI();
 }
 
@@ -490,9 +665,9 @@ function renderCurrentSolvingStep() {
     nextBtn.textContent =
         solvingCurrentStepIndex < problem.steps.length - 1
             ? "Next step →"
-            : (solvingCurrentProblemIndex < solvingProblems.length - 1
-                ? "Next equation →"
-                : "All done 🎉");
+            : solvingCurrentProblemIndex < solvingProblems.length - 1
+            ? "Next equation →"
+            : "All done 🎉";
 
     optsContainer.innerHTML = "";
     step.options.forEach((opt, idx) => {
@@ -513,7 +688,7 @@ function handleMcqAnswer(selectedIndex) {
     const nextBtn = document.getElementById("mcq-next-step");
     const optionButtons = document.querySelectorAll(".mcq-option");
 
-    optionButtons.forEach(btn => {
+    optionButtons.forEach((btn) => {
         btn.classList.remove("mcq-correct", "mcq-incorrect");
     });
 
@@ -550,10 +725,11 @@ function setupMcqNextButton() {
             if (solvingCurrentProblemIndex < solvingProblems.length - 1) {
                 solvingCurrentProblemIndex++;
                 solvingCurrentStepIndex = 0;
-                renderCurrentSolvingStep();
+                loadSolvingProblem(solvingCurrentProblemIndex);
             } else {
                 const feedback = document.getElementById("mcq-feedback");
-                feedback.textContent = "You finished all Solving for X problems! 🎉";
+                feedback.textContent =
+                    "You finished all Solving for X problems! 🎉";
                 feedback.classList.add("correct");
                 nextBtn.disabled = true;
             }
@@ -561,11 +737,25 @@ function setupMcqNextButton() {
     });
 }
 
-// ======================= EXPRESSIONS MODE (INPUT) =======================
+// ======================= EXPRESSIONS MODE (3 SETS) =======================
+
+function currentExpressionSet() {
+    if (
+        currentMode === "expressions" ||
+        currentMode === "practice1" ||
+        currentMode === "practice2"
+    ) {
+        return expressionSets[currentMode];
+    }
+    return null;
+}
 
 function loadExpressionProblem(index) {
-    exprCurrentIndex = index;
-    const problem = expressionProblems[index];
+    const set = currentExpressionSet();
+    if (!set) return;
+
+    set.currentIndex = index;
+    const problem = set.problems[index];
 
     const promptEl = document.getElementById("expr-prompt");
     const inputEl = document.getElementById("expr-input");
@@ -580,8 +770,9 @@ function loadExpressionProblem(index) {
     feedback.textContent = "";
     feedback.classList.remove("correct");
     checkBtn.disabled = false;
-    nextBtn.style.display = exprSolved[index] ? "inline-flex" : "none";
+    nextBtn.style.display = set.solved[index] ? "inline-flex" : "none";
 
+    updatePagination(index);
     updateProgressUI();
 }
 
@@ -593,9 +784,10 @@ function setupExpressionButtons() {
     if (!checkBtn || !nextBtn || !inputEl) return;
 
     checkBtn.addEventListener("click", () => {
-        if (currentMode !== "expressions") return;
+        const set = currentExpressionSet();
+        if (!set) return;
 
-        const problem = expressionProblems[exprCurrentIndex];
+        const problem = set.problems[set.currentIndex];
         const user = normalizeEquation(inputEl.value);
         const correct = normalizeEquation(problem.answer);
 
@@ -613,9 +805,9 @@ function setupExpressionButtons() {
             checkBtn.disabled = true;
             nextBtn.style.display = "inline-flex";
 
-            if (!exprSolved[exprCurrentIndex]) {
-                exprSolved[exprCurrentIndex] = true;
-                exprScore += 1;
+            if (!set.solved[set.currentIndex]) {
+                set.solved[set.currentIndex] = true;
+                set.score += 1;
                 updateProgressUI();
             }
         } else {
@@ -625,40 +817,37 @@ function setupExpressionButtons() {
     });
 
     nextBtn.addEventListener("click", () => {
-        if (exprCurrentIndex < expressionProblems.length - 1) {
-            loadExpressionProblem(exprCurrentIndex + 1);
+        const set = currentExpressionSet();
+        if (!set) return;
+
+        if (set.currentIndex < set.problems.length - 1) {
+            loadExpressionProblem(set.currentIndex + 1);
         } else {
             const feedback = document.getElementById("expr-feedback");
-            feedback.textContent = "You finished all word problems! 🎉";
+            feedback.textContent = "You finished all problems! 🎉";
             feedback.classList.add("correct");
             nextBtn.style.display = "none";
         }
     });
 }
 
-// ======================= SHARED UI: PROGRESS, PAGINATION, MODAL =======================
-
-function updatePagination(index) {
-    const currentPageNumber = index + 1;
-    const pages = document.querySelectorAll(".pagination .page");
-
-    pages.forEach(page => {
-        const pageNum = parseInt(page.dataset.page, 10);
-        const isCurrent = pageNum === currentPageNumber;
-        page.classList.toggle("active", isCurrent);
-        page.classList.toggle("inactive", !isCurrent);
-    });
-}
+// ======================= SHARED UI: PROGRESS, MODAL, NEXT BTN =======================
 
 function updateProgressUI() {
     const summary = document.getElementById("progress-summary");
+
     const isolatingElem = document.getElementById("isolating-progress");
     const solvingElem = document.getElementById("solving-progress");
     const exprElem = document.getElementById("expressions-progress");
+    const practice1Elem = document.getElementById("practice1-progress");
+    const practice2Elem = document.getElementById("practice2-progress");
+
     const stars = document.querySelectorAll(".star-indicator");
 
     if (isolatingElem) {
-        const p = Math.round((isolatingScore / isolatingProblems.length) * 100);
+        const p = Math.round(
+            (isolatingScore / isolatingProblems.length) * 100
+        );
         isolatingElem.textContent = `${p}%`;
     }
     if (solvingElem) {
@@ -666,11 +855,23 @@ function updateProgressUI() {
         solvingElem.textContent = `${p}%`;
     }
     if (exprElem) {
-        const p = Math.round((exprScore / expressionProblems.length) * 100);
+        const set = expressionSets.expressions;
+        const p = Math.round((set.score / set.problems.length) * 100);
         exprElem.textContent = `${p}%`;
+    }
+    if (practice1Elem) {
+        const set = expressionSets.practice1;
+        const p = Math.round((set.score / set.problems.length) * 100);
+        practice1Elem.textContent = `${p}%`;
+    }
+    if (practice2Elem) {
+        const set = expressionSets.practice2;
+        const p = Math.round((set.score / set.problems.length) * 100);
+        practice2Elem.textContent = `${p}%`;
     }
 
     let label, done, total;
+
     if (currentMode === "isolating") {
         label = "Isolating X-Terms";
         done = isolatingScore;
@@ -679,10 +880,21 @@ function updateProgressUI() {
         label = "Solving for X";
         done = solvingScore;
         total = solvingProblems.length;
+    } else if (currentMode === "expressions") {
+        const set = expressionSets.expressions;
+        label = set.label;
+        done = set.score;
+        total = set.problems.length;
+    } else if (currentMode === "practice1") {
+        const set = expressionSets.practice1;
+        label = set.label;
+        done = set.score;
+        total = set.problems.length;
     } else {
-        label = "Word Problems to Expressions";
-        done = exprScore;
-        total = expressionProblems.length;
+        const set = expressionSets.practice2;
+        label = set.label;
+        done = set.score;
+        total = set.problems.length;
     }
 
     const xp = done * 10;
@@ -786,21 +998,66 @@ function activateExpressionLesson() {
     exprMode.classList.remove("hidden");
     label.textContent = "WORD PROBLEMS TO EXPRESSIONS";
 
-    loadExpressionProblem(exprCurrentIndex);
+    const set = expressionSets.expressions;
+    loadExpressionProblem(set.currentIndex);
+}
+
+function activatePractice1Lesson() {
+    currentMode = "practice1";
+    const dragMode = document.getElementById("drag-mode");
+    const mcqMode = document.getElementById("mcq-mode");
+    const exprMode = document.getElementById("expression-mode");
+    const label = document.getElementById("workspace-label");
+
+    dragMode.classList.add("hidden");
+    mcqMode.classList.add("hidden");
+    exprMode.classList.remove("hidden");
+    label.textContent = "PRACTICE TEST 1";
+
+    const set = expressionSets.practice1;
+    loadExpressionProblem(set.currentIndex);
+}
+
+function activatePractice2Lesson() {
+    currentMode = "practice2";
+    const dragMode = document.getElementById("drag-mode");
+    const mcqMode = document.getElementById("mcq-mode");
+    const exprMode = document.getElementById("expression-mode");
+    const label = document.getElementById("workspace-label");
+
+    dragMode.classList.add("hidden");
+    mcqMode.classList.add("hidden");
+    exprMode.classList.remove("hidden");
+    label.textContent = "PRACTICE TEST 2";
+
+    const set = expressionSets.practice2;
+    loadExpressionProblem(set.currentIndex);
 }
 
 function setupLessonClicks() {
     const workspace = document.querySelector(".workspace-wrapper");
+
     const isolatingItem = document.getElementById("lesson-isolating");
     const solvingItem = document.getElementById("lesson-solving");
     const exprItem = document.getElementById("lesson-expressions");
+    const practice1Item = document.getElementById("lesson-practice1");
+    const practice2Item = document.getElementById("lesson-practice2");
+
+    function activateItem(item) {
+        [
+            isolatingItem,
+            solvingItem,
+            exprItem,
+            practice1Item,
+            practice2Item,
+        ].forEach((el) => el && el.classList.remove("active-lesson"));
+        if (item) item.classList.add("active-lesson");
+    }
 
     if (isolatingItem) {
         isolatingItem.addEventListener("click", () => {
             workspace.scrollIntoView({ behavior: "smooth", block: "center" });
-            isolatingItem.classList.add("active-lesson");
-            solvingItem && solvingItem.classList.remove("active-lesson");
-            exprItem && exprItem.classList.remove("active-lesson");
+            activateItem(isolatingItem);
             activateIsolatingLesson();
         });
     }
@@ -808,9 +1065,7 @@ function setupLessonClicks() {
     if (solvingItem) {
         solvingItem.addEventListener("click", () => {
             workspace.scrollIntoView({ behavior: "smooth", block: "center" });
-            solvingItem.classList.add("active-lesson");
-            isolatingItem && isolatingItem.classList.remove("active-lesson");
-            exprItem && exprItem.classList.remove("active-lesson");
+            activateItem(solvingItem);
             activateSolvingLesson();
         });
     }
@@ -818,10 +1073,24 @@ function setupLessonClicks() {
     if (exprItem) {
         exprItem.addEventListener("click", () => {
             workspace.scrollIntoView({ behavior: "smooth", block: "center" });
-            exprItem.classList.add("active-lesson");
-            isolatingItem && isolatingItem.classList.remove("active-lesson");
-            solvingItem && solvingItem.classList.remove("active-lesson");
+            activateItem(exprItem);
             activateExpressionLesson();
+        });
+    }
+
+    if (practice1Item) {
+        practice1Item.addEventListener("click", () => {
+            workspace.scrollIntoView({ behavior: "smooth", block: "center" });
+            activateItem(practice1Item);
+            activatePractice1Lesson();
+        });
+    }
+
+    if (practice2Item) {
+        practice2Item.addEventListener("click", () => {
+            workspace.scrollIntoView({ behavior: "smooth", block: "center" });
+            activateItem(practice2Item);
+            activatePractice2Lesson();
         });
     }
 }
@@ -835,5 +1104,5 @@ document.addEventListener("DOMContentLoaded", () => {
     setupLessonClicks();
     setupMcqNextButton();
     setupExpressionButtons();
-    activateIsolatingLesson();  // start in drag mode
+    activateIsolatingLesson(); // start in drag mode
 });

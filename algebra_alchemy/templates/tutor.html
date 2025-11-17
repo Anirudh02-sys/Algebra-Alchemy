@@ -103,8 +103,8 @@
                         <div class="lesson-progress" id="expressions-progress">0%</div>
                     </li>
 
-
-                    <li class="lesson-item">
+                    <!-- Practice Level Up Test 1 -->
+                    <li class="lesson-item clickable" id="lesson-practice1">
                         <div class="lesson-main">
                             <span class="lesson-star">☆</span>
                             <div>
@@ -112,9 +112,11 @@
                                 <div class="lesson-text-subtitle">Feeling confident?</div>
                             </div>
                         </div>
+                        <div class="lesson-progress" id="practice1-progress">0%</div>
                     </li>
 
-                    <li class="lesson-item">
+                    <!-- Practice Level Up Test 2 -->
+                    <li class="lesson-item clickable" id="lesson-practice2">
                         <div class="lesson-main">
                             <span class="lesson-star">☆</span>
                             <div>
@@ -122,6 +124,7 @@
                                 <div class="lesson-text-subtitle">Test out to next level!</div>
                             </div>
                         </div>
+                        <div class="lesson-progress" id="practice2-progress">0%</div>
                     </li>
                 </ul>
             </article>
@@ -129,7 +132,7 @@
             <!-- RIGHT: WORKSPACE -->
             <section class="workspace-wrapper">
                 <div class="workspace-label" id="workspace-label">DRAG TO ISOLATE X</div>
-                        
+
                 <!-- Drag-and-drop mode (Isolating X-Terms) -->
                 <div id="drag-mode">
                     <div id="original-equation" class="original-equation"></div>
@@ -202,13 +205,8 @@
                 Next problem →
             </button>
         
-            <div class="pagination">
-                <div class="page active" data-page="1">1</div>
-                <div class="page inactive" data-page="2">2</div>
-                <div class="page inactive" data-page="3">3</div>
-                <div class="page inactive" data-page="4">4</div>
-                <div class="page inactive" data-page="5">5</div>
-            </div>
+            <div id="pagination" class="pagination"></div>
+
         </section>
 
     </main>
