@@ -17,14 +17,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, re_path
 from django.contrib.auth import views as auth_views
-from .views import (
-    tutor_dashboard,
-    current_progress,
-    learning_graph,
-    calendar_view,
-)
+from .views import *
 
-# import algebra_alchemy.views as views
+
+import algebra_alchemy.views as views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -35,4 +31,9 @@ urlpatterns = [
     path("progress/", current_progress, name="current-progress"),
     path("graph/", learning_graph, name="learning-graph"),
     path("calendar/", calendar_view, name="calendar"),
+    path("api/isolating/", isolating_problems),
+    path("api/questions/", get_all_questions),
+    path("api/questions/category/<str:category_id>/", get_questions_by_category)
+
+
 ]
