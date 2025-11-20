@@ -688,6 +688,55 @@ body {
     letter-spacing: 0.14em;
 }
 
+.reaction-panel {
+    position: absolute;
+    right: 18px;
+    bottom: 18px;
+    padding: 12px 14px;
+    background: rgba(255, 255, 255, 0.92);
+    border: 1px solid #ececf3;
+    border-radius: 18px;
+    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 270px;
+    max-width: calc(100% - 36px);
+}
+
+.reaction-title {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+}
+
+.reaction-icons {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    align-items: flex-end;
+}
+
+.reaction-icon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--text-muted);
+    text-align: center;
+}
+
+.reaction-icon img {
+    width: 56px;
+    height: auto;
+    background: linear-gradient(145deg, #f9f9ff, #f1efff);
+    border-radius: 16px;
+    padding: 6px;
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.06);
+}
+
 .original-equation {
     text-align: center;
     font-size: 16px;
@@ -826,6 +875,16 @@ body {
 
     .workspace-chips {
         flex-wrap: wrap;
+    }
+
+    .reaction-panel {
+        position: static;
+        width: 100%;
+        margin-top: 16px;
+    }
+
+    .reaction-icons {
+        justify-content: space-around;
     }
 }
 
