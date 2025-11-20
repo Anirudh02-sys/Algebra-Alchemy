@@ -115,24 +115,40 @@
                 </div>
 
                 <div class="reaction-panel" aria-label="Wizard reactions">
-                    <div class="reaction-title">Reactions</div>
-                    <div class="reaction-icons">
-                        <div class="reaction-icon">
-                            <img src="{% static 'images/wizard_enter.png' %}" alt="Wizard enters the scene">
-                            <span>Ready</span>
+                    <div class="reaction-header">
+                        <div class="reaction-title">Wizard reactions</div>
+                        <div class="reaction-pill">Live</div>
+                    </div>
+
+                    <div class="reaction-card">
+                        <div class="reaction-avatar">
+                            <img
+                                id="reaction-image"
+                                src="{% static 'images/wizard_enter.png' %}"
+                                alt="Wizard ready to help"
+                            />
                         </div>
-                        <div class="reaction-icon">
-                            <img src="{% static 'images/wizard_doubt.png' %}" alt="Wizard looking uncertain">
-                            <span>Thinking</span>
+                        <div class="reaction-copy">
+                            <div class="reaction-state" id="reaction-state-label">Ready</div>
+                            <p class="reaction-desc" id="reaction-state-desc">
+                                I’m here and ready to walk through the next step with you.
+                            </p>
                         </div>
-                        <div class="reaction-icon">
-                            <img src="{% static 'images/wizard_happy_progress.png' %}" alt="Wizard celebrating progress">
-                            <span>Keep going</span>
-                        </div>
-                        <div class="reaction-icon">
-                            <img src="{% static 'images/wizard_on_completion.png' %}" alt="Wizard cheering at completion">
-                            <span>Done!</span>
-                        </div>
+                    </div>
+
+                    <div class="reaction-steps" role="list" aria-label="Reaction stages">
+                        <button class="reaction-step active" data-reaction-step="ready" aria-pressed="true">
+                            <span class="reaction-step-label">Ready</span>
+                        </button>
+                        <button class="reaction-step" data-reaction-step="thinking" aria-pressed="false">
+                            <span class="reaction-step-label">Thinking</span>
+                        </button>
+                        <button class="reaction-step" data-reaction-step="progress" aria-pressed="false">
+                            <span class="reaction-step-label">Keep going</span>
+                        </button>
+                        <button class="reaction-step" data-reaction-step="complete" aria-pressed="false">
+                            <span class="reaction-step-label">Done!</span>
+                        </button>
                     </div>
                 </div>
             </section>
