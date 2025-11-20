@@ -1,0 +1,390 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Algebra Alchemy – Question Generator</title>
+    <link rel="stylesheet" href="{% static 'css/tutor.css' %}">
+    <style>
+        .generator-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 14px;
+            margin-top: 14px;
+            margin-bottom: 12px;
+        }
+        .generator-field {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            font-size: 13px;
+        }
+        .generator-field label {
+            font-weight: 700;
+            color: #2c2c34;
+        }
+        .generator-field select,
+        .generator-field textarea,
+        .generator-field input {
+            border: 1px solid #dfe0ea;
+            border-radius: 10px;
+            padding: 10px 12px;
+            font-size: 13px;
+            background: #fff;
+        }
+        .generator-field textarea {
+            min-height: 90px;
+            resize: vertical;
+        }
+        .generator-actions {
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .result-box {
+            border: 1px solid #e9e9f1;
+            background: #fafafe;
+            border-radius: 16px;
+            padding: 14px 16px;
+            margin-top: 12px;
+            box-shadow: inset 0 0 0 1px rgba(123,97,255,0.05);
+        }
+        .result-subtle {
+            background: #f6f5ff;
+            border-radius: 12px;
+            padding: 10px 12px;
+            font-size: 13px;
+            color: #383553;
+            border: 1px solid #ecebf8;
+        }
+        .result-meta {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 8px;
+        }
+        .chip.small {
+            padding: 6px 9px;
+            border-radius: 12px;
+            background: #f1efff;
+            color: #4c3dba;
+            font-weight: 700;
+            font-size: 11px;
+        }
+        .result-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 12px;
+            flex-wrap: wrap;
+        }
+    </style>
+</head>
+<body>
+<div class="app-shell">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <div class="sidebar-top">
+            <div class="nav-icon-circle">
+                👤
+            </div>
+        </div>
+
+        <div class="nav-section">
+            <div class="nav-item">
+                <div class="nav-icon-circle outline">
+                    ☰
+                </div>
+            </div>
+
+            <a href="{% url 'tutor-dashboard' %}" class="nav-item {% if active_page|default:'learn' == 'learn' %}active{% endif %}">
+                <div class="nav-icon-circle">✏️</div>
+                <span>Learn</span>
+            </a>
+
+            <a href="{% url 'question-generator' %}" class="nav-item {% if active_page == 'generator' %}active{% endif %}">
+                <div class="nav-icon-circle">⚙️</div>
+                <span>Generator</span>
+            </a>
+
+            <a href="{% url 'current-progress' %}" class="nav-item {% if active_page == 'progress' %}active{% endif %}">
+                <div class="nav-icon-circle">★</div>
+                <span>Current<br>Progress</span>
+            </a>
+
+            <a href="{% url 'learning-graph' %}" class="nav-item {% if active_page == 'graph' %}active{% endif %}">
+                <div class="nav-icon-circle">📊</div>
+                <span>Learning<br>Graph</span>
+            </a>
+
+            <a href="{% url 'calendar' %}" class="nav-item {% if active_page == 'calendar' %}active{% endif %}">
+                <div class="nav-icon-circle">📅</div>
+                <span>Calendar</span>
+            </a>
+        </div>
+
+        <div class="sidebar-spacer"></div>
+    </aside>
+
+    <!-- MAIN AREA -->
+    <main class="main-area">
+        <header class="top-bar">
+            <div>
+                <div class="top-title">Algebra Alchemy</div>
+                <div class="top-subtitle">Question Generator</div>
+            </div>
+        </header>
+
+        <section class="content-row">
+            <article class="page-card">
+                <div class="page-card-title">Build a question</div>
+                <p class="page-card-body">
+                    Select the parameters you want to guide the generator. You can also add an optional prompt to
+                    steer the style or context of the question.
+                </p>
+
+                <div class="generator-grid">
+                    <div class="generator-field">
+                        <label for="category-select">Category</label>
+                        <select id="category-select" name="category_id">
+                            {% for category_id, label in categories %}
+                                <option value="{{ category_id }}">{{ label }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="generator-field">
+                        <label for="type-select">Question type</label>
+                        <select id="type-select" name="question_type">
+                            {% for question_type, label in question_types %}
+                                <option value="{{ question_type }}">{{ label }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="generator-field">
+                        <label for="difficulty-select">Difficulty</label>
+                        <select id="difficulty-select" name="difficulty">
+                            {% for level, label in difficulty_levels %}
+                                <option value="{{ level }}">{{ label }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+                <div class="generator-field">
+                    <label for="prompt-input">Optional instructions</label>
+                    <textarea id="prompt-input" name="prompt" placeholder="e.g. Include a real-world example about cooking"></textarea>
+                </div>
+
+                <div class="generator-actions">
+                    <button class="next-btn" id="generate-btn" type="button">Generate question →</button>
+                    <button class="next-btn secondary-btn" id="load-example" type="button">Load MongoDB example</button>
+                    <span class="page-card-body" style="margin: 0;">Results will display in the panel on the right.</span>
+                </div>
+
+                <div class="result-box" style="margin-top: 14px;">
+                    <div class="generator-field" style="margin-bottom: 6px;">
+                        <label>MongoDB example (randomized)</label>
+                        <pre id="example-json" style="background:#f9f9ff;border-radius:12px;padding:10px;font-size:12px;white-space:pre-wrap;margin:0;">Click "Load MongoDB example" to view a stored question.</pre>
+                    </div>
+                    <div class="page-card-body" id="example-status" style="margin: 0; color: #5c5a7c;">Examples pull directly from the questions collection with your selected filters.</div>
+                </div>
+            </article>
+
+            <article class="page-card">
+                <div class="page-card-title">Preview &amp; results</div>
+                <p class="page-card-body">
+                    Use this panel to review the generated output before saving it into practice sets.
+                </p>
+
+                <div class="result-box">
+                    <div class="generator-field">
+                        <label for="question-stem">Question stem</label>
+                        <textarea id="question-stem" readonly placeholder="Your generated question will appear here."></textarea>
+                    </div>
+
+                    <div class="generator-field" style="margin-top: 10px;">
+                        <label for="answer-key">Answer key</label>
+                        <input id="answer-key" type="text" readonly placeholder="Auto-generated answer" />
+                    </div>
+
+                    <div class="generator-field" style="margin-top: 10px;">
+                        <label for="equation-display">Equation or translation</label>
+                        <div id="equation-display" class="result-subtle">The generated equation or translation will appear here.</div>
+                    </div>
+
+                    <div class="generator-field" style="margin-top: 6px;">
+                        <label for="steps-list">Solution steps</label>
+                        <div id="steps-list" class="result-subtle" style="white-space: pre-wrap;">Detailed steps will appear here once a question is generated.</div>
+                    </div>
+
+                    <div class="result-meta">
+                        <span class="chip small" id="meta-category">Category</span>
+                        <span class="chip small" id="meta-type">Type</span>
+                        <span class="chip small" id="meta-difficulty">Difficulty</span>
+                    </div>
+
+                    <div class="result-actions">
+                        <button class="next-btn secondary-btn" id="save-btn" type="button">Save to MongoDB</button>
+                        <button class="next-btn" id="send-btn" type="button">Send to practice</button>
+                        <span id="save-status" class="page-card-body" style="margin:0;">Generated questions are also saved with metadata.</span>
+                    </div>
+                </div>
+
+                <a class="page-cta" style="margin-top: 12px; display: inline-flex;" href="{% url 'tutor-dashboard' %}">← Back to lessons</a>
+            </article>
+        </section>
+    </main>
+</div>
+
+<script>
+    const categorySelect = document.getElementById('category-select');
+    const typeSelect = document.getElementById('type-select');
+    const difficultySelect = document.getElementById('difficulty-select');
+    const promptInput = document.getElementById('prompt-input');
+
+    const questionStem = document.getElementById('question-stem');
+    const answerKey = document.getElementById('answer-key');
+    const metaCategory = document.getElementById('meta-category');
+    const metaType = document.getElementById('meta-type');
+    const metaDifficulty = document.getElementById('meta-difficulty');
+    const saveStatus = document.getElementById('save-status');
+    const equationDisplay = document.getElementById('equation-display');
+    const stepsList = document.getElementById('steps-list');
+
+    const generateBtn = document.getElementById('generate-btn');
+    const loadExampleBtn = document.getElementById('load-example');
+    const saveBtn = document.getElementById('save-btn');
+
+    let latestQuestion = null;
+
+    function setStatus(message, color = '#5c5a7c') {
+        saveStatus.textContent = message;
+        saveStatus.style.color = color;
+    }
+
+    function renderQuestion(question) {
+        latestQuestion = question || null;
+
+        const stem = question?.prompt || question?.wordProblem || question?.question || '';
+        const solution = question?.solution?.answer || question?.correctTranslation || question?.answer || '';
+        const equation = question?.givenEquation || question?.equation || question?.correctTranslation || 'No equation provided.';
+        const steps = Array.isArray(question?.solution?.steps) ? question.solution.steps : [];
+
+        questionStem.value = stem || 'Question data missing expected fields.';
+        answerKey.value = solution || '';
+        equationDisplay.textContent = equation;
+        stepsList.textContent = steps.length ? steps.map((s, idx) => `${idx + 1}. ${s}`).join('\n') : 'Steps were not provided by the generator.';
+
+        metaCategory.textContent = `Category: ${question?.categoryName || question?.categoryId || 'n/a'}`;
+        metaType.textContent = `Type: ${question?.questionTypeLabel || question?.questionType || 'n/a'}`;
+        metaDifficulty.textContent = `Difficulty: ${question?.difficulty ?? 'n/a'}`;
+
+        setStatus('Generated question ready. Save it to MongoDB or send to practice.');
+    }
+
+    async function generateQuestion() {
+        setStatus('Generating question…', '#5c5a7c');
+        generateBtn.disabled = true;
+        try {
+            const payload = {
+                category_id: categorySelect.value,
+                question_type: typeSelect.value,
+                difficulty: Number(difficultySelect.value),
+                prompt: promptInput.value.trim() || undefined,
+            };
+
+            const response = await fetch('/api/generate-question/', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload),
+            });
+
+            const data = await response.json();
+            if (data.success) {
+                renderQuestion(data.question);
+            } else {
+                setStatus(data.error || 'Unable to generate question.', '#b00020');
+            }
+        } catch (error) {
+            setStatus('Error generating question.', '#b00020');
+        } finally {
+            generateBtn.disabled = false;
+        }
+    }
+
+    async function loadExample() {
+        const params = new URLSearchParams({
+            category_id: categorySelect.value,
+            question_type: typeSelect.value,
+            difficulty: difficultySelect.value,
+        });
+
+        const exampleBox = document.getElementById('example-json');
+        const exampleStatus = document.getElementById('example-status');
+
+        exampleStatus.textContent = 'Loading from MongoDB…';
+        exampleStatus.style.color = '#5c5a7c';
+
+        try {
+            const response = await fetch(`/api/example-question/?${params.toString()}`);
+            const data = await response.json();
+            if (data.success) {
+                exampleBox.textContent = JSON.stringify(data.example, null, 2);
+                exampleStatus.textContent = 'Example loaded from questions collection.';
+            } else {
+                exampleStatus.textContent = data.error || 'No example found.';
+                exampleStatus.style.color = '#b00020';
+            }
+        } catch (error) {
+            exampleStatus.textContent = 'Unable to load example.';
+            exampleStatus.style.color = '#b00020';
+        }
+    }
+
+    async function saveQuestion() {
+        if (!latestQuestion) {
+            setStatus('Generate or load a question before saving.', '#b00020');
+            return;
+        }
+
+        setStatus('Saving to MongoDB…');
+        try {
+            const payload = {
+                question: {
+                    ...latestQuestion,
+                    categoryId: latestQuestion.categoryId || categorySelect.value,
+                    questionType: latestQuestion.questionType || typeSelect.value,
+                    difficulty: latestQuestion.difficulty || Number(difficultySelect.value),
+                },
+                tags: ['generator-ui', 'draft'],
+            };
+
+            const response = await fetch('/api/save-generated-question/', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload),
+            });
+
+            const data = await response.json();
+            if (data.success) {
+                setStatus(`Saved to MongoDB with id ${data.id}.`, '#2b8a3e');
+            } else {
+                setStatus(data.error || 'Unable to save question.', '#b00020');
+            }
+        } catch (error) {
+            setStatus('Error saving question.', '#b00020');
+        }
+    }
+
+    generateBtn.addEventListener('click', generateQuestion);
+    loadExampleBtn.addEventListener('click', loadExample);
+    saveBtn.addEventListener('click', saveQuestion);
+    document.getElementById('send-btn').addEventListener('click', saveQuestion);
+
+    // Auto-load an example on first visit to demonstrate MongoDB data
+    loadExample();
+</script>
+</body>
+</html>

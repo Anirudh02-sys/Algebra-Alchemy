@@ -2,6 +2,7 @@ from __future__ import unicode_literals
 
 import os
 import json
+from datetime import datetime
 from functools import lru_cache
 
 from django.shortcuts import render, redirect, get_object_or_404
@@ -81,6 +82,36 @@ def calendar_view(request):
     return render(request, "calendar.html", {"active_page": "calendar"})
 
 
+def question_generator_view(request):
+    """UI for generating practice questions"""
+    categories = [
+        ("solving_for_x", "Solving for X"),
+        ("reducing_fractions", "Reducing Fractions"),
+        ("isolating_x_terms", "Isolating X-Terms"),
+    ]
+    question_types = [
+        ("solve_equation", "Solve Equation"),
+        ("word_problem", "Word Problem"),
+        ("translate", "Translate Expression"),
+    ]
+    difficulty_levels = [
+        (1, "Level 1 - Beginner"),
+        (2, "Level 2 - Intermediate"),
+        (3, "Level 3 - Advanced"),
+    ]
+
+    return render(
+        request,
+        "question_generator.html",
+        {
+            "active_page": "generator",
+            "categories": categories,
+            "question_types": question_types,
+            "difficulty_levels": difficulty_levels,
+        },
+    )
+
+
 # ==================== NEW AI-POWERED ENDPOINTS ====================
 
 @require_http_methods(["POST"])
@@ -104,13 +135,15 @@ def generate_question_api(request):
         category_id = data.get('category_id')
         question_type = data.get('question_type')
         difficulty = data.get('difficulty')
+        custom_prompt = data.get('prompt')
         
         # Generate question
         question = question_gen.generate_question(
             user_id=user_id,
             category_id=category_id,
             question_type=question_type,
-            difficulty=difficulty
+            difficulty=difficulty,
+            custom_prompt=custom_prompt
         )
         
         return JsonResponse({
@@ -118,6 +151,51 @@ def generate_question_api(request):
             'question': question
         })
         
+    except Exception as e:
+        return JsonResponse({
+            'success': False,
+            'error': str(e)
+        }, status=500)
+
+
+
+@require_http_methods(["GET"])
+def example_question_api(request):
+    """Fetch a representative MongoDB question for the given filters."""
+    try:
+        category_id = request.GET.get('category_id')
+        question_type = request.GET.get('question_type')
+        difficulty = request.GET.get('difficulty')
+
+        query = {}
+        if category_id:
+            query['categoryId'] = category_id
+        if question_type:
+            query['questionType'] = question_type
+        if difficulty:
+            try:
+                query['difficulty'] = int(difficulty)
+            except ValueError:
+                pass
+
+        pipeline = [{"$match": query}] if query else []
+        pipeline.append({"$sample": {"size": 1}})
+
+        sample = list(db["questions"].aggregate(pipeline))
+        if not sample:
+            return JsonResponse({
+                'success': False,
+                'error': 'No example found for the selected filters.'
+            }, status=404)
+
+        example = sample[0]
+        example.pop('_id', None)
+
+        return JsonResponse({
+            'success': True,
+            'example': example
+        })
+
     except Exception as e:
         return JsonResponse({
             'success': False,
@@ -360,7 +438,44 @@ def bulk_generate_questions(request):
             'count': len(generated_questions),
             'questions': generated_questions
         })
-        
+
+    except Exception as e:
+        return JsonResponse({
+            'success': False,
+            'error': str(e)
+        }, status=500)
+
+
+@require_http_methods(["POST"])
+@csrf_exempt
+def save_generated_question(request):
+    """Persist a generated question and any metadata into MongoDB."""
+    try:
+        user_id = str(request.user.id) if request.user.is_authenticated else "guest"
+        payload = json.loads(request.body or "{}")
+        question = payload.get("question")
+        tags = payload.get("tags", [])
+
+        if not isinstance(question, dict):
+            return JsonResponse({
+                'success': False,
+                'error': 'Invalid question payload.'
+            }, status=400)
+
+        question.setdefault('user_id', user_id)
+        question['saved_at'] = datetime.utcnow()
+        question['source'] = question.get('source', 'generator-ui')
+        question['is_generated'] = question.get('is_generated', True)
+        if tags:
+            question['tags'] = tags
+
+        result = question_gen.generated_questions_collection.insert_one(question)
+
+        return JsonResponse({
+            'success': True,
+            'id': str(result.inserted_id)
+        })
+
     except Exception as e:
         return JsonResponse({
             'success': False,

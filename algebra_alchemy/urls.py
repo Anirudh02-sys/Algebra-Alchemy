@@ -14,6 +14,7 @@ urlpatterns = [
     path("progress/", current_progress, name="current-progress"),
     path("graph/", learning_graph, name="learning-graph"),
     path("calendar/", calendar_view, name="calendar"),
+    path("generator/", question_generator_view, name="question-generator"),
     
     # ==================== EXISTING API ENDPOINTS ====================
     path("api/isolating/", isolating_problems, name="isolating-problems"),
@@ -21,13 +22,15 @@ urlpatterns = [
     path("api/questions/category/<str:category_id>/", get_questions_by_category, name="questions-by-category"),
     path("api/questions/type/<str:q_type>/", get_questions_by_type, name="questions-by-type"),
     path("api/questions/difficulty/<int:level>/", get_questions_by_difficulty, name="questions-by-difficulty"),
-    
+    path("api/example-question/", example_question_api, name="example-question"),
+
     # ==================== NEW AI-POWERED ENDPOINTS ====================
-    
+
     # Question Generation
     path("api/generate-question/", generate_question_api, name="generate-question"),
     path("api/next-practice-question/", get_next_practice_question, name="next-practice-question"),
     path("api/bulk-generate/", bulk_generate_questions, name="bulk-generate"),
+    path("api/save-generated-question/", save_generated_question, name="save-generated-question"),
     
     # Answer Validation
     path("api/validate-answer/", validate_answer_api, name="validate-answer"),
