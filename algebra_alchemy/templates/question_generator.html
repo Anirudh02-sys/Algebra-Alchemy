@@ -50,6 +50,14 @@
             margin-top: 12px;
             box-shadow: inset 0 0 0 1px rgba(123,97,255,0.05);
         }
+        .result-subtle {
+            background: #f6f5ff;
+            border-radius: 12px;
+            padding: 10px 12px;
+            font-size: 13px;
+            color: #383553;
+            border: 1px solid #ecebf8;
+        }
         .result-meta {
             display: flex;
             gap: 10px;
@@ -201,6 +209,16 @@
                         <input id="answer-key" type="text" readonly placeholder="Auto-generated answer" />
                     </div>
 
+                    <div class="generator-field" style="margin-top: 10px;">
+                        <label for="equation-display">Equation or translation</label>
+                        <div id="equation-display" class="result-subtle">The generated equation or translation will appear here.</div>
+                    </div>
+
+                    <div class="generator-field" style="margin-top: 6px;">
+                        <label for="steps-list">Solution steps</label>
+                        <div id="steps-list" class="result-subtle" style="white-space: pre-wrap;">Detailed steps will appear here once a question is generated.</div>
+                    </div>
+
                     <div class="result-meta">
                         <span class="chip small" id="meta-category">Category</span>
                         <span class="chip small" id="meta-type">Type</span>
@@ -232,6 +250,8 @@
     const metaType = document.getElementById('meta-type');
     const metaDifficulty = document.getElementById('meta-difficulty');
     const saveStatus = document.getElementById('save-status');
+    const equationDisplay = document.getElementById('equation-display');
+    const stepsList = document.getElementById('steps-list');
 
     const generateBtn = document.getElementById('generate-btn');
     const loadExampleBtn = document.getElementById('load-example');
@@ -249,9 +269,13 @@
 
         const stem = question?.prompt || question?.wordProblem || question?.question || '';
         const solution = question?.solution?.answer || question?.correctTranslation || question?.answer || '';
+        const equation = question?.givenEquation || question?.equation || question?.correctTranslation || 'No equation provided.';
+        const steps = Array.isArray(question?.solution?.steps) ? question.solution.steps : [];
 
         questionStem.value = stem || 'Question data missing expected fields.';
         answerKey.value = solution || '';
+        equationDisplay.textContent = equation;
+        stepsList.textContent = steps.length ? steps.map((s, idx) => `${idx + 1}. ${s}`).join('\n') : 'Steps were not provided by the generator.';
 
         metaCategory.textContent = `Category: ${question?.categoryName || question?.categoryId || 'n/a'}`;
         metaType.textContent = `Type: ${question?.questionTypeLabel || question?.questionType || 'n/a'}`;

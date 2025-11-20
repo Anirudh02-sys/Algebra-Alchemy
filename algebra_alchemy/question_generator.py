@@ -147,6 +147,15 @@ class QuestionGenerator:
                     'answerNumeric': question_data.get('answerNumeric'),
                     'steps': question_data.get('steps', [])
                 }
+
+            if question_data.get('questionType') == 'solve_equation':
+                prompt_text = question_data.get('prompt', '')
+                needs_equation = not question_data.get('givenEquation') or not any(ch.isdigit() for ch in prompt_text)
+                if needs_equation:
+                    fallback = self._default_equation_payload(difficulty)
+                    question_data.setdefault('givenEquation', fallback['givenEquation'])
+                    question_data['prompt'] = fallback['prompt']
+                    question_data['solution'] = fallback['solution']
             
             # Add metadata
             question_data['user_id'] = user_id
@@ -222,7 +231,7 @@ class QuestionGenerator:
 
 **Extra creator notes**: {custom_instructions or 'Keep concise and pedagogically sound.'}
 
-**Required JSON Structure**:
+**Required JSON Structure** (NO placeholders—use specific numbers and variables):
 {{
     "categoryId": "{category_id}",
     "categoryName": "{category_name}",
@@ -234,20 +243,37 @@ class QuestionGenerator:
     "difficulty": {difficulty}
 }}
 
+**Example for solve_equation** (keep the same keys, change numbers):
+{{
+    "categoryId": "solving_for_x",
+    "categoryName": "Solving for X",
+    "questionType": "solve_equation",
+    "questionTypeLabel": "Solve Equation",
+    "prompt": "Solve the equation for x: 3x - 7 = 11.",
+    "givenEquation": "3x - 7 = 11",
+    "solution": {{
+        "answer": "x = 6",
+        "answerNumeric": 6,
+        "steps": ["Add 7 to both sides: 3x = 18", "Divide by 3: x = 6"]
+    }},
+    "kcTags": ["linear-equations"],
+    "dfTargets": ["DF1"],
+    "difficulty": {difficulty}
+}}
+
 **Important Guidelines**:
 1. Make the question educational and appropriate for difficulty level {difficulty}
 2. Provide clear, step-by-step solutions
 3. Use realistic numbers (avoid very large or complex decimals)
-4. For word problems, create relatable real-world scenarios
-5. Ensure mathematical accuracy
-6. Keep steps concise but complete
+4. For word problems, create relatable real-world scenarios with numeric details
+5. Ensure mathematical accuracy and that the prompt references the same equation you provide
+6. Do not output generic stems like "Solve the equation for x" without including the actual equation
+7. Return ONLY the JSON object, no additional text.
 
 **Difficulty Guidelines**:
 - Level 1: Single-step problems, small integers
 - Level 2: Two-step problems, may include fractions
-- Level 3: Multi-step problems, complex scenarios
-
-Return ONLY the JSON object, no additional text."""
+- Level 3: Multi-step problems, complex scenarios"""
         
         return prompt
     
@@ -393,9 +419,9 @@ Return ONLY the JSON object, no additional text."""
         return False
     
     def _update_student_progress(
-        self, 
-        user_id: str, 
-        is_correct: bool, 
+        self,
+        user_id: str,
+        is_correct: bool,
         category_id: str,
         difficulty: int
     ) -> int:
@@ -429,8 +455,56 @@ Return ONLY the JSON object, no additional text."""
                 }
             }
         )
-        
+
         return xp_earned
+
+    def _default_equation_payload(self, difficulty: int) -> Dict:
+        """Provide a concrete equation/solution pair for clarity in the UI."""
+        examples = {
+            1: {
+                'givenEquation': '2x + 5 = 13',
+                'prompt': 'Solve the equation for x: 2x + 5 = 13.',
+                'solution': {
+                    'answer': 'x = 4',
+                    'answerNumeric': 4,
+                    'steps': [
+                        'Subtract 5 from both sides: 2x = 8',
+                        'Divide both sides by 2: x = 4'
+                    ]
+                }
+            },
+            2: {
+                'givenEquation': '3(x - 2) = 2x + 4',
+                'prompt': 'Solve the equation for x: 3(x - 2) = 2x + 4.',
+                'solution': {
+                    'answer': 'x = 10',
+                    'answerNumeric': 10,
+                    'steps': [
+                        'Distribute 3: 3x - 6 = 2x + 4',
+                        'Subtract 2x from both sides: x - 6 = 4',
+                        'Add 6 to both sides: x = 10'
+                    ]
+                }
+            },
+            3: {
+                'givenEquation': '5x/2 - 3 = x + 7',
+                'prompt': 'Solve the equation for x: (5x/2) - 3 = x + 7.',
+                'solution': {
+                    'answer': 'x = 20/3',
+                    'answerNumeric': 20 / 3,
+                    'steps': [
+                        'Subtract x from both sides: (3x/2) - 3 = 7',
+                        'Add 3 to both sides: 3x/2 = 10',
+                        'Multiply both sides by 2/3: x = (10 * 2) / 3 ≈ 6.67'
+                    ]
+                }
+            }
+        }
+
+        payload = examples.get(difficulty, examples[1]).copy()
+        payload['solution'] = payload['solution'].copy()
+        payload['solution']['steps'] = list(payload['solution'].get('steps', []))
+        return payload
     
     def _get_fallback_question(self, category_id: str, difficulty: int) -> Dict:
         """Get a question from existing database as fallback"""
