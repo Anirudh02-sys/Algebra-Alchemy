@@ -99,7 +99,7 @@ class QuestionGenerator:
         try:
             # Call OpenAI API
             response = self.client.chat.completions.create(
-                model="gpt-4",
+                model="gpt-4o-mini",
                 messages=[
                     {
                         "role": "system",
@@ -124,6 +124,29 @@ class QuestionGenerator:
                 content = content.strip()
             
             question_data = json.loads(content)
+
+            # Ensure required metadata fields exist for downstream UI/state
+            question_data.setdefault('categoryId', category_id)
+            question_data.setdefault('categoryName', self.categories.get(category_id, category_id))
+            question_data.setdefault('questionType', question_type)
+            question_data.setdefault('questionTypeLabel', self.question_types.get(question_type, question_type))
+            question_data.setdefault('difficulty', difficulty)
+
+            # Normalize prompt and solution keys so the UI doesn't show blanks
+            if 'prompt' not in question_data:
+                if 'wordProblem' in question_data:
+                    question_data['prompt'] = question_data['wordProblem']
+                elif 'givenEquation' in question_data:
+                    question_data['prompt'] = f"Solve the equation: {question_data['givenEquation']}"
+                else:
+                    question_data['prompt'] = question_data.get('question', '')
+
+            if 'solution' not in question_data and 'correctTranslation' in question_data:
+                question_data['solution'] = {
+                    'answer': question_data['correctTranslation'],
+                    'answerNumeric': question_data.get('answerNumeric'),
+                    'steps': question_data.get('steps', [])
+                }
             
             # Add metadata
             question_data['user_id'] = user_id

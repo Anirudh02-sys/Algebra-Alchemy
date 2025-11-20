@@ -138,13 +138,13 @@ def generate_question_api(request):
         custom_prompt = data.get('prompt')
         
         # Generate question
-            question = question_gen.generate_question(
-                user_id=user_id,
-                category_id=category_id,
-                question_type=question_type,
-                difficulty=difficulty,
-                custom_prompt=custom_prompt
-            )
+        question = question_gen.generate_question(
+            user_id=user_id,
+            category_id=category_id,
+            question_type=question_type,
+            difficulty=difficulty,
+            custom_prompt=custom_prompt
+        )
         
         return JsonResponse({
             'success': True,
@@ -156,6 +156,7 @@ def generate_question_api(request):
             'success': False,
             'error': str(e)
         }, status=500)
+
 
 
 @require_http_methods(["GET"])
