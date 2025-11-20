@@ -360,70 +360,93 @@ let draggedElement = null;
 
 // ======================= REACTION IMAGE =======================
 
-const reactionImagePaths = {
-    ready: "/static/images/wizard_enter.png",
-    thinking: "/static/images/wizard_doubt.png",
-    progress: "/static/images/wizard_happy_progress.png",
-    complete: "/static/images/wizard_on_completion.png",
+const reactionStates = {
+    ready: {
+        src: "/static/images/wizard_enter.png",
+        title: "Ready",
+        subtitle: "I’m here and ready to walk through the next step with you.",
+        alt: "Wizard ready to help",
+    },
+    thinking: {
+        src: "/static/images/wizard_doubt.png",
+        title: "Thinking",
+        subtitle: "Let me reason through this move before we commit.",
+        alt: "Wizard thinking",
+    },
+    progress: {
+        src: "/static/images/wizard_happy_progress.png",
+        title: "Keep going",
+        subtitle: "Nice! That shift brings us closer to isolating x.",
+        alt: "Wizard cheering for progress",
+    },
+    complete: {
+        src: "/static/images/wizard_on_completion.png",
+        title: "Done!",
+        subtitle: "Spell complete. Let’s lock in this solution.",
+        alt: "Wizard celebrating completion",
+    },
 };
 
-let reactionImageEl = null;
-
-function ensureReactionImage() {
-    if (reactionImageEl && document.body.contains(reactionImageEl)) {
-        return reactionImageEl;
-    }
-
+function getReactionElements() {
     const panel = document.querySelector(".reaction-panel");
-    if (!panel) return null;
+    if (!panel) return {};
 
-    const existing = panel.querySelector("#reaction-image");
-    if (existing) {
-        reactionImageEl = existing;
-        return reactionImageEl;
-    }
-
-    const wrapper = document.createElement("div");
-    wrapper.className = "reaction-icon";
-
-    const img = document.createElement("img");
-    img.id = "reaction-image";
-    img.alt = "Wizard reaction";
-    img.classList.add("hidden");
-
-    const label = document.createElement("span");
-    label.textContent = "Wizard";
-
-    wrapper.appendChild(img);
-    wrapper.appendChild(label);
-
-    const icons = panel.querySelector(".reaction-icons");
-    if (icons) {
-        panel.insertBefore(wrapper, icons);
-    } else {
-        panel.appendChild(wrapper);
-    }
-
-    reactionImageEl = img;
-    return reactionImageEl;
+    return {
+        img: panel.querySelector("#reaction-image"),
+        label: panel.querySelector("#reaction-state-label"),
+        desc: panel.querySelector("#reaction-state-desc"),
+        steps: panel.querySelectorAll("[data-reaction-step]"),
+    };
 }
 
 function setReactionState(state) {
-    const img = ensureReactionImage();
-    if (!img) return;
+    const config = reactionStates[state];
+    if (!config) return;
 
-    const src = reactionImagePaths[state];
-    if (!src) return;
+    const { img, label, desc, steps } = getReactionElements();
 
-    img.src = src;
-    img.classList.remove("hidden");
+    if (img) {
+        img.src = config.src;
+        img.alt = config.alt;
+        img.classList.remove("hidden");
+    }
+
+    if (label) {
+        label.textContent = config.title;
+    }
+
+    if (desc) {
+        desc.textContent = config.subtitle;
+    }
+
+    if (steps && steps.length) {
+        steps.forEach((step) => {
+            const isActive = step.dataset.reactionStep === state;
+            step.classList.toggle("active", isActive);
+            step.setAttribute("aria-pressed", isActive ? "true" : "false");
+        });
+    }
 }
 
 function hideReactionImage() {
-    const img = ensureReactionImage();
+    const { img } = getReactionElements();
     if (!img) return;
 
     img.classList.add("hidden");
+}
+
+function setupReactionStepClicks() {
+    const { steps } = getReactionElements();
+    if (!steps) return;
+
+    steps.forEach((step) => {
+        step.addEventListener("click", () => {
+            const state = step.dataset.reactionStep;
+            if (state) {
+                setReactionState(state);
+            }
+        });
+    });
 }
 
 // ======================= GENERIC HELPERS =======================
@@ -1231,6 +1254,7 @@ document.addEventListener("DOMContentLoaded", () => {
     setupMcqNextButton();
     setupExpressionButtons();
     setupProgressPopup();
+    setupReactionStepClicks();
     activateIsolatingLesson(); // start in drag mode
 });
 
