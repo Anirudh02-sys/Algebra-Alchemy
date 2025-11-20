@@ -30,6 +30,11 @@
                 <span>Learn</span>
             </a>
 
+            <a href="{% url 'question-generator' %}" class="nav-item {% if active_page == 'generator' %}active{% endif %}">
+                <div class="nav-icon-circle">⚙️</div>
+                <span>Generator</span>
+            </a>
+
             <a href="#" id="sidebar-progress" class="nav-item {% if active_page == 'progress' %}active{% endif %}">
                 <div class="nav-icon-circle">★</div>
                 <span>Current<br>Progress</span>

@@ -57,11 +57,12 @@ class QuestionGenerator:
         return progress
     
     def generate_question(
-        self, 
-        user_id: str, 
+        self,
+        user_id: str,
         category_id: Optional[str] = None,
         question_type: Optional[str] = None,
-        difficulty: Optional[int] = None
+        difficulty: Optional[int] = None,
+        custom_prompt: Optional[str] = None
     ) -> Dict:
         """
         Generate a new algebra question based on student's level
@@ -88,10 +89,11 @@ class QuestionGenerator:
         
         # Create prompt for OpenAI
         prompt = self._create_generation_prompt(
-            category_id, 
-            question_type, 
-            difficulty, 
-            progress
+            category_id,
+            question_type,
+            difficulty,
+            progress,
+            custom_prompt
         )
         
         try:
@@ -141,11 +143,12 @@ class QuestionGenerator:
             return self._get_fallback_question(category_id, difficulty)
     
     def _create_generation_prompt(
-        self, 
+        self,
         category_id: str,
         question_type: str,
         difficulty: int,
-        progress: Dict
+        progress: Dict,
+        custom_instructions: Optional[str] = None
     ) -> str:
         """Create detailed prompt for question generation"""
         
@@ -193,6 +196,8 @@ class QuestionGenerator:
 **Type**: {type_label} ({question_type})
 **Difficulty**: {difficulty} (1=easy, 2=medium, 3=hard)
 **Guidance**: {category_guidance.get(category_id, '')}
+
+**Extra creator notes**: {custom_instructions or 'Keep concise and pedagogically sound.'}
 
 **Required JSON Structure**:
 {{
