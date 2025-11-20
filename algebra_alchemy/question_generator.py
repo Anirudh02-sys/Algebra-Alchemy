@@ -57,11 +57,12 @@ class QuestionGenerator:
         return progress
     
     def generate_question(
-        self, 
-        user_id: str, 
+        self,
+        user_id: str,
         category_id: Optional[str] = None,
         question_type: Optional[str] = None,
-        difficulty: Optional[int] = None
+        difficulty: Optional[int] = None,
+        custom_prompt: Optional[str] = None
     ) -> Dict:
         """
         Generate a new algebra question based on student's level
@@ -88,16 +89,17 @@ class QuestionGenerator:
         
         # Create prompt for OpenAI
         prompt = self._create_generation_prompt(
-            category_id, 
-            question_type, 
-            difficulty, 
-            progress
+            category_id,
+            question_type,
+            difficulty,
+            progress,
+            custom_prompt
         )
         
         try:
             # Call OpenAI API
             response = self.client.chat.completions.create(
-                model="gpt-4",
+                model="gpt-4o-mini",
                 messages=[
                     {
                         "role": "system",
@@ -122,6 +124,29 @@ class QuestionGenerator:
                 content = content.strip()
             
             question_data = json.loads(content)
+
+            # Ensure required metadata fields exist for downstream UI/state
+            question_data.setdefault('categoryId', category_id)
+            question_data.setdefault('categoryName', self.categories.get(category_id, category_id))
+            question_data.setdefault('questionType', question_type)
+            question_data.setdefault('questionTypeLabel', self.question_types.get(question_type, question_type))
+            question_data.setdefault('difficulty', difficulty)
+
+            # Normalize prompt and solution keys so the UI doesn't show blanks
+            if 'prompt' not in question_data:
+                if 'wordProblem' in question_data:
+                    question_data['prompt'] = question_data['wordProblem']
+                elif 'givenEquation' in question_data:
+                    question_data['prompt'] = f"Solve the equation: {question_data['givenEquation']}"
+                else:
+                    question_data['prompt'] = question_data.get('question', '')
+
+            if 'solution' not in question_data and 'correctTranslation' in question_data:
+                question_data['solution'] = {
+                    'answer': question_data['correctTranslation'],
+                    'answerNumeric': question_data.get('answerNumeric'),
+                    'steps': question_data.get('steps', [])
+                }
             
             # Add metadata
             question_data['user_id'] = user_id
@@ -141,11 +166,12 @@ class QuestionGenerator:
             return self._get_fallback_question(category_id, difficulty)
     
     def _create_generation_prompt(
-        self, 
+        self,
         category_id: str,
         question_type: str,
         difficulty: int,
-        progress: Dict
+        progress: Dict,
+        custom_instructions: Optional[str] = None
     ) -> str:
         """Create detailed prompt for question generation"""
         
@@ -193,6 +219,8 @@ class QuestionGenerator:
 **Type**: {type_label} ({question_type})
 **Difficulty**: {difficulty} (1=easy, 2=medium, 3=hard)
 **Guidance**: {category_guidance.get(category_id, '')}
+
+**Extra creator notes**: {custom_instructions or 'Keep concise and pedagogically sound.'}
 
 **Required JSON Structure**:
 {{
