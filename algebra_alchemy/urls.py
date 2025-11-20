@@ -1,39 +1,42 @@
 """
 URL configuration for algebra_alchemy project.
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/5.2/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
 from django.urls import path, re_path
 from django.contrib.auth import views as auth_views
 from .views import *
 
-
-import algebra_alchemy.views as views
-
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # re_path(r'^$', views.landing, name='landing'),
-    # path("home/", views.home, name='home'),
-    # re_path(r'^sendmessage$', views.sendmessage, name ='sendmessage'),
+    
+    # ==================== MAIN PAGES ====================
     path("", tutor_dashboard, name="tutor-dashboard"),
     path("progress/", current_progress, name="current-progress"),
     path("graph/", learning_graph, name="learning-graph"),
     path("calendar/", calendar_view, name="calendar"),
-    path("api/isolating/", isolating_problems),
-    path("api/questions/", get_all_questions),
-    path("api/questions/category/<str:category_id>/", get_questions_by_category)
-
-
+    
+    # ==================== EXISTING API ENDPOINTS ====================
+    path("api/isolating/", isolating_problems, name="isolating-problems"),
+    path("api/questions/", get_all_questions, name="all-questions"),
+    path("api/questions/category/<str:category_id>/", get_questions_by_category, name="questions-by-category"),
+    path("api/questions/type/<str:q_type>/", get_questions_by_type, name="questions-by-type"),
+    path("api/questions/difficulty/<int:level>/", get_questions_by_difficulty, name="questions-by-difficulty"),
+    
+    # ==================== NEW AI-POWERED ENDPOINTS ====================
+    
+    # Question Generation
+    path("api/generate-question/", generate_question_api, name="generate-question"),
+    path("api/next-practice-question/", get_next_practice_question, name="next-practice-question"),
+    path("api/bulk-generate/", bulk_generate_questions, name="bulk-generate"),
+    
+    # Answer Validation
+    path("api/validate-answer/", validate_answer_api, name="validate-answer"),
+    
+    # Student Progress & Stats
+    path("api/stats/", get_student_stats, name="student-stats"),
+    path("api/student-progress/", get_student_progress_view, name="student-progress"),
+    path("api/question-history/", get_question_history_api, name="question-history"),
+    
+    # AI Tutor Chat
+    path("api/chat-tutor/", chat_with_tutor, name="chat-tutor"),
 ]
