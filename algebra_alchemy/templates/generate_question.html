@@ -1,0 +1,234 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Algebra Alchemy – Generate Questions</title>
+    <link rel="stylesheet" href="{% static 'css/tutor.css' %}">
+</head>
+
+<body>
+<div class="app-shell">
+
+    <!-- =========== SIDEBAR (Copied exactly as your tutor page) =========== -->
+    <aside class="sidebar">
+        <div class="sidebar-top">
+            <div class="nav-icon-circle">
+                👤
+            </div>
+        </div>
+
+        <div class="nav-section">
+
+            <div class="nav-item">
+                <div class="nav-icon-circle outline">☰</div>
+            </div>
+
+            <a href="{% url 'tutor-dashboard' %}" class="nav-item">
+                <div class="nav-icon-circle">✏️</div>
+                <span>Learn</span>
+            </a>
+
+            <a href="{% url 'current-progress' %}" class="nav-item">
+                <div class="nav-icon-circle">★</div>
+                <span>Current<br>Progress</span>
+            </a>
+            <a href="{% url 'question-generator' %}" 
+            class="nav-item {% if active_page == 'generator' %}active{% endif %}">
+                <div class="nav-icon-circle">⚗️</div>
+                <span>Generate<br>Questions</span>
+            </a>
+            <a href="{% url 'learning-graph' %}" class="nav-item">
+                <div class="nav-icon-circle">📊</div>
+                <span>Learning<br>Graph</span>
+            </a>
+
+            <a href="{% url 'calendar' %}" class="nav-item">
+                <div class="nav-icon-circle">📅</div>
+                <span>Calendar</span>
+            </a>
+
+        </div>
+
+        <div class="sidebar-spacer"></div>
+    </aside>
+
+    <!-- ==================== MAIN CONTENT ==================== -->
+    <main class="main-area">
+
+        <!-- HEADER BAR -->
+        <header class="top-bar">
+            <div>
+                <div class="top-title">AI Question Generator</div>
+                <div class="top-subtitle">Create new algebra questions using AI + MongoDB</div>
+            </div>
+        </header>
+
+        <!-- PAGE MAIN CARD -->
+        <section class="page-card">
+
+            <div class="page-card-title">Generate New Question</div>
+            <div class="page-card-body">
+                Select examples from the database and let AI build new practice problems.
+            </div>
+
+            <div style="display:flex; gap:36px; margin-top:20px;">
+
+                <!-- LEFT: Filters + Example List -->
+                <div style="flex:1; display:flex; flex-direction:column; gap:14px;">
+
+                    <label>Category</label>
+                    <select id="category-select" class="expr-input">
+                        <option value="">All</option>
+                    </select>
+
+                    <label>Difficulty</label>
+                    <select id="difficulty-select" class="expr-input">
+                        <option value="">All</option>
+                        <option value="1">1 – Easy</option>
+                        <option value="2">2 – Medium</option>
+                        <option value="3">3 – Hard</option>
+                    </select>
+
+                    <h3 style="margin-top:10px;">Select Example Questions</h3>
+                    <div id="question-list" style="
+                        height:420px; 
+                        overflow-y:auto; 
+                        border:1px solid #eee; 
+                        border-radius:16px; 
+                        padding:12px;
+                        background:#fff;
+                    "></div>
+
+                </div>
+
+                <!-- RIGHT: Generate Output -->
+                <div style="flex:1; display:flex; flex-direction:column; gap:14px;">
+
+                    <button id="generate-btn" class="next-btn">Generate Question</button>
+
+                    <div id="generated-output" style="
+                        min-height:260px;
+                        white-space:pre-wrap;
+                        border-radius:16px;
+                        padding:18px;
+                        background:#fff;
+                        border:1px solid #ececf3;
+                        font-family:monospace;
+                    ">
+                        No question generated yet.
+                    </div>
+
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+<script>
+    let allQuestions = [];
+    let selected = [];
+
+    async function loadQuestions() {
+        const res = await fetch("/api/questions/");
+        const data = await res.json();
+        allQuestions = data.problems;
+
+        populateCategories();
+        renderQuestions(allQuestions);
+    }
+
+    function populateCategories() {
+        const select = document.getElementById("category-select");
+        const unique = [...new Set(allQuestions.map(q => q.categoryId))];
+
+        unique.forEach(cat => {
+            if (!cat) return;
+            const opt = document.createElement("option");
+            opt.value = cat;
+            opt.textContent = cat;
+            select.appendChild(opt);
+        });
+    }
+
+    function renderQuestions(list) {
+        const box = document.getElementById("question-list");
+        box.innerHTML = "";
+
+        list.forEach(q => {
+            const card = document.createElement("div");
+            card.className = "question-card";
+            card.style = `
+                padding:10px 14px;
+                background:#fff;
+                border-radius:12px;
+                margin-bottom:8px;
+                border:1px solid #ddd;
+                cursor:pointer;
+            `;
+            card.innerHTML = `
+                <strong>${q.categoryId}</strong><br>
+                ${q.wordProblem || q.prompt}
+            `;
+
+            card.onclick = () => {
+                if (card.dataset.sel === "1") {
+                    card.dataset.sel = "0";
+                    card.style.background = "#fff";
+                    selected = selected.filter(e => e !== q);
+                } else {
+                    card.dataset.sel = "1";
+                    card.style.background = "#f3ecff";
+                    selected.push(q);
+                }
+            };
+
+            box.appendChild(card);
+        });
+    }
+
+    function applyFilters() {
+        const c = document.getElementById("category-select").value;
+        const d = document.getElementById("difficulty-select").value;
+
+        let filtered = allQuestions;
+        if (c) filtered = filtered.filter(q => q.categoryId === c);
+        if (d) filtered = filtered.filter(q => q.difficulty == d);
+
+        selected = [];
+        renderQuestions(filtered);
+    }
+
+    document.getElementById("category-select").onchange = applyFilters;
+    document.getElementById("difficulty-select").onchange = applyFilters;
+
+    document.getElementById("generate-btn").onclick = async function () {
+        if (selected.length === 0) {
+            alert("Pick at least one example.");
+            return;
+        }
+
+        const res = await fetch("/generate-question/", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({
+                examples: selected,
+                category: document.getElementById("category-select").value || selected[0].categoryId,
+                difficulty: document.getElementById("difficulty-select").value || selected[0].difficulty
+            })
+        });
+
+        const data = await res.json();
+        document.getElementById("generated-output").textContent =
+            JSON.stringify(data.generated, null, 2);
+    };
+
+    loadQuestions();
+</script>
+
+</body>
+</html>

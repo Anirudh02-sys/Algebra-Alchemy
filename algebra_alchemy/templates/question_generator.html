@@ -1,0 +1,69 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Generate Questions</title>
+    <link rel="stylesheet" href="{% static 'css/tutor.css' %}">
+</head>
+<body>
+
+<div class="app-shell">
+
+    <!-- LEFT: SAME SIDEBAR AS YOUR SITE -->
+    {% include "partials/sidebar.html" %}
+
+    <main class="main-area">
+
+        <header class="top-bar">
+            <div>
+                <div class="top-title">Question Generator</div>
+                <div class="top-subtitle">Create new Algebra problems using AI</div>
+            </div>
+        </header>
+
+        <section class="content-row">
+
+            <div class="page-card">
+                <div class="page-card-title">Generate Question</div>
+
+                <form id="genForm">
+                    <label>Category:</label>
+                    <input type="text" name="category" value="solving_for_x">
+
+                    <label>Difficulty (1–3):</label>
+                    <input type="number" name="difficulty" value="1" min="1" max="3">
+
+                    <button class="next-btn" type="submit">Generate →</button>
+                </form>
+            </div>
+
+            <div class="page-card" id="resultCard" style="display:none;">
+                <div class="page-card-title">Generated Question</div>
+                <pre id="resultBox" style="white-space: pre-wrap;"></pre>
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+<script>
+document.getElementById("genForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const form = new FormData(e.target);
+
+    const res = await fetch("/generate-question/", {
+        method: "POST",
+        body: form
+    });
+
+    const data = await res.json();
+
+    document.getElementById("resultCard").style.display = "block";
+    document.getElementById("resultBox").textContent = JSON.stringify(data.question, null, 2);
+});
+</script>
+
+</body>
+</html>

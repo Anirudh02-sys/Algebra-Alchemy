@@ -33,7 +33,11 @@ urlpatterns = [
     path("calendar/", calendar_view, name="calendar"),
     path("api/isolating/", isolating_problems),
     path("api/questions/", get_all_questions),
-    path("api/questions/category/<str:category_id>/", get_questions_by_category)
+    path("api/questions/category/<str:category_id>/", get_questions_by_category),
+    path("generate-question/", generate_question_view, name="generate-question-api"),
+    path("question-generator/", render_question_gen_page, name="question-generator-page"),
+
+
 
 
 ]

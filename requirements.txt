@@ -6,3 +6,5 @@ sentence-transformers==2.3.1 # Local embeddings , to save money $$
 pdfplumber # parse pdf content
 djongo
 pymongo
+sympy
+wolframalpha

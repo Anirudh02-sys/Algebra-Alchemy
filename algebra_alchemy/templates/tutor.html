@@ -35,6 +35,12 @@
                 <span>Current<br>Progress</span>
             </a>
 
+            <a href="{% url 'question-generator' %}" 
+            class="nav-item {% if active_page == 'generator' %}active{% endif %}">
+                <div class="nav-icon-circle">⚗️</div>
+                <span>Generate<br>Questions</span>
+            </a>
+
             <a href="{% url 'learning-graph' %}" class="nav-item {% if active_page == 'graph' %}active{% endif %}">
                 <div class="nav-icon-circle">📊</div>
                 <span>Learning<br>Graph</span>
