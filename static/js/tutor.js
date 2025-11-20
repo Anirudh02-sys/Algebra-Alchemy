@@ -358,6 +358,74 @@ const expressionSets = {
 let currentMode = "isolating"; // "isolating" | "solving" | "expressions" | "practice1" | "practice2"
 let draggedElement = null;
 
+// ======================= REACTION IMAGE =======================
+
+const reactionImagePaths = {
+    ready: "/static/images/wizard_enter.png",
+    thinking: "/static/images/wizard_doubt.png",
+    progress: "/static/images/wizard_happy_progress.png",
+    complete: "/static/images/wizard_on_completion.png",
+};
+
+let reactionImageEl = null;
+
+function ensureReactionImage() {
+    if (reactionImageEl && document.body.contains(reactionImageEl)) {
+        return reactionImageEl;
+    }
+
+    const panel = document.querySelector(".reaction-panel");
+    if (!panel) return null;
+
+    const existing = panel.querySelector("#reaction-image");
+    if (existing) {
+        reactionImageEl = existing;
+        return reactionImageEl;
+    }
+
+    const wrapper = document.createElement("div");
+    wrapper.className = "reaction-icon";
+
+    const img = document.createElement("img");
+    img.id = "reaction-image";
+    img.alt = "Wizard reaction";
+    img.classList.add("hidden");
+
+    const label = document.createElement("span");
+    label.textContent = "Wizard";
+
+    wrapper.appendChild(img);
+    wrapper.appendChild(label);
+
+    const icons = panel.querySelector(".reaction-icons");
+    if (icons) {
+        panel.insertBefore(wrapper, icons);
+    } else {
+        panel.appendChild(wrapper);
+    }
+
+    reactionImageEl = img;
+    return reactionImageEl;
+}
+
+function setReactionState(state) {
+    const img = ensureReactionImage();
+    if (!img) return;
+
+    const src = reactionImagePaths[state];
+    if (!src) return;
+
+    img.src = src;
+    img.classList.remove("hidden");
+}
+
+function hideReactionImage() {
+    const img = ensureReactionImage();
+    if (!img) return;
+
+    img.classList.add("hidden");
+}
+
 // ======================= GENERIC HELPERS =======================
 
 function shuffle(array) {
@@ -498,6 +566,8 @@ function loadIsolatingProblem(index) {
     const problem = isolatingProblems[index];
     isolatingCorrectOrder = problem.correct;
 
+    setReactionState("ready");
+
     const container = document.getElementById("chip-container");
     const status = document.getElementById("status-message");
     const nextBtn = document.getElementById("next-problem");
@@ -604,6 +674,11 @@ function checkIsolatingCorrect() {
     if (isCorrect) {
         status.textContent = "Correct! 🎉";
         status.classList.add("correct");
+        setReactionState(
+            isolatingCurrentIndex === isolatingProblems.length - 1
+                ? "complete"
+                : "progress"
+        );
 
         container.querySelectorAll(".chip").forEach((c) => {
             c.classList.add("correct-chip");
@@ -634,6 +709,7 @@ function checkIsolatingCorrect() {
 
         container.classList.add("shake");
         setTimeout(() => container.classList.remove("shake"), 250);
+        setReactionState("thinking");
     }
 }
 
@@ -642,6 +718,7 @@ function checkIsolatingCorrect() {
 function loadSolvingProblem(index) {
     solvingCurrentProblemIndex = index;
     solvingCurrentStepIndex = 0;
+    setReactionState("ready");
     renderCurrentSolvingStep();
     updatePagination(index);
     updateProgressUI();
@@ -697,11 +774,13 @@ function handleMcqAnswer(selectedIndex) {
         feedback.classList.add("correct");
         optionButtons[selectedIndex].classList.add("mcq-correct");
         nextBtn.disabled = false;
+        setReactionState("progress");
     } else {
         feedback.textContent = "Not quite. Try again.";
         feedback.classList.remove("correct");
         optionButtons[selectedIndex].classList.add("mcq-incorrect");
         nextBtn.disabled = true;
+        setReactionState("thinking");
     }
 }
 
@@ -732,6 +811,7 @@ function setupMcqNextButton() {
                     "You finished all Solving for X problems! 🎉";
                 feedback.classList.add("correct");
                 nextBtn.disabled = true;
+                setReactionState("complete");
             }
         }
     });
@@ -750,11 +830,16 @@ function currentExpressionSet() {
     return null;
 }
 
+function isExpressionSetComplete(set) {
+    return set.problems.length > 0 && set.solved.every(Boolean);
+}
+
 function loadExpressionProblem(index) {
     const set = currentExpressionSet();
     if (!set) return;
 
     set.currentIndex = index;
+    setReactionState("ready");
     const problem = set.problems[index];
 
     const promptEl = document.getElementById("expr-prompt");
@@ -810,9 +895,16 @@ function setupExpressionButtons() {
                 set.score += 1;
                 updateProgressUI();
             }
+
+            if (isExpressionSetComplete(set)) {
+                setReactionState("complete");
+            } else {
+                setReactionState("progress");
+            }
         } else {
             feedback.textContent = "Not quite. Check your signs and order.";
             feedback.classList.remove("correct");
+            setReactionState("thinking");
         }
     });
 
