@@ -1,0 +1,126 @@
+{% block content %}
+
+<style>
+    .json-box {
+        background: #111;
+        color: #0f0;
+        padding: 15px;
+        border-radius: 8px;
+        white-space: pre-wrap;
+        font-family: "Fira Code", monospace;
+        max-height: 400px;
+        overflow-y: auto;
+        font-size: 14px;
+    }
+    .loader {
+        display: none;
+        margin-top: 15px;
+    }
+</style>
+
+<div class="container mt-5">
+    <h2 class="mb-4">Generate New Algebra Question</h2>
+
+    <!-- INPUT FORM -->
+    <div class="card p-4 shadow-sm">
+
+        <div class="mb-3">
+            <label class="form-label">Category</label>
+            <select id="category" class="form-select">
+                {% for id, name in categories %}
+                <option value="{{ id }}">{{ name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Question Type</label>
+            <select id="question_type" class="form-select">
+                {% for id, name in question_types %}
+                <option value="{{ id }}">{{ name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Difficulty</label>
+            <select id="difficulty" class="form-select">
+                {% for d in difficulties %}
+                <option value="{{ d }}">{{ d }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <button id="generateBtn" class="btn btn-primary w-100">
+            Generate Question
+        </button>
+
+        <div class="loader" id="loadingSpinner">
+            <div class="spinner-border text-primary"></div>
+        </div>
+    </div>
+
+    <!-- OUTPUT -->
+    <h4 class="mt-5">Generated Question</h4>
+    <div id="outputBox" class="json-box"></div>
+
+</div>
+
+<script>
+    document.getElementById("generateBtn").onclick = async function () {
+
+        const category = document.getElementById("category").value;
+        const question_type = document.getElementById("question_type").value;
+        const difficulty = parseInt(document.getElementById("difficulty").value);
+
+        const spinner = document.getElementById("loadingSpinner");
+        const output = document.getElementById("outputBox");
+
+        output.textContent = "";
+        spinner.style.display = "block";
+
+        try {
+            const response = await fetch("/api/generate-question/", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRFToken": getCookie("csrftoken")
+                },
+                body: JSON.stringify({
+                    category_id: category,
+                    question_type: question_type,
+                    difficulty: difficulty
+                })
+            });
+
+            const data = await response.json();
+            spinner.style.display = "none";
+
+            if (data.success) {
+                output.textContent = JSON.stringify(data.question, null, 2);
+            } else {
+                output.textContent = "Error: " + data.error;
+            }
+
+        } catch (err) {
+            spinner.style.display = "none";
+            output.textContent = "Error: " + err;
+        }
+    };
+
+
+    // CSRF helper
+    function getCookie(name) {
+        const cookieArr = document.cookie.split(";");
+
+        for (let cookie of cookieArr) {
+            cookie = cookie.trim();
+            if (cookie.startsWith(name + "=")) {
+                return cookie.substring(name.length + 1);
+            }
+        }
+        return "";
+    }
+</script>
+
+{% endblock %}
