@@ -17,6 +17,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, re_path
 from django.contrib.auth import views as auth_views
+from .views import *
+
 
 import algebra_alchemy.views as views
 
@@ -24,5 +26,14 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     # re_path(r'^$', views.landing, name='landing'),
     # path("home/", views.home, name='home'),
-    re_path(r'^sendmessage$', views.sendmessage, name ='sendmessage'),
+    # re_path(r'^sendmessage$', views.sendmessage, name ='sendmessage'),
+    path("", tutor_dashboard, name="tutor-dashboard"),
+    path("progress/", current_progress, name="current-progress"),
+    path("graph/", learning_graph, name="learning-graph"),
+    path("calendar/", calendar_view, name="calendar"),
+    path("api/isolating/", isolating_problems),
+    path("api/questions/", get_all_questions),
+    path("api/questions/category/<str:category_id>/", get_questions_by_category)
+
+
 ]

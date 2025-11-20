@@ -1,0 +1,129 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Algebra Alchemy – Learning Graph</title>
+    <link rel="stylesheet" href="{% static 'css/tutor.css' %}">
+</head>
+<body>
+<div class="app-shell">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <div class="sidebar-top">
+            <div class="nav-icon-circle">
+                👤
+            </div>
+        </div>
+
+        <div class="nav-section">
+            <div class="nav-item">
+                <div class="nav-icon-circle outline">
+                    ☰
+                </div>
+            </div>
+
+            <a href="{% url 'tutor-dashboard' %}" class="nav-item {% if active_page|default:'learn' == 'learn' %}active{% endif %}">
+                <div class="nav-icon-circle">✏️</div>
+                <span>Learn</span>
+            </a>
+
+            <a href="{% url 'current-progress' %}" class="nav-item {% if active_page == 'progress' %}active{% endif %}">
+                <div class="nav-icon-circle">★</div>
+                <span>Current<br>Progress</span>
+            </a>
+
+            <a href="{% url 'learning-graph' %}" class="nav-item {% if active_page == 'graph' %}active{% endif %}">
+                <div class="nav-icon-circle">📊</div>
+                <span>Learning<br>Graph</span>
+            </a>
+
+            <a href="{% url 'calendar' %}" class="nav-item {% if active_page == 'calendar' %}active{% endif %}">
+                <div class="nav-icon-circle">📅</div>
+                <span>Calendar</span>
+            </a>
+        </div>
+
+        <div class="sidebar-spacer"></div>
+    </aside>
+
+    <!-- MAIN AREA -->
+    <main class="main-area">
+        <header class="top-bar">
+            <div>
+                <div class="top-title">Algebra Alchemy</div>
+                <div class="top-subtitle">Learning Graph</div>
+            </div>
+        </header>
+
+        <section class="content-single">
+            <article class="page-card">
+                <div class="page-card-title">Learning Graph</div>
+                <p class="page-card-body">
+                    Snapshot of your mastery gains across lessons and practice. We'll wire this to real data soon.
+                </p>
+
+                <div class="graph-card">
+                    <div class="graph-header">
+                        <div class="graph-title">Algebraic Fraction Reduction Progress</div>
+                        <div class="graph-subtitle">Past 10 weeks</div>
+                    </div>
+                    <div class="graph-legend">
+                        <span class="legend-item"><span class="legend-dot primary"></span> Comprehension</span>
+                        <span class="legend-item"><span class="legend-dot secondary"></span> Task Completion</span>
+                    </div>
+                    <svg class="line-chart" viewBox="0 0 700 300" role="img" aria-label="Learning progress line chart">
+                        <g class="chart-grid">
+                            <line x1="60" y1="40" x2="660" y2="40"/>
+                            <line x1="60" y1="80" x2="660" y2="80"/>
+                            <line x1="60" y1="120" x2="660" y2="120"/>
+                            <line x1="60" y1="160" x2="660" y2="160"/>
+                            <line x1="60" y1="200" x2="660" y2="200"/>
+                            <line x1="60" y1="240" x2="660" y2="240"/>
+                        </g>
+                        <g class="chart-axis">
+                            <text x="40" y="244">0</text>
+                            <text x="34" y="204">20</text>
+                            <text x="34" y="164">40</text>
+                            <text x="34" y="124">60</text>
+                            <text x="34" y="84">80</text>
+                            <text x="28" y="44">100</text>
+                        </g>
+
+                        <!-- Comprehension -->
+                        <path class="chart-area" d="M60 230 L120 190 L180 150 L240 120 L300 90 L360 70 L420 50 L480 48 L540 46 L600 44 L600 260 L60 260 Z"/>
+                        <polyline class="chart-line" points="60,230 120,190 180,150 240,120 300,90 360,70 420,50 480,48 540,46 600,44"/>
+                        <g class="chart-dots">
+                            <circle cx="60" cy="230" r="6"/><circle cx="120" cy="190" r="6"/><circle cx="180" cy="150" r="6"/><circle cx="240" cy="120" r="6"/><circle cx="300" cy="90" r="6"/><circle cx="360" cy="70" r="6"/><circle cx="420" cy="50" r="6"/><circle cx="480" cy="48" r="6"/><circle cx="540" cy="46" r="6"/><circle cx="600" cy="44" r="6"/>
+                        </g>
+
+                        <!-- Task Completion -->
+                        <path class="chart-area secondary" d="M60 240 L120 210 L180 180 L240 155 L300 130 L360 118 L420 110 L480 108 L540 106 L600 105 L600 260 L60 260 Z"/>
+                        <polyline class="chart-line secondary" points="60,240 120,210 180,180 240,155 300,130 360,118 420,110 480,108 540,106 600,105"/>
+                        <g class="chart-dots secondary">
+                            <circle cx="60" cy="240" r="6"/><circle cx="120" cy="210" r="6"/><circle cx="180" cy="180" r="6"/><circle cx="240" cy="155" r="6"/><circle cx="300" cy="130" r="6"/><circle cx="360" cy="118" r="6"/><circle cx="420" cy="110" r="6"/><circle cx="480" cy="108" r="6"/><circle cx="540" cy="106" r="6"/><circle cx="600" cy="105" r="6"/>
+                        </g>
+
+                        <g class="chart-axis">
+                            <text x="70" y="278">0</text>
+                            <text x="130" y="278">2</text>
+                            <text x="190" y="278">4</text>
+                            <text x="250" y="278">6</text>
+                            <text x="310" y="278">8</text>
+                            <text x="370" y="278">10</text>
+                            <text x="430" y="278">12</text>
+                            <text x="490" y="278">14</text>
+                            <text x="550" y="278">16</text>
+                            <text x="610" y="278">18</text>
+                            <text x="650" y="278">20</text>
+                        </g>
+                    </svg>
+                </div>
+
+                <a class="page-cta" style="margin-top: 10px; display: inline-block;" href="{% url 'tutor-dashboard' %}">← Back to lessons</a>
+            </article>
+        </section>
+    </main>
+</div>
+</body>
+</html>

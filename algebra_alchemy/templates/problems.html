@@ -1,0 +1,10 @@
+<h1>Isolating Problems</h1>
+
+{% for p in problems %}
+  <div>
+    <strong>{{ p.original }}</strong><br>
+    Tokens: {{ p.tokens }}<br>
+    Correct: {{ p.correct }}
+  </div>
+  <hr>
+{% endfor %}

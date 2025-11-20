@@ -1,0 +1,239 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Algebra Alchemy – Calendar</title>
+    <link rel="stylesheet" href="{% static 'css/tutor.css' %}">
+    <style>
+        /* Calendar-specific overrides to enforce grid layout even if external CSS is cached */
+        .calendar {
+            margin: 16px auto 0;
+            border: 1px solid #e0e0e6;
+            border-radius: 16px;
+            overflow: hidden;
+            background: #fff;
+            max-width: 1100px;
+            box-shadow: 0 8px 26px rgba(0,0,0,0.05);
+        }
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 16px;
+            background: #f7f6ff;
+            border-bottom: 1px solid #ece8ff;
+        }
+        .calendar-weekdays {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            padding: 10px 14px;
+            gap: 8px;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: #7a7a8a;
+            text-align: center;
+            border-bottom: 1px solid #ececec;
+        }
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            grid-auto-rows: 140px;
+            gap: 1px;
+            background: #dfe1ec;
+            padding: 1px;
+        }
+        .calendar-day {
+            padding: 12px 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            background: #fff;
+            position: relative;
+            border: 1px solid #e6e7f2;
+            border-radius: 6px;
+        }
+        .calendar-day.muted { color: #b8b8b8; }
+        .calendar-day.today {
+            background: #f3efff;
+            box-shadow: inset 0 0 0 1px rgba(93,41,238,0.25);
+        }
+        .calendar-day .date {
+            font-weight: 700;
+            font-size: 13px;
+            text-align: right;
+        }
+        .calendar-day.empty {
+            background: #f6f7fb;
+            border: 1px solid #e6e7f2;
+            color: transparent;
+        }
+        .calendar .chip {
+            box-shadow: 0 8px 16px rgba(0,0,0,0.08);
+            font-size: 12px;
+        }
+        .calendar-legend {
+            margin-top: 18px;
+            margin-bottom: 10px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .calendar-legend .chip {
+            padding: 8px 12px;
+            font-size: 12px;
+            box-shadow: 0 5px 12px rgba(0,0,0,0.07);
+        }
+        .back-link {
+            display: inline-block;
+            margin-top: 8px;
+        }
+    </style>
+</head>
+<body>
+<div class="app-shell">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <div class="sidebar-top">
+            <div class="nav-icon-circle">
+                👤
+            </div>
+        </div>
+
+        <div class="nav-section">
+            <div class="nav-item">
+                <div class="nav-icon-circle outline">
+                    ☰
+                </div>
+            </div>
+
+            <a href="{% url 'tutor-dashboard' %}" class="nav-item {% if active_page|default:'learn' == 'learn' %}active{% endif %}">
+                <div class="nav-icon-circle">✏️</div>
+                <span>Learn</span>
+            </a>
+
+            <a href="{% url 'current-progress' %}" class="nav-item {% if active_page == 'progress' %}active{% endif %}">
+                <div class="nav-icon-circle">★</div>
+                <span>Current<br>Progress</span>
+            </a>
+
+            <a href="{% url 'learning-graph' %}" class="nav-item {% if active_page == 'graph' %}active{% endif %}">
+                <div class="nav-icon-circle">📊</div>
+                <span>Learning<br>Graph</span>
+            </a>
+
+            <a href="{% url 'calendar' %}" class="nav-item {% if active_page == 'calendar' %}active{% endif %}">
+                <div class="nav-icon-circle">📅</div>
+                <span>Calendar</span>
+            </a>
+        </div>
+
+        <div class="sidebar-spacer"></div>
+    </aside>
+
+    <!-- MAIN AREA -->
+    <main class="main-area">
+        <header class="top-bar">
+            <div>
+                <div class="top-title">Algebra Alchemy</div>
+                <div class="top-subtitle">Calendar</div>
+            </div>
+        </header>
+
+        <section class="content-single">
+            <article class="page-card">
+                <h1 class="page-card-title">Calendar</h1>
+                <p class="page-card-body">
+                    Upcoming study plan for this month. Tap any day to add or adjust events once we hook this up.
+                </p>
+
+                <div class="calendar">
+                    <div class="calendar-header">
+                        <div class="calendar-month">November</div>
+                        <div class="calendar-year">2025</div>
+                    </div>
+
+                    <div class="calendar-weekdays">
+                        <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
+                    </div>
+
+                    <div class="calendar-grid">
+                        <div class="calendar-day muted"><span class="date">26</span></div>
+                        <div class="calendar-day muted"><span class="date">27</span></div>
+                        <div class="calendar-day muted"><span class="date">28</span></div>
+                        <div class="calendar-day muted"><span class="date">29</span></div>
+                        <div class="calendar-day muted"><span class="date">30</span></div>
+                        <div class="calendar-day muted"><span class="date">31</span></div>
+                        <div class="calendar-day"><span class="date">1</span></div>
+
+                        <div class="calendar-day"><span class="date">2</span></div>
+                        <div class="calendar-day"><span class="date">3</span></div>
+                        <div class="calendar-day"><span class="date">4</span></div>
+                        <div class="calendar-day"><span class="date">5</span>
+                            <div class="event chip blue">Lesson: Solving for X</div>
+                        </div>
+                        <div class="calendar-day"><span class="date">6</span></div>
+                        <div class="calendar-day"><span class="date">7</span></div>
+                        <div class="calendar-day"><span class="date">8</span></div>
+                        <div class="calendar-day"><span class="date">9</span>
+                            <div class="event chip purple">Practice Test #1</div>
+                        </div>
+
+                        <div class="calendar-day"><span class="date">10</span></div>
+                        <div class="calendar-day"><span class="date">11</span></div>
+                        <div class="calendar-day"><span class="date">12</span>
+                            <div class="event chip green">Review: Isolating X</div>
+                        </div>
+                        <div class="calendar-day"><span class="date">13</span>
+                            <div class="event chip orange">Live Session @ 5pm</div>
+                        </div>
+                        <div class="calendar-day"><span class="date">14</span></div>
+                        <div class="calendar-day"><span class="date">15</span></div>
+                        <div class="calendar-day"><span class="date">16</span></div>
+
+                        <div class="calendar-day today"><span class="date">17</span></div>
+                        <div class="calendar-day"><span class="date">18</span></div>
+                        <div class="calendar-day"><span class="date">19</span></div>
+                        <div class="calendar-day"><span class="date">20</span>
+                            <div class="event chip blue">Lesson: Word Problems</div>
+                        </div>
+                        <div class="calendar-day"><span class="date">21</span></div>
+                        <div class="calendar-day"><span class="date">22</span></div>
+                        <div class="calendar-day"><span class="date">23</span>
+                            <div class="event chip purple">Practice Test #2</div>
+                        </div>
+
+                        <div class="calendar-day"><span class="date">24</span></div>
+                        <div class="calendar-day"><span class="date">25</span></div>
+                        <div class="calendar-day"><span class="date">26</span></div>
+                        <div class="calendar-day"><span class="date">27</span></div>
+                        <div class="calendar-day"><span class="date">28</span>
+                        <div class="event chip green">Review Marathon</div>
+                        </div>
+                        <div class="calendar-day"><span class="date">29</span></div>
+
+                        <div class="calendar-day"><span class="date">30</span></div>
+                        <div class="calendar-day empty"><span class="date">&nbsp;</span></div>
+                        <div class="calendar-day empty"><span class="date">&nbsp;</span></div>
+                        <div class="calendar-day empty"><span class="date">&nbsp;</span></div>
+                        <div class="calendar-day empty"><span class="date">&nbsp;</span></div>
+                        <div class="calendar-day empty"><span class="date">&nbsp;</span></div>
+                        <div class="calendar-day empty"><span class="date">&nbsp;</span></div>
+                    </div>
+                </div>
+
+                <div class="calendar-legend">
+                    <span class="chip blue">Lesson</span>
+                    <span class="chip purple">Practice Test</span>
+                    <span class="chip green">Review</span>
+                    <span class="chip orange">Live Session</span>
+                </div>
+
+                <a class="page-cta back-link" href="{% url 'tutor-dashboard' %}">← Back to lessons</a>
+            </article>
+        </section>
+    </main>
+</div>
+</body>
+</html>
