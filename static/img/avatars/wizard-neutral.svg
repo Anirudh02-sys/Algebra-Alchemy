@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="420" height="420" viewBox="0 0 420 420" role="img" aria-labelledby="title desc">
+  <title id="title">Cheerful algebra wizard</title>
+  <desc id="desc">A friendly math wizard waving hello from a purple cloud.</desc>
+  <defs>
+    <linearGradient id="hat" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3a5abf"/>
+      <stop offset="100%" stop-color="#233e8b"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#f6e6ff" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#d8c5ff" stop-opacity="0.2"/>
+    </radialGradient>
+    <linearGradient id="robe" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#3c71d8"/>
+      <stop offset="100%" stop-color="#2554a7"/>
+    </linearGradient>
+  </defs>
+  <rect width="420" height="420" rx="38" fill="#f8f7ff"/>
+  <circle cx="210" cy="210" r="170" fill="url(#glow)"/>
+  <g transform="translate(60 60)">
+    <path d="M150 44c26-16 82-18 110 32l-18 10-9-8-20 10-21-7-26 3z" fill="url(#hat)" stroke="#1d2b55" stroke-width="4" stroke-linejoin="round"/>
+    <path d="M162 70l112 10-20-52z" fill="#2f4fa5" opacity="0.7"/>
+    <path d="M178 92c-4 16-8 35-8 52 0 42 30 72 70 72s70-30 70-72c0-18-5-37-8-52z" fill="#ffe5c5" stroke="#d6a36b" stroke-width="4"/>
+    <path d="M190 142c10 8 20 12 32 12s22-4 32-12" fill="none" stroke="#d68c4d" stroke-width="6" stroke-linecap="round"/>
+    <circle cx="206" cy="132" r="6" fill="#2c2b48"/>
+    <circle cx="254" cy="132" r="6" fill="#2c2b48"/>
+    <path d="M210 162c6 10 14 14 22 14s16-4 22-14" fill="none" stroke="#b35f2f" stroke-width="5" stroke-linecap="round"/>
+    <path d="M198 186c12 26 24 44 34 58 10-14 22-32 34-58" fill="#fff" stroke="#d9b88c" stroke-width="4" stroke-linecap="round"/>
+    <path d="M160 210c4-32 14-66 26-82 6-8 24-10 30 2-18 18-28 40-34 64z" fill="url(#robe)" stroke="#24457b" stroke-width="4"/>
+    <path d="M316 210c-4-32-14-66-26-82-6-8-24-10-30 2 18 18 28 40 34 64z" fill="url(#robe)" stroke="#24457b" stroke-width="4"/>
+    <path d="M186 236c-4 36 6 66 58 66s62-30 58-66" fill="url(#robe)" stroke="#1e3b6b" stroke-width="5" stroke-linejoin="round"/>
+    <path d="M152 258c-32 6-60 22-76 44 26 26 72 42 130 42 58 0 104-16 130-42-16-22-44-38-76-44" fill="#6c57c4" opacity="0.3"/>
+    <path d="M140 268c-28 6-52 18-66 36 22 18 64 30 116 30 52 0 94-12 116-30-14-18-38-30-66-36" fill="#8168d1" opacity="0.45"/>
+    <circle cx="308" cy="118" r="10" fill="#f6d354"/>
+    <text x="226" y="44" font-family="Georgia,serif" font-size="20" fill="#f9d76e">π</text>
+    <text x="252" y="64" font-family="Georgia,serif" font-size="16" fill="#f9d76e">×</text>
+    <text x="190" y="62" font-family="Georgia,serif" font-size="16" fill="#f9d76e">+</text>
+  </g>
+</svg>

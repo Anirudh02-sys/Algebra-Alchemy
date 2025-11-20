@@ -358,6 +358,42 @@ const expressionSets = {
 let currentMode = "isolating"; // "isolating" | "solving" | "expressions" | "practice1" | "practice2"
 let draggedElement = null;
 
+const avatarMessages = {
+    neutral: "I'll cheer or coach you based on what you try.",
+    happy: "Nice choice! Keep the momentum going.",
+    celebrate: "Brilliant! That's the move we wanted.",
+    thinking: "Let's rethink that step together.",
+};
+
+function setAvatarMood(state = "neutral", customMessage) {
+    const avatar = document.getElementById("mentor-avatar");
+    const img = document.getElementById("avatar-image");
+    const caption = document.getElementById("avatar-caption");
+
+    if (!avatar || !img || !caption) return;
+
+    const sources = {
+        neutral: avatar.dataset.avatarNeutral,
+        happy: avatar.dataset.avatarHappy,
+        celebrate: avatar.dataset.avatarCelebrate,
+        thinking: avatar.dataset.avatarThinking,
+    };
+
+    const validState = sources[state] ? state : "neutral";
+    const message = customMessage || avatarMessages[validState] || avatarMessages.neutral;
+
+    img.src = sources[validState] || sources.neutral;
+    caption.textContent = message;
+
+    avatar.classList.remove(
+        "avatar-neutral",
+        "avatar-happy",
+        "avatar-celebrate",
+        "avatar-thinking"
+    );
+    avatar.classList.add(`avatar-${validState}`);
+}
+
 // ======================= GENERIC HELPERS =======================
 
 function shuffle(array) {
@@ -508,6 +544,10 @@ function loadIsolatingProblem(index) {
     container.innerHTML = "";
     status.textContent = "";
     status.classList.remove("correct");
+    setAvatarMood(
+        "neutral",
+        "Drag the chips until both sides of the equation balance."
+    );
     nextBtn.style.display = isolatingSolved[index] ? "inline-flex" : "none";
     nextBtn.disabled = false;
     nextBtn.textContent =
@@ -604,6 +644,10 @@ function checkIsolatingCorrect() {
     if (isCorrect) {
         status.textContent = "Correct! 🎉";
         status.classList.add("correct");
+        setAvatarMood(
+            "celebrate",
+            "Balanced perfectly! Move to the next equation."
+        );
 
         container.querySelectorAll(".chip").forEach((c) => {
             c.classList.add("correct-chip");
@@ -631,6 +675,11 @@ function checkIsolatingCorrect() {
         status.textContent = "Keep going...";
         status.classList.remove("correct");
         nextBtn.style.display = "none";
+
+        setAvatarMood(
+            "thinking",
+            "Try adjusting terms so the x-terms stay on one side."
+        );
 
         container.classList.add("shake");
         setTimeout(() => container.classList.remove("shake"), 250);
@@ -669,6 +718,11 @@ function renderCurrentSolvingStep() {
             ? "Next equation →"
             : "All done 🎉";
 
+    setAvatarMood(
+        "neutral",
+        "Choose the step that keeps the equation balanced."
+    );
+
     optsContainer.innerHTML = "";
     step.options.forEach((opt, idx) => {
         const btn = document.createElement("button");
@@ -697,11 +751,16 @@ function handleMcqAnswer(selectedIndex) {
         feedback.classList.add("correct");
         optionButtons[selectedIndex].classList.add("mcq-correct");
         nextBtn.disabled = false;
+        setAvatarMood("happy", "Great pick! Let's continue.");
     } else {
         feedback.textContent = "Not quite. Try again.";
         feedback.classList.remove("correct");
         optionButtons[selectedIndex].classList.add("mcq-incorrect");
         nextBtn.disabled = true;
+        setAvatarMood(
+            "thinking",
+            "Check the operation order and try another option."
+        );
     }
 }
 
@@ -732,6 +791,10 @@ function setupMcqNextButton() {
                     "You finished all Solving for X problems! 🎉";
                 feedback.classList.add("correct");
                 nextBtn.disabled = true;
+                setAvatarMood(
+                    "celebrate",
+                    "All solving steps cleared—fantastic work!"
+                );
             }
         }
     });
@@ -772,6 +835,11 @@ function loadExpressionProblem(index) {
     checkBtn.disabled = false;
     nextBtn.style.display = set.solved[index] ? "inline-flex" : "none";
 
+    setAvatarMood(
+        "neutral",
+        "Translate the words into an equation before checking."
+    );
+
     updatePagination(index);
     updateProgressUI();
 }
@@ -796,6 +864,10 @@ function setupExpressionButtons() {
         if (!user) {
             feedback.textContent = "Type your equation first.";
             feedback.classList.remove("correct");
+            setAvatarMood(
+                "thinking",
+                "Start by typing the equation that matches the prompt."
+            );
             return;
         }
 
@@ -804,6 +876,7 @@ function setupExpressionButtons() {
             feedback.classList.add("correct");
             checkBtn.disabled = true;
             nextBtn.style.display = "inline-flex";
+            setAvatarMood("happy", "Beautiful equation! Keep it up.");
 
             if (!set.solved[set.currentIndex]) {
                 set.solved[set.currentIndex] = true;
@@ -813,6 +886,10 @@ function setupExpressionButtons() {
         } else {
             feedback.textContent = "Not quite. Check your signs and order.";
             feedback.classList.remove("correct");
+            setAvatarMood(
+                "thinking",
+                "Check the signs and variable placement, then try again."
+            );
         }
     });
 
@@ -827,6 +904,10 @@ function setupExpressionButtons() {
             feedback.textContent = "You finished all problems! 🎉";
             feedback.classList.add("correct");
             nextBtn.style.display = "none";
+            setAvatarMood(
+                "celebrate",
+                "Practice set complete—stellar focus!"
+            );
         }
     });
 }

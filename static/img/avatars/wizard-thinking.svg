@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="420" height="420" viewBox="0 0 420 420" role="img" aria-labelledby="title desc">
+  <title id="title">Thinking algebra wizard</title>
+  <desc id="desc">A puzzled wizard pondering the next move.</desc>
+  <defs>
+    <linearGradient id="hatThinking" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#426ad4"/>
+      <stop offset="100%" stop-color="#273b86"/>
+    </linearGradient>
+    <radialGradient id="glowThinking" cx="50%" cy="45%" r="60%">
+      <stop offset="0%" stop-color="#f0e7ff" stop-opacity="0.85"/>
+      <stop offset="100%" stop-color="#cfd8ff" stop-opacity="0.25"/>
+    </radialGradient>
+    <linearGradient id="robeThinking" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#2c7ac6"/>
+      <stop offset="100%" stop-color="#1c4f92"/>
+    </linearGradient>
+  </defs>
+  <rect width="420" height="420" rx="38" fill="#f8f7ff"/>
+  <circle cx="210" cy="196" r="168" fill="url(#glowThinking)"/>
+  <g transform="translate(54 60)">
+    <path d="M148 44c26-16 82-18 110 32l-18 10-9-8-20 10-21-7-26 3z" fill="url(#hatThinking)" stroke="#1d2b55" stroke-width="4" stroke-linejoin="round"/>
+    <path d="M162 70l112 10-20-52z" fill="#2f4fa5" opacity="0.7"/>
+    <path d="M178 92c-4 16-8 35-8 52 0 42 30 72 70 72s70-30 70-72c0-18-5-37-8-52z" fill="#ffe7c9" stroke="#d6a36b" stroke-width="4"/>
+    <circle cx="206" cy="132" r="6" fill="#2c2b48"/>
+    <circle cx="254" cy="130" r="6" fill="#2c2b48"/>
+    <path d="M188 146c14 10 26 14 40 14s26-4 40-14" fill="none" stroke="#d68c4d" stroke-width="6" stroke-linecap="round"/>
+    <path d="M208 166c6 10 14 14 22 14s16-4 22-14" fill="none" stroke="#b35f2f" stroke-width="5" stroke-linecap="round"/>
+    <path d="M198 186c12 26 24 44 34 58 10-14 22-32 34-58" fill="#fff" stroke="#d9b88c" stroke-width="4" stroke-linecap="round"/>
+    <path d="M160 210c4-32 14-66 26-82 6-8 24-10 30 2-18 18-28 40-34 64z" fill="url(#robeThinking)" stroke="#1d4178" stroke-width="4"/>
+    <path d="M316 210c-4-32-14-66-26-82-6-8-24-10-30 2 18 18 28 40 34 64z" fill="url(#robeThinking)" stroke="#1d4178" stroke-width="4"/>
+    <path d="M188 236c-4 36 6 66 58 66s62-30 58-66" fill="url(#robeThinking)" stroke="#1c3868" stroke-width="5" stroke-linejoin="round"/>
+    <path d="M150 260c-32 8-58 22-74 42 28 26 78 40 134 40s106-14 134-40c-16-20-42-34-74-42" fill="#6c57c4" opacity="0.3"/>
+    <text x="226" y="44" font-family="Georgia,serif" font-size="20" fill="#f9d76e">π</text>
+    <text x="252" y="64" font-family="Georgia,serif" font-size="16" fill="#f9d76e">×</text>
+    <text x="190" y="62" font-family="Georgia,serif" font-size="16" fill="#f9d76e">+</text>
+    <g fill="#f4d869" opacity="0.8">
+      <circle cx="290" cy="36" r="8"/>
+      <circle cx="306" cy="50" r="4"/>
+      <circle cx="298" cy="66" r="3"/>
+    </g>
+    <text x="300" y="32" font-family="" font-size="36" fill="#f4d869">?</text>
+  </g>
+</svg>
