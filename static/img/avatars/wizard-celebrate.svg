@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 220" role="img" aria-labelledby="title desc">
+  <title id="title">Celebrating algebra guide avatar</title>
+  <desc id="desc">A wizard celebrating a correct answer with sparkles.</desc>
+  <defs>
+    <linearGradient id="hatGradientCelebrate" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffb347" />
+      <stop offset="100%" stop-color="#ff6f61" />
+    </linearGradient>
+    <linearGradient id="robeGradientCelebrate" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#7c5bff" />
+      <stop offset="100%" stop-color="#5330c9" />
+    </linearGradient>
+    <radialGradient id="glowCelebrate" cx="50%" cy="50%" r="62%">
+      <stop offset="0%" stop-color="#fff3e0" stop-opacity="0.95" />
+      <stop offset="100%" stop-color="#e5d7ff" stop-opacity="0.55" />
+    </radialGradient>
+  </defs>
+  <rect width="220" height="220" rx="26" fill="#f8f7ff" />
+  <circle cx="110" cy="118" r="92" fill="url(#glowCelebrate)" />
+  <g transform="translate(40 24)">
+    <path d="M70 26c16-10 64-10 84 18l-12 8-8-7-18 8-18-5-20 2z" fill="url(#hatGradientCelebrate)" stroke="#7a3a26" stroke-width="3" stroke-linejoin="round" />
+    <circle cx="142" cy="48" r="6" fill="#ffe072" stroke="#f0b83c" stroke-width="2" />
+    <rect x="80" y="48" width="64" height="12" rx="4" fill="#fff8d9" opacity="0.7" />
+    <path d="M86 58c-3 12-5 26-5 40 0 30 22 52 52 52s52-22 52-52c0-14-2-28-5-40z" fill="#ffe3c4" stroke="#cf8a45" stroke-width="3" />
+    <circle cx="118" cy="90" r="4.5" fill="#2c2b48" />
+    <circle cx="150" cy="90" r="4.5" fill="#2c2b48" />
+    <path d="M118 102c8 12 14 16 24 16s16-4 24-16" fill="none" stroke="#c05a20" stroke-width="4" stroke-linecap="round" />
+    <path d="M120 114c10 18 18 22 22 22s12-4 22-22" fill="none" stroke="#ef7c3b" stroke-width="4" stroke-linecap="round" />
+    <path d="M112 120c12 24 22 38 26 46 4-8 14-22 26-46" fill="#fff" stroke="#e0c28f" stroke-width="3" stroke-linecap="round" />
+    <path d="M82 140c5-26 18-54 30-68 6-6 18-6 22 4-12 16-20 34-24 52z" fill="url(#robeGradientCelebrate)" stroke="#44268c" stroke-width="3" />
+    <path d="M186 140c-5-26-18-54-30-68-6-6-18-6-22 4 12 16 20 34 24 52z" fill="url(#robeGradientCelebrate)" stroke="#44268c" stroke-width="3" />
+    <path d="M106 156c-2 32 10 50 52 50s54-18 52-50" fill="url(#robeGradientCelebrate)" stroke="#3b1f7c" stroke-width="4" stroke-linejoin="round" />
+    <path d="M64 170c-22 4-42 14-52 28 16 18 48 30 88 30s72-12 88-30c-10-14-30-24-52-28" fill="#a98bff" opacity="0.35" />
+    <g fill="#ffce5c" stroke="#ff9f43" stroke-width="1.5" stroke-linecap="round">
+      <path d="M30 40l6 4-4 6-6-4-4 6-6-4 4-6-6-4 4-6 6 4 4-6 6 4z" />
+      <path d="M210 24l5 3-3 5-5-3-3 5-5-3 3-5-5-3 3-5 5 3 3-5 5 3z" />
+      <path d="M202 90l4 3-3 4-4-3-3 4-4-3 3-4-4-3 3-4 4 3 3-4 4 3z" />
+    </g>
+  </g>
+</svg>

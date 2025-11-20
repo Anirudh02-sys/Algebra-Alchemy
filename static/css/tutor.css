@@ -678,14 +678,81 @@ body {
     overflow: hidden;
 }
 
+.workspace-top {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 12px;
+}
+
 .workspace-label {
-    position: absolute;
-    top: 16px;
-    right: 24px;
     font-size: 11px;
     color: var(--text-muted);
     text-transform: uppercase;
     letter-spacing: 0.14em;
+}
+
+.mentor-avatar {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 12px;
+    background: #f6f2ff;
+    border: 1px solid #e8e2ff;
+    border-left: 6px solid #9d7bff;
+    border-radius: 16px;
+    box-shadow: 0 12px 24px rgba(86, 70, 140, 0.12);
+    max-width: 380px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    margin-bottom: 10px;
+}
+
+.mentor-avatar-image {
+    width: 92px;
+    height: 92px;
+    flex-shrink: 0;
+    border-radius: 14px;
+    border: 1px solid #ede9ff;
+    background: radial-gradient(circle at 30% 30%, #ffffff, #f6f2ff);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.mentor-avatar-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+}
+
+.avatar-name {
+    font-weight: 800;
+    color: #2c2b48;
+    font-size: 15px;
+    margin-bottom: 4px;
+}
+
+.avatar-caption {
+    color: #5b5785;
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+.mentor-avatar.avatar-happy {
+    border-left-color: #2fb568;
+    box-shadow: 0 12px 28px rgba(47, 181, 104, 0.18);
+}
+
+.mentor-avatar.avatar-celebrate {
+    border-left-color: #ff9f43;
+    box-shadow: 0 14px 30px rgba(255, 159, 67, 0.22);
+}
+
+.mentor-avatar.avatar-thinking {
+    border-left-color: #f6c14a;
+    box-shadow: 0 12px 24px rgba(246, 193, 74, 0.18);
 }
 
 .original-equation {
