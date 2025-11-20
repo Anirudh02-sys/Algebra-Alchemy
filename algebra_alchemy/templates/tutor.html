@@ -66,7 +66,32 @@
         <section class="content-row progress-hidden" id="main-content-row">
             <!-- WORKSPACE -->
             <section class="workspace-wrapper">
-                <div class="workspace-label" id="workspace-label">DRAG TO ISOLATE X</div>
+                <div class="workspace-top">
+                    <div class="workspace-label" id="workspace-label">DRAG TO ISOLATE X</div>
+
+                    <div
+                        class="mentor-avatar"
+                        id="mentor-avatar"
+                        data-avatar-neutral="{% static 'img/avatars/wizard-neutral.svg' %}"
+                        data-avatar-happy="{% static 'img/avatars/wizard-happy.svg' %}"
+                        data-avatar-celebrate="{% static 'img/avatars/wizard-celebrate.svg' %}"
+                        data-avatar-thinking="{% static 'img/avatars/wizard-thinking.svg' %}"
+                    >
+                        <div class="mentor-avatar-image">
+                            <img
+                                id="avatar-image"
+                                src="{% static 'img/avatars/wizard-neutral.svg' %}"
+                                alt="Friendly wizard avatar reacting to your progress"
+                            />
+                        </div>
+                        <div class="mentor-avatar-copy">
+                            <div class="avatar-name">Algebra Guide</div>
+                            <div class="avatar-caption" id="avatar-caption">
+                                I react in real time to your moves.
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
                 <!-- Drag-and-drop mode (Isolating X-Terms) -->
                 <div id="drag-mode">
