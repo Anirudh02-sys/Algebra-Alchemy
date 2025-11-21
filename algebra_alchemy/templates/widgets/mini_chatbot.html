@@ -1,0 +1,288 @@
+<!-- ===================== MINI TUTOR CHAT WIDGET ===================== -->
+<style>
+    /* Floating button */
+    #tutorChatButton {
+        position: fixed;
+        bottom: 24px;
+        right: 30px;
+        background: var(--purple);
+        color: #fff;
+        border-radius: var(--radius-pill);
+        padding: 12px 22px;
+        font-size: 15px;
+        cursor: pointer;
+        z-index: 9999;
+        font-weight: 600;
+        box-shadow: var(--shadow-soft);
+        transition: background 0.2s ease, transform 0.15s ease;
+    }
+    #tutorChatButton:hover {
+        background: var(--purple-dark);
+        transform: translateY(-2px);
+    }
+
+    /* Chat panel */
+    #tutorChatPanel {
+        position: fixed;
+        bottom: 80px;
+        right: 20px;
+        width: 320px;
+        height: 420px;
+        background: var(--card-bg);
+        border-radius: var(--radius-lg);
+        border: 1px solid #ececf3;
+        box-shadow: 0 16px 40px rgba(0,0,0,0.14);
+        display: none;
+        flex-direction: column;
+        overflow: hidden;
+        z-index: 9999;
+        animation: pop-in 0.25s ease-out;
+    }
+
+    /* Wizard Background */
+    #tutorWizardBg {
+        position: absolute;
+        bottom: 0px;              /* lower the wizard so it doesn't overlap text */
+        left: 50%;
+        transform: translateX(-50%);
+        width: 90%;               /* slightly wider */
+        height: 130px;            /* reduce height from 200px to 130px */
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center bottom;
+        
+        opacity: 0.08;            /* reduce opacity — 0.16 to 0.08 */
+        
+        pointer-events: none;
+        z-index: 1;
+        filter: drop-shadow(0 4px 8px rgba(0,0,0,0.04));
+        animation: floatUp 6s ease-in-out infinite alternate;
+    }
+
+    /* Messages */
+    #tutorChatMessages {
+        position: relative;
+        flex: 1;
+        padding: 12px 14px;
+        overflow-y: auto;
+        font-size: 14px;
+        line-height: 1.45;
+        z-index: 2;
+        background: radial-gradient(circle at top left, #fdfbff, #faf8ff);
+    }
+
+    /* Bottom fade */
+    #tutorChatMessages::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 60px;
+        background: linear-gradient(to bottom, rgba(253,251,255,0), var(--card-bg));
+        pointer-events: none;
+        z-index: 3;
+    }
+
+    /* Chat bubbles */
+    .msg-user {
+        background: white;
+        padding: 10px 14px;
+        border-radius: var(--radius-lg);
+        margin-bottom: 10px;
+        max-width: 85%;
+        align-self: flex-end;
+        box-shadow: var(--shadow-soft);
+        border: 1px solid #eee;
+        color: #4f46e5;
+        font-weight: 600;
+    }
+    .msg-bot {
+        background: #f3efff;
+        padding: 12px 14px;
+        border-radius: var(--radius-lg);
+        margin-bottom: 12px;
+        max-width: 85%;
+        align-self: flex-start;
+        border: 1px solid #e7ddff;
+        box-shadow: var(--shadow-soft);
+        color: #333;
+    }
+
+    /* Input */
+    #tutorChatInputBox {
+        display: flex;
+        border-top: 1px solid #e8e8f0;
+        padding: 10px;
+        background: white;
+        z-index: 5;
+    }
+    #tutorChatInput {
+        flex: 1;
+        padding: 10px 14px;
+        border-radius: var(--radius-pill);
+        border: 1px solid #ddd;
+        background: #fafafa;
+        outline: none;
+    }
+    #tutorChatInput:focus {
+        border-color: var(--purple-dark);
+        box-shadow: 0 0 0 2px rgba(155, 127, 255, 0.18);
+    }
+    #tutorChatSend {
+        background: var(--purple-dark);
+        color: white;
+        padding: 0 16px;
+        border-radius: var(--radius-pill);
+        margin-left: 8px;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        border: none;
+        transition: background 0.2s ease, transform 0.15s ease;
+    }
+
+    /* Animations */
+    @keyframes floatUp {
+        from { transform: translate(-50%, 6px); opacity: 0.14; }
+        to   { transform: translate(-50%, -4px); opacity: 0.20; }
+    }
+    @keyframes pop-in {
+        from { transform: scale(0.9); opacity: 0; }
+        to { transform: scale(1); opacity: 1; }
+    }
+
+</style>
+{% load static %}
+
+
+<div id="tutorChatButton">💬 Ask Alchemy Wizard</div>
+
+<div id="tutorChatPanel">
+    <div id="tutorWizardBg"></div>
+    <div id="tutorChatMessages"></div>
+    <div id="tutorChatInputBox">
+        <input id="tutorChatInput" placeholder="Ask a question...">
+        <button id="tutorChatSend">Send</button>
+    </div>
+</div>
+
+<script>
+    const tutorBtn = document.getElementById("tutorChatButton");
+    const tutorPanel = document.getElementById("tutorChatPanel");
+    const tutorMsgBox = document.getElementById("tutorChatMessages");
+    const tutorInput = document.getElementById("tutorChatInput");
+
+    tutorBtn.onclick = () => {
+        tutorPanel.style.display =
+            tutorPanel.style.display === "none" ? "flex" : "none";
+    };
+
+    const WIZARD_IMG = "{% static 'images/wizard_happy_progress.png' %}";
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const wizardDiv = document.getElementById("tutorWizardBg");
+        wizardDiv.style.backgroundImage = `url(${WIZARD_IMG})`;
+    });
+
+
+    function appendMessage(text, isUser=false) {
+        const div = document.createElement("div");
+        div.className = isUser ? "msg-user" : "msg-bot";
+        div.textContent = text;
+        tutorMsgBox.appendChild(div);
+        tutorMsgBox.scrollTop = tutorMsgBox.scrollHeight;
+    }
+    function getCurrentProblemContext() {
+        const mode = window.currentMode || "unknown";
+
+        // MODE 1: ISOLATING (drag chips)
+        if (mode === "isolating") {
+            const eq = document.getElementById("original-equation")?.innerText ?? "";
+            return {
+                mode: "isolating_x_terms",
+                original_equation: eq,
+                tokens: eq.split(" ")
+            };
+        }
+
+        // MODE 2: MCQ SOLVING
+        if (mode === "solving") {
+            const eq = document.getElementById("mcq-original")?.innerText ?? "";
+            const question = document.getElementById("mcq-question")?.innerText ?? "";
+
+            const options = [...document.querySelectorAll("#mcq-options button")]
+                .map(b => b.innerText);
+
+            return {
+                mode: "solving_for_x",
+                original_equation: eq,
+                question,
+                options,
+                stepIndex: window.solvingCurrentStepIndex,
+                problemIndex: window.solvingCurrentProblemIndex
+            };
+        }
+
+        // MODE 3: EXPRESSIONS / PRACTICE 1 / PRACTICE 2
+        if (
+            mode === "expressions" ||
+            mode === "practice1" ||
+            mode === "practice2"
+        ) {
+            const prompt = document.getElementById("expr-prompt")?.innerText ?? "";
+            const userInput = document.getElementById("expr-input")?.value ?? "";
+
+            return {
+                mode,
+                prompt,
+                userInput
+            };
+        }
+
+        // Fallback
+        return { mode: "unknown" };
+    }
+
+
+    async function sendTutorMessage() {
+        const text = tutorInput.value.trim();
+        if (!text) return;
+
+        appendMessage("You: " + text, true);
+        tutorInput.value = "";
+
+        const payload = {
+            message: text,
+            context: {
+                current_question: getCurrentProblemContext()
+            }
+        };
+
+        try {
+            const res = await fetch("/api/chat-tutor/", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload)
+            });
+
+            const data = await res.json();
+            if (data.success) {
+                appendMessage("Tutor: " + data.response);
+            } else {
+                appendMessage("⚠ Error: " + data.error);
+            }
+        } catch (err) {
+            appendMessage("⚠ Network error");
+        }
+    }
+
+
+
+
+    document.getElementById("tutorChatSend").onclick = sendTutorMessage;
+    tutorInput.addEventListener("keypress", e => {
+        if (e.key === "Enter") sendTutorMessage();
+    });
+</script>
+<!-- ===================== END MINI CHAT WIDGET ===================== -->

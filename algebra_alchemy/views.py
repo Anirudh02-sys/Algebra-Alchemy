@@ -363,6 +363,7 @@ def chat_with_tutor(request):
         ]
         
         # Add context if available
+        print(context)
         if context.get('current_question'):
             messages.append({
                 "role": "system",
@@ -381,7 +382,7 @@ def chat_with_tutor(request):
         
         # Get response from OpenAI
         response = client.chat.completions.create(
-            model="gpt-4",
+            model="gpt-4o-mini",
             messages=messages,
             temperature=0.7,
             max_tokens=300

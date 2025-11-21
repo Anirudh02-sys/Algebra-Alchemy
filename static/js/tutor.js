@@ -355,7 +355,7 @@ const expressionSets = {
 
 // ======================= GLOBAL STATE =======================
 
-let currentMode = "isolating"; // "isolating" | "solving" | "expressions" | "practice1" | "practice2"
+window.currentMode = "isolating"; // "isolating" | "solving" | "expressions" | "practice1" | "practice2"
 let draggedElement = null;
 
 // ======================= GENERIC HELPERS =======================
@@ -451,17 +451,17 @@ function renderPagination(total, currentIndex) {
         btn.textContent = i + 1;
 
         btn.addEventListener("click", () => {
-            if (currentMode === "isolating") {
+            if (window.currentMode === "isolating") {
                 isolatingCurrentIndex = i;
                 loadIsolatingProblem(i);
-            } else if (currentMode === "solving") {
+            } else if (window.currentMode === "solving") {
                 solvingCurrentProblemIndex = i;
                 solvingCurrentStepIndex = 0;
                 loadSolvingProblem(i);
             } else if (
-                currentMode === "expressions" ||
-                currentMode === "practice1" ||
-                currentMode === "practice2"
+                window.currentMode === "expressions" ||
+                window.currentMode === "practice1" ||
+                window.currentMode === "practice2"
             ) {
                 const set = currentExpressionSet();
                 if (!set) return;
@@ -477,14 +477,14 @@ function renderPagination(total, currentIndex) {
 
 function updatePagination(currentIndex) {
     let total = 0;
-    if (currentMode === "isolating") {
+    if (window.currentMode === "isolating") {
         total = isolatingProblems.length;
-    } else if (currentMode === "solving") {
+    } else if (window.currentMode === "solving") {
         total = solvingProblems.length;
     } else if (
-        currentMode === "expressions" ||
-        currentMode === "practice1" ||
-        currentMode === "practice2"
+        window.currentMode === "expressions" ||
+        window.currentMode === "practice1" ||
+        window.currentMode === "practice2"
     ) {
         const set = currentExpressionSet();
         total = set ? set.problems.length : 0;
@@ -583,7 +583,7 @@ function setupContainerDnD() {
 }
 
 function checkIsolatingCorrect() {
-    if (currentMode !== "isolating") return;
+    if (window.currentMode !== "isolating") return;
 
     const container = document.getElementById("chip-container");
     const status = document.getElementById("status-message");
@@ -680,7 +680,7 @@ function renderCurrentSolvingStep() {
 }
 
 function handleMcqAnswer(selectedIndex) {
-    if (currentMode !== "solving") return;
+    if (window.currentMode !== "solving") return;
 
     const problem = solvingProblems[solvingCurrentProblemIndex];
     const step = problem.steps[solvingCurrentStepIndex];
@@ -741,11 +741,11 @@ function setupMcqNextButton() {
 
 function currentExpressionSet() {
     if (
-        currentMode === "expressions" ||
-        currentMode === "practice1" ||
-        currentMode === "practice2"
+        window.currentMode === "expressions" ||
+        window.currentMode === "practice1" ||
+        window.currentMode === "practice2"
     ) {
-        return expressionSets[currentMode];
+        return expressionSets[window.currentMode];
     }
     return null;
 }
@@ -901,20 +901,20 @@ function updateProgressUI() {
     // Active mode stats
     let label, done, total;
 
-    if (currentMode === "isolating") {
+    if (window.currentMode === "isolating") {
         label = "Isolating X-Terms";
         done = isolatingScore;
         total = isolatingProblems.length;
-    } else if (currentMode === "solving") {
+    } else if (window.currentMode === "solving") {
         label = "Solving for X";
         done = solvingScore;
         total = solvingProblems.length;
-    } else if (currentMode === "expressions") {
+    } else if (window.currentMode === "expressions") {
         const set = expressionSets.expressions;
         label = set.label;
         done = set.score;
         total = set.problems.length;
-    } else if (currentMode === "practice1") {
+    } else if (window.currentMode === "practice1") {
         const set = expressionSets.practice1;
         label = set.label;
         done = set.score;
@@ -936,7 +936,7 @@ function updateProgressUI() {
     }
 
     const isPractice =
-        currentMode === "practice1" || currentMode === "practice2";
+        window.currentMode === "practice1" || window.currentMode === "practice2";
     updateStars(done, total, isPractice);
 }
 
@@ -945,7 +945,7 @@ function setupNextButton() {
     if (!nextBtn) return;
 
     nextBtn.addEventListener("click", () => {
-        if (currentMode !== "isolating") return;
+        if (window.currentMode !== "isolating") return;
 
         if (isolatingCurrentIndex < isolatingProblems.length - 1) {
             isolatingCurrentIndex++;
@@ -991,7 +991,7 @@ function setupCompletionModal() {
 // ======================= LESSON MODE SWITCHING =======================
 
 function activateIsolatingLesson() {
-    currentMode = "isolating";
+    window.currentMode = "isolating";
     const dragMode = document.getElementById("drag-mode");
     const mcqMode = document.getElementById("mcq-mode");
     const exprMode = document.getElementById("expression-mode");
@@ -1006,7 +1006,7 @@ function activateIsolatingLesson() {
 }
 
 function activateSolvingLesson() {
-    currentMode = "solving";
+    window.currentMode = "solving";
     const dragMode = document.getElementById("drag-mode");
     const mcqMode = document.getElementById("mcq-mode");
     const exprMode = document.getElementById("expression-mode");
@@ -1021,7 +1021,7 @@ function activateSolvingLesson() {
 }
 
 function activateExpressionLesson() {
-    currentMode = "expressions";
+    window.currentMode = "expressions";
     const dragMode = document.getElementById("drag-mode");
     const mcqMode = document.getElementById("mcq-mode");
     const exprMode = document.getElementById("expression-mode");
@@ -1037,7 +1037,7 @@ function activateExpressionLesson() {
 }
 
 function activatePractice1Lesson() {
-    currentMode = "practice1";
+    window.currentMode = "practice1";
     const dragMode = document.getElementById("drag-mode");
     const mcqMode = document.getElementById("mcq-mode");
     const exprMode = document.getElementById("expression-mode");
@@ -1053,7 +1053,7 @@ function activatePractice1Lesson() {
 }
 
 function activatePractice2Lesson() {
-    currentMode = "practice2";
+    window.currentMode = "practice2";
     const dragMode = document.getElementById("drag-mode");
     const mcqMode = document.getElementById("mcq-mode");
     const exprMode = document.getElementById("expression-mode");
